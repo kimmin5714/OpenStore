@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import MapMenu from "@/components/apart/MapMenu/MapMenu.vue";
 
 var map;
 const positions = ref([]);
@@ -106,13 +107,17 @@ const deleteMarkers = () => {
 </script>
 
 <template>
-  <div id="map"></div>
+  <div id="map_wrap" class="pos-abs w-100p h-100p dp-fl">
+    <div id="map">
+      <MapMenu />
+    </div>
+  </div>
 </template>
 
 <style>
 #map {
-  width: 100%;
-  /* height: 100%; */
-  height: 700px;
+  width: 100vw;
+  height: 100vh;
+  /* height: 700px; */
 }
 </style>
