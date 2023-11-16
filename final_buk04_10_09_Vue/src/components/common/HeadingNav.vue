@@ -41,17 +41,13 @@ checkLogin();
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <!-- <c:if test="${cookie.ssafy_id.value ne null}">
-      <c:set var="idck" value=" checked" />
-      <c:set var="saveid" value="${cookie.ssafy_id.value}" />
-    </c:if> -->
+  <nav class="navbar navbar-expand-lg bg-transparent">
     <div class="container">
       <RouterLink
-        class="navbar-brand text-primary fw-bold"
+        class="navbar-brand text-warning fw-bold"
         :to="{ name: 'IndexView' }"
       >
-        WhereIsMyHome
+        Open Store
       </RouterLink>
       <button
         class="navbar-toggler"
@@ -72,15 +68,7 @@ checkLogin();
               aria-current="page"
               :to="{ name: 'ApartView' }"
             >
-              아파트</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink
-              class="nav-link"
-              aria-current="page"
-              :to="{ name: 'ApartView' }"
-              >주택</RouterLink
+              지도</RouterLink
             >
           </li>
         </ul>

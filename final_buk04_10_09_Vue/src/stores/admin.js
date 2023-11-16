@@ -56,7 +56,7 @@ export const useAdminStore = defineStore("admin", () => {
         sessionStorage.setItem("accessToken", accessToken);
         sessionStorage.setItem("refreshToken", refreshToken);
         console.log("sessiontStorage에 담았다", isLogin.value);
-        getUserInfo(accessToken);
+        await getUserInfo(accessToken);
       } else {
         console.log("로그인 실패했다");
         isLogin.value = false;
@@ -143,6 +143,7 @@ export const useAdminStore = defineStore("admin", () => {
         sessionStorage.removeItem("refreshToken");
         // sessionStorage.clear();
         isLogin.value = false;
+        isLoginError.value = false;
         userInfo.value = null;
         isValidToken.value = false;
       } else {

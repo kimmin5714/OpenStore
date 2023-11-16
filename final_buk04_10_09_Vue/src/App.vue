@@ -4,8 +4,12 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
 </script>
 
 <template>
-  <HeadingNav />
   <RouterView />
 </template>
 
-<style></style>
+<style>
+a {
+  text-decoration: none;
+  color: black;
+}
+</style>

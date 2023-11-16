@@ -1,7 +1,7 @@
-import "@/assets/css/main.css";
-import "@/assets/css/app.css";
-import "@/assets/css/login.css";
-import "@/assets/css/register.css";
+// import "@/assets/css/main.css";
+// import "@/assets/css/app.css";
+// import "@/assets/css/login.css";
+// import "@/assets/css/register.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";

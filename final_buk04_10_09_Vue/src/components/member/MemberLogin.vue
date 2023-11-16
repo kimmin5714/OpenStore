@@ -8,7 +8,7 @@ const router = useRouter();
 
 const memberStore = useAdminStore();
 
-const { isLogin } = storeToRefs(memberStore);
+const { isLogin, isLoginError } = storeToRefs(memberStore);
 const { userLogin, getUserInfo } = memberStore;
 
 const loginUser = ref({
@@ -26,7 +26,11 @@ const login = async () => {
   //   console.log("로그인 성공아닌가???");
   //   getUserInfo(token);
   // }
-  router.push("/");
+  if (isLogin.value) {
+    router.push("/");
+  } else {
+    alert("아이디나 비밀번호를 다시 확인해주세요.");
+  }
 };
 </script>
 
