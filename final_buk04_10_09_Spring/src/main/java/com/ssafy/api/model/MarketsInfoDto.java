@@ -38,8 +38,8 @@ public class MarketsInfoDto {
 	private String dongNo;
 	private String flrNo;
 	private String hoNo;
-	private String lon;
-	private String lat;
+	private double lon;
+	private double lat;
 	public String getBizesId() {
 		return bizesId;
 	}
@@ -262,16 +262,16 @@ public class MarketsInfoDto {
 	public void setHoNo(String hoNo) {
 		this.hoNo = hoNo;
 	}
-	public String getLon() {
+	public double getLon() {
 		return lon;
 	}
-	public void setLon(String lon) {
+	public void setLon(double lon) {
 		this.lon = lon;
 	}
-	public String getLat() {
+	public double getLat() {
 		return lat;
 	}
-	public void setLat(String lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 	@Override

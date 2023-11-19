@@ -73,8 +73,8 @@ public class XmlParser {
         String divId = "ctprvnCd";
         String numOfRows = "1000";		// 최대 1000
         // 서울에서 제주까지
-//        String[] sidoCodes = {"11","26","27","28","29","30","31","41","42","43","44","45","46","47","48","50"};
-        String[] sidoCodes = {"50"};
+        String[] sidoCodes = {"11","26","27","28","29","30","31","41","42","43","44","45","46","47","48","50"};
+//        String[] sidoCodes = {"50"};
 		
         //페이지 생략
         try {
@@ -85,83 +85,88 @@ public class XmlParser {
             for(String sidoCode : sidoCodes) {
             	System.out.println("==== 시도 코드 : "+sidoCode);
             	
-            	for(int page=1; ;page++) {
-            		if(page%2000==0)
-            			Thread.sleep(5000);
-            			System.out.println("============== "+page+"번째 페이지 저장 중");
-            		
-	                String pageNo = String.valueOf(page);
-		            String url = "https://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong?serviceKey="+encServiceKey+"&pageNo="+pageNo+"&numOfRows="+numOfRows+"&divId="+divId+"&key="+sidoCode+"&indsLclsCd=&indsMclsCd=&indsSclsCd=&type=xml";
-		       
-		            Document doc = dBuilder.parse(url);
-		
-		            // ===페이지 오버시 break 코드===
-		            Element header = (Element) doc.getElementsByTagName("header").item(0);
-		            String resultMsg = header.getElementsByTagName("resultMsg").item(0).getTextContent();
-		            
-		            if("NODATA_ERROR".equals(resultMsg)) {
-	            		break;		// 마지막 페이지를 지났다면 현재 sidoCode에서 종료	
-		            }
-		            // ========================
-		            
-		            doc.getDocumentElement().normalize();
-		            
-		            NodeList nList = doc.getElementsByTagName("item");
-		            List<MarketsInfoDto> list = new ArrayList<MarketsInfoDto>();
-		            
-		
-		            for(int tmp=0;tmp<nList.getLength();tmp++) {
-		                Node nNode = nList.item(tmp);
-		                if(nNode.getNodeType() == Node.ELEMENT_NODE) {
-		                    Element eElement = (Element) nNode;
-		                    MarketsInfoDto marketsInfoDto = new MarketsInfoDto();
-		
-							marketsInfoDto.setBizesId(getTagValue("bizesId",eElement));
-							marketsInfoDto.setBizesNm(getTagValue("bizesNm",eElement));
-							marketsInfoDto.setBrchNm(getTagValue("brchNm",eElement));
-							marketsInfoDto.setIndsLclsCd(getTagValue("indsLclsCd",eElement));
-							marketsInfoDto.setIndsLclsNm(getTagValue("indsLclsNm",eElement));
-							marketsInfoDto.setIndsMclsCd(getTagValue("indsMclsCd",eElement));
-							marketsInfoDto.setIndsMclsNm(getTagValue("indsMclsNm",eElement));
-							marketsInfoDto.setIndsSclsCd(getTagValue("indsSclsCd",eElement));
-							marketsInfoDto.setIndsSclsNm(getTagValue("indsSclsNm",eElement));
-							marketsInfoDto.setKsicCd(getTagValue("ksicCd",eElement));
-							marketsInfoDto.setKsicNm(getTagValue("ksicNm",eElement));
-							marketsInfoDto.setCtprvnCd(getTagValue("ctprvnCd",eElement));
-							marketsInfoDto.setCtprvnNm(getTagValue("ctprvnNm",eElement));
-							marketsInfoDto.setSignguCd(getTagValue("signguCd",eElement));
-							marketsInfoDto.setSignguNm(getTagValue("signguNm",eElement));
-							marketsInfoDto.setAdongCd(getTagValue("adongCd",eElement));
-							marketsInfoDto.setAdongNm(getTagValue("adongNm",eElement));
-							marketsInfoDto.setLdongCd(getTagValue("ldongCd",eElement));
-							marketsInfoDto.setLdongNm(getTagValue("ldongNm",eElement));
-							marketsInfoDto.setLnoCd(getTagValue("lnoCd",eElement));
-							marketsInfoDto.setPlotSctCd(getTagValue("plotSctCd",eElement));
-							marketsInfoDto.setPlotSctNm(getTagValue("plotSctNm",eElement));
-							marketsInfoDto.setLnoMnno(getTagValue("lnoMnno",eElement));
-							marketsInfoDto.setLnoSlno(getTagValue("lnoSlno",eElement));
-							marketsInfoDto.setLnoAdr(getTagValue("lnoAdr",eElement));
-							marketsInfoDto.setRdnmCd(getTagValue("rdnmCd",eElement));
-							marketsInfoDto.setRdnm(getTagValue("rdnm",eElement));
-							marketsInfoDto.setBldMnno(getTagValue("bldMnno",eElement));
-							marketsInfoDto.setBldSlno(getTagValue("bldSlno",eElement));
-							marketsInfoDto.setBldMngNo(getTagValue("bldMngNo",eElement));
-							marketsInfoDto.setBldNm(getTagValue("bldNm",eElement));
-							marketsInfoDto.setRdnmAdr(getTagValue("rdnmAdr",eElement));
-							marketsInfoDto.setOldZipcd(getTagValue("oldZipcd",eElement));
-							marketsInfoDto.setNewZipcd(getTagValue("newZipcd",eElement));
-							marketsInfoDto.setDongNo(getTagValue("dongNo",eElement));
-							marketsInfoDto.setFlrNo(getTagValue("flrNo",eElement));
-							marketsInfoDto.setHoNo(getTagValue("hoNo",eElement));
-							marketsInfoDto.setLon(getTagValue("lon",eElement));
-							marketsInfoDto.setLat(getTagValue("lat",eElement));
-		                
-							list.add(marketsInfoDto);
-		                }
-		            }
-		            
-		            apiMapper.insertMarketsInfo(list);
-            	}
+            	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
+            	
+            	for(String indsLclsCd : indsLclsCdList) {
+            		System.out.println("======== 대분류 코드 "+indsLclsCd);
+	            	for(int page=1; ;page++) {
+	            		if(page%5==0)
+	            			Thread.sleep(10000);
+	            			System.out.println("============== "+page+"번째 페이지 저장 중");
+	            		
+		                String pageNo = String.valueOf(page);
+			            String url = "https://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong?serviceKey="+encServiceKey+"&pageNo="+pageNo+"&numOfRows="+numOfRows+"&divId="+divId+"&key="+sidoCode+"&indsLclsCd="+indsLclsCd+"&indsMclsCd=&indsSclsCd=&type=xml";
+			       
+			            Document doc = dBuilder.parse(url);
+			
+			            // ===페이지 오버시 break 코드===
+			            Element header = (Element) doc.getElementsByTagName("header").item(0);
+			            String resultMsg = header.getElementsByTagName("resultMsg").item(0).getTextContent();
+			            
+			            if("NODATA_ERROR".equals(resultMsg)) {
+		            		break;		// 마지막 페이지를 지났다면 현재 sidoCode에서 종료	
+			            }
+			            // ========================
+			            
+			            doc.getDocumentElement().normalize();
+			            
+			            NodeList nList = doc.getElementsByTagName("item");
+			            List<MarketsInfoDto> list = new ArrayList<MarketsInfoDto>();
+			            
+			
+			            for(int tmp=0;tmp<nList.getLength();tmp++) {
+			                Node nNode = nList.item(tmp);
+			                if(nNode.getNodeType() == Node.ELEMENT_NODE) {
+			                    Element eElement = (Element) nNode;
+			                    MarketsInfoDto marketsInfoDto = new MarketsInfoDto();
+			
+								marketsInfoDto.setBizesId(getTagValue("bizesId",eElement));
+								marketsInfoDto.setBizesNm(getTagValue("bizesNm",eElement));
+								marketsInfoDto.setBrchNm(getTagValue("brchNm",eElement));
+								marketsInfoDto.setIndsLclsCd(getTagValue("indsLclsCd",eElement));
+								marketsInfoDto.setIndsLclsNm(getTagValue("indsLclsNm",eElement));
+								marketsInfoDto.setIndsMclsCd(getTagValue("indsMclsCd",eElement));
+								marketsInfoDto.setIndsMclsNm(getTagValue("indsMclsNm",eElement));
+								marketsInfoDto.setIndsSclsCd(getTagValue("indsSclsCd",eElement));
+								marketsInfoDto.setIndsSclsNm(getTagValue("indsSclsNm",eElement));
+								marketsInfoDto.setKsicCd(getTagValue("ksicCd",eElement));
+								marketsInfoDto.setKsicNm(getTagValue("ksicNm",eElement));
+								marketsInfoDto.setCtprvnCd(getTagValue("ctprvnCd",eElement));
+								marketsInfoDto.setCtprvnNm(getTagValue("ctprvnNm",eElement));
+								marketsInfoDto.setSignguCd(getTagValue("signguCd",eElement));
+								marketsInfoDto.setSignguNm(getTagValue("signguNm",eElement));
+								marketsInfoDto.setAdongCd(getTagValue("adongCd",eElement));
+								marketsInfoDto.setAdongNm(getTagValue("adongNm",eElement));
+								marketsInfoDto.setLdongCd(getTagValue("ldongCd",eElement));
+								marketsInfoDto.setLdongNm(getTagValue("ldongNm",eElement));
+								marketsInfoDto.setLnoCd(getTagValue("lnoCd",eElement));
+								marketsInfoDto.setPlotSctCd(getTagValue("plotSctCd",eElement));
+								marketsInfoDto.setPlotSctNm(getTagValue("plotSctNm",eElement));
+								marketsInfoDto.setLnoMnno(getTagValue("lnoMnno",eElement));
+								marketsInfoDto.setLnoSlno(getTagValue("lnoSlno",eElement));
+								marketsInfoDto.setLnoAdr(getTagValue("lnoAdr",eElement));
+								marketsInfoDto.setRdnmCd(getTagValue("rdnmCd",eElement));
+								marketsInfoDto.setRdnm(getTagValue("rdnm",eElement));
+								marketsInfoDto.setBldMnno(getTagValue("bldMnno",eElement));
+								marketsInfoDto.setBldSlno(getTagValue("bldSlno",eElement));
+								marketsInfoDto.setBldMngNo(getTagValue("bldMngNo",eElement));
+								marketsInfoDto.setBldNm(getTagValue("bldNm",eElement));
+								marketsInfoDto.setRdnmAdr(getTagValue("rdnmAdr",eElement));
+								marketsInfoDto.setOldZipcd(getTagValue("oldZipcd",eElement));
+								marketsInfoDto.setNewZipcd(getTagValue("newZipcd",eElement));
+								marketsInfoDto.setDongNo(getTagValue("dongNo",eElement));
+								marketsInfoDto.setFlrNo(getTagValue("flrNo",eElement));
+								marketsInfoDto.setHoNo(getTagValue("hoNo",eElement));
+								marketsInfoDto.setLon(Double.parseDouble(getTagValue("lon",eElement)));
+								marketsInfoDto.setLat(Double.parseDouble(getTagValue("lat",eElement)));
+			                
+								list.add(marketsInfoDto);
+			                }
+			            }
+			            
+			            apiMapper.insertMarketsInfo(list);
+	            	}
+	            }
             }
             
         } catch (Exception e) {
