@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.api.model.mapper.ApiMapper">
+
+	 <insert id="insertMarketsInfo" parameterType="list">
+    	insert into markets (bizesId,bizesNm,brchNm,indsLclsCd,indsLclsNm,indsMclsCd,indsMclsNm,indsSclsCd,indsSclsNm,ksicCd,ksicNm,ctprvnCd,ctprvnNm,signguCd,signguNm,adongCd,adongNm,ldongCd,ldongNm,lnoCd,plotSctCd,plotSctNm,lnoMnno,lnoSlno,lnoAdr,rdnmCd,rdnm,bldMnno,bldSlno,bldMngNo,bldNm,rdnmAdr,oldZipcd,newZipcd,dongNo,flrNo,hoNo,lon,lat)
+    	values 
+    	<foreach collection="list" item="item" open="(" close=")" separator="),(">
+			 #{item.bizesId},#{item.bizesNm},#{item.brchNm},#{item.indsLclsCd},#{item.indsLclsNm},#{item.indsMclsCd},#{item.indsMclsNm},#{item.indsSclsCd},#{item.indsSclsNm},#{item.ksicCd},#{item.ksicNm},#{item.ctprvnCd},#{item.ctprvnNm},#{item.signguCd},#{item.signguNm},#{item.adongCd},#{item.adongNm},#{item.ldongCd},#{item.ldongNm},#{item.lnoCd},#{item.plotSctCd},#{item.plotSctNm},#{item.lnoMnno},#{item.lnoSlno},#{item.lnoAdr},#{item.rdnmCd},#{item.rdnm},#{item.bldMnno},#{item.bldSlno},#{item.bldMngNo},#{item.bldNm},#{item.rdnmAdr},#{item.oldZipcd},#{item.newZipcd},#{item.dongNo},#{item.flrNo},#{item.hoNo},#{item.lon},#{item.lat}
+		</foreach> 	
+    </insert>
+    
+</mapper>

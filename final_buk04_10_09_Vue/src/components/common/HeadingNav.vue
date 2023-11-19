@@ -4,6 +4,8 @@ import { useRoute, useRouter } from "vue-router";
 import { useAdminStore } from "@/stores/admin";
 import { storeToRefs } from "pinia";
 
+import { commercialProperties } from "@/api/api";
+
 const route = useRoute();
 const router = useRouter();
 
@@ -38,6 +40,11 @@ const logout = () => {
 };
 
 checkLogin();
+
+const importData = async () => {
+  await commercialProperties();
+  console.log("이예이");
+};
 </script>
 
 <template>
@@ -70,6 +77,11 @@ checkLogin();
             >
               지도</RouterLink
             >
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-danger" @click="importData">
+              DATA IMPORT
+            </a>
           </li>
         </ul>
 
