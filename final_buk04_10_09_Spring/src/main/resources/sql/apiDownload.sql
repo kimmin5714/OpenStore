@@ -1,5 +1,5 @@
 
-create table markets (
+create table stores (
 bizesId varchar(100) primary key,
 bizesNm varchar(100),
 brchNm varchar(100),
@@ -41,14 +41,9 @@ lon double,
 lat double
 );
 
-drop table markets;
+drop table stores;
 
-desc markets;
-
-select *
-from markets;
+desc stores;
 
 select *
-from markets
-where lon between (33.4727061407024-0.02) and (33.4727061407024+0.02)
-and lat (126.48475027728-0.02) and (126.48475027728+0.02)
+from stores;

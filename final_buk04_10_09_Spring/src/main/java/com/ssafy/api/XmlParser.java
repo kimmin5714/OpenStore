@@ -83,11 +83,13 @@ public class XmlParser {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder(); 
             
             for(String sidoCode : sidoCodes) {
+    			Thread.sleep(10000);
             	System.out.println("==== 시도 코드 : "+sidoCode);
             	
             	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
             	
             	for(String indsLclsCd : indsLclsCdList) {
+        			Thread.sleep(10000);
             		System.out.println("======== 대분류 코드 "+indsLclsCd);
 	            	for(int page=1; ;page++) {
 	            		if(page%5==0)
