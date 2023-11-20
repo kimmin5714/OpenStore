@@ -64,9 +64,9 @@ checkLogin();
             <RouterLink
               class="nav-link"
               aria-current="page"
-              :to="{ name: 'ApartView' }">
-              지도</RouterLink
-            >
+              :to="{ name: 'apart-view' }">
+              지도
+            </RouterLink>
           </li>
         </ul>
 

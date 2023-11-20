@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <span>알림</span>
+    <span>공지사항</span>
   </div>
 </template>
 

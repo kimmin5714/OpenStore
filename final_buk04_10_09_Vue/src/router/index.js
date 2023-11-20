@@ -103,30 +103,30 @@ const router = createRouter({
     },
     {
       path: "/apart",
-      name: "ApartView",
+      name: "apart-view",
       // 컴포넌트 아파트
       component: () => import("@/views/ApartView.vue"),
-      redirect: { name: "apartNavbarHome" },
+      // redirect: "/apart"
       children: [
         {
-          path: "/home",
-          name: "apartNavbarHome",
+          path: "home",
+          name: "apart-navbar-home",
           component: () =>
             import(
               "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarHome.vue"
             ),
         },
         {
-          path: "/search",
-          name: "apartNavbarSearch",
+          path: "search",
+          name: "apart-navbar-search",
           component: () =>
             import(
               "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarSearch.vue"
             ),
         },
         {
-          path: "/bookmarks",
-          name: "apartNavbarBookmarks",
+          path: "bookmarks",
+          name: "apart-navbar-bookmarks",
           component: () =>
             import(
               "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarBookmarks.vue"
@@ -134,13 +134,21 @@ const router = createRouter({
           // beforeEnter: onlyAuthUser,
         },
         {
-          path: "/notifications",
-          name: "apartNavbarNotifications",
+          path: "notifications",
+          name: "apart-navbar-notifications",
           component: () =>
             import(
               "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarNotifications.vue"
             ),
           // beforeEnter: onlyAuthUser,
+        },
+        {
+          path: "detail",
+          name: "ApartDetail",
+          component: () =>
+            import(
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartDetail.vue"
+            ),
         },
       ],
     },

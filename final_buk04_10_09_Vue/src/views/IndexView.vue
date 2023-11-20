@@ -247,7 +247,7 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
         <div class="sc-dmjyfX gbJRUv">
           <p><strong>서비스</strong></p>
           <ul>
-            <li><a class="sc-ekFWYn iOQUAh" href="/apart">지도</a></li>
+            <li><a class="sc-ekFWYn iOQUAh" href="/home">지도</a></li>
             <li>
               <a class="sc-ekFWYn iOQUAh" href="/service/ai-analytics"
                 >AI 건축분석</a
