@@ -59,7 +59,8 @@ const router = useRouter();
     </div>
 
     <!-- 검색 결과 리스트 -->
-    <div role="tabpanel" class="sc-lplcVV gLTKct">
+    <!-- <div class="simplebar-content-wrapper"> -->
+    <div role="tabpanel" class="apart-list">
       <div class="search-list-box">
         <ul class="search-list-ul">
           <li data-pnu="1159010200102960009" class="search-list-li">
@@ -255,6 +256,7 @@ const router = useRouter();
         </ul>
       </div>
     </div>
+    <!-- </div> -->
 
     <!-- 검색리스트 상세 정보 -->
     <div></div>
@@ -273,6 +275,11 @@ const router = useRouter();
 </template>
 
 <style scoped>
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
 .search-body-up {
   width: 100%;
   height: 15%;
@@ -287,7 +294,7 @@ const router = useRouter();
 .search-list-box {
   padding-bottom: 100px;
   box-sizing: border-box;
-  overflow: hidden scroll;
+  overflow: visible;
 }
 .search-body {
   scroll-behavior: smooth;
@@ -354,4 +361,16 @@ const router = useRouter();
   --bs-border-radius-2xl: 2rem;
   --bs-border-radius-pill: 50rem;
 } */
+.simplebar-content-wrapper {
+  -ms-overflow-style: none;
+  box-sizing: border-box !important;
+  direction: inherit;
+  display: block;
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  scrollbar-width: none;
+  width: auto;
+}
 </style>
