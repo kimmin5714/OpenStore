@@ -1,7 +1,11 @@
 <script setup></script>
 
 <template>
-  <div id="left-menu-body"></div>
+  <div id="left-menu-body">
+    <Suspense>
+      <RouterView />
+    </Suspense>
+  </div>
 </template>
 
 <style scoped>

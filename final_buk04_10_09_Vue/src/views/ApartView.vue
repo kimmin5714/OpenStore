@@ -1,5 +1,4 @@
 <script setup>
-import Apartmap from "@/components/apart/Apartmap.vue";
 import VKakaoMap from "@/components/common/VKakaoMap.vue";
 
 const list = [];

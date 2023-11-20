@@ -45,8 +45,7 @@ checkLogin();
     <div class="container">
       <RouterLink
         class="navbar-brand text-warning fw-bold"
-        :to="{ name: 'IndexView' }"
-      >
+        :to="{ name: 'IndexView' }">
         Open Store
       </RouterLink>
       <button
@@ -56,8 +55,7 @@ checkLogin();
         data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -66,8 +64,7 @@ checkLogin();
             <RouterLink
               class="nav-link"
               aria-current="page"
-              :to="{ name: 'ApartView' }"
-            >
+              :to="{ name: 'ApartView' }">
               지도</RouterLink
             >
           </li>
@@ -75,8 +72,7 @@ checkLogin();
 
         <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
-          style="--bs-scroll-height: 100px"
-        >
+          style="--bs-scroll-height: 100px">
           <template v-if="isLogin">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" style="font-weight: bold">

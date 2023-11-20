@@ -22,12 +22,6 @@ const router = createRouter({
       component: IndexView,
     },
     {
-      path: "/apart",
-      name: "ApartView",
-      // 컴포넌트 아파트
-      component: () => import("@/views/ApartView.vue"),
-    },
-    {
       path: "/board",
       name: "BoardView",
       component: () => import("@/views/BoardView.vue"),
@@ -105,6 +99,49 @@ const router = createRouter({
         //   name: "user-mypage",
         //   component: () => import("@/components/member/UserMyPage.vue"),
         // },
+      ],
+    },
+    {
+      path: "/apart",
+      name: "ApartView",
+      // 컴포넌트 아파트
+      component: () => import("@/views/ApartView.vue"),
+      redirect: { name: "apartNavbarHome" },
+      children: [
+        {
+          path: "/home",
+          name: "apartNavbarHome",
+          component: () =>
+            import(
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarHome.vue"
+            ),
+        },
+        {
+          path: "/search",
+          name: "apartNavbarSearch",
+          component: () =>
+            import(
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarSearch.vue"
+            ),
+        },
+        {
+          path: "/bookmarks",
+          name: "apartNavbarBookmarks",
+          component: () =>
+            import(
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarBookmarks.vue"
+            ),
+          // beforeEnter: onlyAuthUser,
+        },
+        {
+          path: "/notifications",
+          name: "apartNavbarNotifications",
+          component: () =>
+            import(
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarNotifications.vue"
+            ),
+          // beforeEnter: onlyAuthUser,
+        },
       ],
     },
   ],
