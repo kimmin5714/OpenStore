@@ -1,5 +1,6 @@
 <script setup>
 import VKakaoMap from "@/components/common/VKakaoMap.vue";
+import MapStoreFilter from "../components/apart/MapStoreFilter/MapStoreFilter.vue";
 
 const list = [];
 const a = {};
@@ -15,6 +16,7 @@ const a = {};
 
 <template>
   <VKakaoMap :pointList="list" :selectPoint="a" />
+  <MapStoreFilter />
 </template>
 
 <style scoped></style>
