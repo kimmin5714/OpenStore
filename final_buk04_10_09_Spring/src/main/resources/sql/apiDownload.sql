@@ -41,9 +41,37 @@ lon double,
 lat double
 );
 
-drop table stores;
+create table comProp(
+id bigint primary key auto_increment,
+dealAmount bigint,
+buildingArea double,
+buildingUse varchar(50),
+buildYear varchar(50),
+dealYear varchar(50),
+plottage double,
+dong varchar(50),
+sigungu varchar(50),
+landUse varchar(50),
+dealMonth varchar(50),
+buildingType varchar(50),
+dealDay varchar(50),
+regionalCode varchar(50)
+);
 
 desc stores;
+desc comProp;
 
 select *
 from stores;
+
+select count(bizesId)
+from stores;
+
+desc dongcodelatlng;
+
+select dongcode, addressCount, sidoName, gugunName, dongName, lat, lon
+from dongcodeLatlng;
+
+select distinct substr(dongCode,1,5)
+from dongcodeLatlng;
+

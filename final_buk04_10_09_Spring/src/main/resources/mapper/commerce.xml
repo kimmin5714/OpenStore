@@ -6,7 +6,7 @@
 	
 	<select id="getStoreList" parameterType="map" resultType="storeDto">
 		select bizesId,bizesNm,brchNm,indsLclsCd,indsLclsNm,indsMclsCd,indsMclsNm,indsSclsCd,indsSclsNm,ksicCd,ksicNm,ctprvnCd,ctprvnNm,signguCd,signguNm,adongCd,adongNm,ldongCd,ldongNm,lnoCd,plotSctCd,plotSctNm,lnoMnno,lnoSlno,lnoAdr,rdnmCd,rdnm,bldMnno,bldSlno,bldMngNo,bldNm,rdnmAdr,oldZipcd,newZipcd,dongNo,flrNo,hoNo,lon,lat
-			from markets
+			from stores
 			<where>
 				and lat between #{latStart} and #{latEnd}
 				and lon between #{lonStart} and #{lonEnd}
@@ -14,6 +14,15 @@
 				<if test="indsLclsCd != null and indsLclsCd != ''">
 					and indsLclsCd = #{indsLclsCd}
 				</if>
+			</where>
+	</select>
+	
+	<select id="getDongsByCoord" parameterType="map" resultType="dongCodeLatlngDto">
+		select dongcode, addressCount, sidoName, gugunName, dongName, lat, lon
+			from dongcodeLatlng
+			<where>
+				and lat between #{latStart} and #{latEnd}
+				and lon between #{lonStart} and #{lonEnd}
 			</where>
 	</select>
 

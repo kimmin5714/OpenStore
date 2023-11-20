@@ -15,5 +15,6 @@
   height: 100%;
   background-color: rgb(255, 255, 255);
   border-right: 1px solid rgb(223, 229, 235);
+  z-index: 1000;
 }
 </style>

@@ -12,7 +12,8 @@ import RightMenuContainer from "@/components/apart/MapMenu/RightMenu/RightMenuCo
 
 <style scoped>
 #map-menu {
+  width: 100vw;
+  height: 100vh;
   position: absolute;
-  z-index: 2;
 }
 </style>

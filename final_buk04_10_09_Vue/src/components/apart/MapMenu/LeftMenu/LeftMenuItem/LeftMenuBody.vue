@@ -13,5 +13,6 @@
   background: rgb(255, 255, 255);
   overflow: hidden;
   transform: translateZ(0px);
+  z-index: 1000;
 }
 </style>

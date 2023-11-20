@@ -12,6 +12,7 @@ import LeftMenuBody from "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/LeftM
 
 <style scoped>
 #left-menu-container {
+  position: absolute;
   height: 100vh;
   background-color: red;
   display: flex;

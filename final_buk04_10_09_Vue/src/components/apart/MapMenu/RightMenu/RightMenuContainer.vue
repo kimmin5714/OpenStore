@@ -1,21 +1,19 @@
 <script setup>
-import LeftMenuNav from "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/LeftMenuNav.vue";
-import LeftMenuBody from "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/LeftMenuBody.vue";
+import RightMenuNav from "@/components/apart/MapMenu/RightMenu/RightMenuItem/RightMenuNav.vue";
 </script>
 
 <template>
   <div id="right-menu-container">
-    <LeftMenuNav />
-    <LeftMenuBody />
+    <RightMenuNav />
   </div>
 </template>
 
 <style scoped>
 #right-menu-container {
   position: absolute;
-  left: 90vw;
+  /* left: calc(100vw - 120px); */
+  right: 0px;
   height: 100vh;
-  width: 100px;
   background-color: red;
   display: flex;
 }

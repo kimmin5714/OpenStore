@@ -1,13 +1,12 @@
 package com.ssafy.api.model;
 
 public class ComPropDto {
-	private int dealAmount;
+	private long dealAmount;
 	private double buildingArea;
 	private String buildingUse;
 	private String buildYear;
-	private String ClassificationOfShareDealing;
 	private String dealYear;
-	private int plottage;
+	private double plottage;
 	private String dong;
 	private String sigungu;
 	private String landUse;
@@ -15,11 +14,10 @@ public class ComPropDto {
 	private String buildingType;
 	private String dealDay;
 	private String regionalCode;
-	private int floor;
-	public int getDealAmount() {
+	public long getDealAmount() {
 		return dealAmount;
 	}
-	public void setDealAmount(int dealAmount) {
+	public void setDealAmount(long dealAmount) {
 		this.dealAmount = dealAmount;
 	}
 	public double getBuildingArea() {
@@ -40,22 +38,16 @@ public class ComPropDto {
 	public void setBuildYear(String buildYear) {
 		this.buildYear = buildYear;
 	}
-	public String getClassificationOfShareDealing() {
-		return ClassificationOfShareDealing;
-	}
-	public void setClassificationOfShareDealing(String classificationOfShareDealing) {
-		ClassificationOfShareDealing = classificationOfShareDealing;
-	}
 	public String getDealYear() {
 		return dealYear;
 	}
 	public void setDealYear(String dealYear) {
 		this.dealYear = dealYear;
 	}
-	public int getPlottage() {
+	public double getPlottage() {
 		return plottage;
 	}
-	public void setPlottage(int plottage) {
+	public void setPlottage(double plottage) {
 		this.plottage = plottage;
 	}
 	public String getDong() {
@@ -100,18 +92,11 @@ public class ComPropDto {
 	public void setRegionalCode(String regionalCode) {
 		this.regionalCode = regionalCode;
 	}
-	public int getFloor() {
-		return floor;
-	}
-	public void setFloor(int floor) {
-		this.floor = floor;
-	}
 	@Override
 	public String toString() {
 		return "ComPropDto [dealAmount=" + dealAmount + ", buildingArea=" + buildingArea + ", buildingUse="
-				+ buildingUse + ", buildYear=" + buildYear + ", ClassificationOfShareDealing="
-				+ ClassificationOfShareDealing + ", dealYear=" + dealYear + ", plottage=" + plottage + ", dong=" + dong
+				+ buildingUse + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", plottage=" + plottage + ", dong=" + dong
 				+ ", sigungu=" + sigungu + ", landUse=" + landUse + ", dealMonth=" + dealMonth + ", buildingType="
-				+ buildingType + ", dealDay=" + dealDay + ", regionalCode=" + regionalCode + ", floor=" + floor + "]";
+				+ buildingType + ", dealDay=" + dealDay + ", regionalCode=" + regionalCode + "]";
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.api.model.DongCodeLatlngDto;
 import com.ssafy.commerce.model.StoreDto;
 import com.ssafy.commerce.model.mapper.CommerceMapper;
 
@@ -21,6 +22,11 @@ public class CommerceServiceImpl implements CommerceService{
 	@Override
 	public List<StoreDto> getStoreList(Map<String, String> map) {
 		return commerceMapper.getStoreList(map);
+	}
+
+	@Override
+	public List<DongCodeLatlngDto> getDongsByCoord(Map<String, String> map) {
+		return commerceMapper.getDongsByCoord(map);
 	}
 
 	

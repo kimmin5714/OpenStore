@@ -1,5 +1,6 @@
 package com.ssafy.api;
 
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.ssafy.api.model.ComPropDto;
+import com.ssafy.api.model.DongCodeLatlngDto;
 import com.ssafy.api.model.MarketsInfoDto;
 import com.ssafy.api.model.mapper.ApiMapper;
 
@@ -35,32 +37,63 @@ public class XmlParser {
         //페이지 생략
         try {
         	
-            String url = "https://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey=7C%2BxWt7OqCU8ncUPvV4pgjVRC5dhQSNGhNaJln3ouoK4URf6jDkAunQIc7mCCnW3JtC5%2Bo7pjwWaQmh1FCpOUg%3D%3D&LAWD_CD=11110&DEAL_YMD=201512";
-
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();        
-            Document doc = dBuilder.parse(url);
-
-            doc.getDocumentElement().normalize();
-
-            NodeList nList = doc.getElementsByTagName("item");
-
-            for(int tmp=0;tmp<nList.getLength();tmp++) {
-                Node nNode = nList.item(tmp);
-                if(nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    
-                    System.out.println("------------------");
-                    System.out.println("시군구 : "+getTagValue("시군구",eElement));
-                    System.out.println("법정동 : "+getTagValue("법정동",eElement));
-                    
-                    System.out.println("거래금액 : "+getTagValue("거래금액",eElement));
-                    System.out.println("대지면적 : "+getTagValue("대지면적",eElement));
-                    
-                    ComPropDto comPropDto = new ComPropDto(); 
-                
-                }
-            }
+        	// DB에서 모든 법정동코드(5자리) 가져오기
+        	List<String> dongCodeList = apiMapper.getDongCodeBy5();
+        	
+    		for(String dongCode : dongCodeList) {
+    			System.out.println("===== 동 코드 : "+dongCode);
+        		for(int month = 1; month<=12; month++) {
+        			
+        			String yearMonth = "2023";
+        			if(month<10) {
+        				yearMonth+="0"+String.valueOf(month);
+        			}else {
+        				yearMonth+=String.valueOf(month);
+        			}
+		        	// ======
+		        	
+		            String url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcNrgTrade?serviceKey=7C%2BxWt7OqCU8ncUPvV4pgjVRC5dhQSNGhNaJln3ouoK4URf6jDkAunQIc7mCCnW3JtC5%2Bo7pjwWaQmh1FCpOUg%3D%3D&LAWD_CD="+dongCode+"&DEAL_YMD="+yearMonth;
+		
+		            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();        
+		            Document doc = dBuilder.parse(url);
+		
+		            doc.getDocumentElement().normalize();
+		
+		            NodeList nList = doc.getElementsByTagName("item");
+		
+		            List<ComPropDto> cPropList = new ArrayList<ComPropDto>();
+		            for(int tmp=0;tmp<nList.getLength();tmp++) {
+		                Node nNode = nList.item(tmp);
+		                if(nNode.getNodeType() == Node.ELEMENT_NODE) {
+		                    Element eElement = (Element) nNode;
+		                    
+		                    ComPropDto comPropDto = new ComPropDto(); 
+		                    comPropDto.setDealAmount(getTagValue("거래금액",eElement)!=null ?
+		                    		Integer.parseInt(getTagValue("거래금액",eElement).replaceAll(",", "")) : 0);
+		                    comPropDto.setBuildingArea(getTagValue("건물면적",eElement)!=null ?
+		                    		Double.parseDouble(getTagValue("건물면적",eElement)) : 0);
+		                    comPropDto.setBuildingUse(getTagValue("건물주용도",eElement));
+		                    comPropDto.setBuildYear(getTagValue("건축년도",eElement));
+		                    comPropDto.setDealYear(getTagValue("년",eElement));
+		                    comPropDto.setPlottage(
+		                    		getTagValue("대지면적",eElement)!=null ?
+		                    				Double.parseDouble(getTagValue("대지면적",eElement)) : 0);
+		                    comPropDto.setDong(getTagValue("법정동",eElement));
+		                    comPropDto.setSigungu(getTagValue("시군구",eElement));
+		                    comPropDto.setLandUse(getTagValue("용도지역",eElement));
+		                    comPropDto.setDealMonth(getTagValue("월",eElement));
+		                    comPropDto.setBuildingType(getTagValue("유형",eElement));
+		                    comPropDto.setDealDay(getTagValue("일",eElement));
+		                    comPropDto.setRegionalCode(getTagValue("지역코드",eElement));
+		                    
+		                    cPropList.add(comPropDto);
+		                }
+		            }
+		            if(cPropList.size()>0)
+		            	apiMapper.insertComProps(cPropList);
+        		}
+        	}
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,7 +106,8 @@ public class XmlParser {
         String divId = "ctprvnCd";
         String numOfRows = "1000";		// 최대 1000
         // 서울에서 제주까지
-        String[] sidoCodes = {"11","26","27","28","29","30","31","41","42","43","44","45","46","47","48","50"};
+//        String[] sidoCodes = {"11","26","27","28","29","30","31","41","42","43","44","45","46","47","48","50"};
+        String[] sidoCodes = {"42","43","44","45","46","47","48","50"};
 //        String[] sidoCodes = {"50"};
 		
         //페이지 생략
@@ -83,18 +117,25 @@ public class XmlParser {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder(); 
             
             for(String sidoCode : sidoCodes) {
-    			Thread.sleep(10000);
+//    			Thread.sleep(10000);
             	System.out.println("==== 시도 코드 : "+sidoCode);
             	
             	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
             	
             	for(String indsLclsCd : indsLclsCdList) {
-        			Thread.sleep(10000);
+//        			Thread.sleep(10000);
             		System.out.println("======== 대분류 코드 "+indsLclsCd);
 	            	for(int page=1; ;page++) {
 	            		if(page%5==0)
-	            			Thread.sleep(10000);
+//	            			Thread.sleep(10000);
 	            			System.out.println("============== "+page+"번째 페이지 저장 중");
+//	            		if(sidoCode.equals("41")) {
+//	            			if(indsLclsCd.equals("I2")) {
+//	            				page = 145;
+//	            				System.out.println(sidoCode+" "+indsLclsCd+" "+page);
+//	            			}else break;
+//	            		}
+	            		
 	            		
 		                String pageNo = String.valueOf(page);
 			            String url = "https://apis.data.go.kr/B553077/api/open/sdsc2/storeListInDong?serviceKey="+encServiceKey+"&pageNo="+pageNo+"&numOfRows="+numOfRows+"&divId="+divId+"&key="+sidoCode+"&indsLclsCd="+indsLclsCd+"&indsMclsCd=&indsSclsCd=&type=xml";
@@ -162,6 +203,7 @@ public class XmlParser {
 								marketsInfoDto.setLon(Double.parseDouble(getTagValue("lon",eElement)));
 								marketsInfoDto.setLat(Double.parseDouble(getTagValue("lat",eElement)));
 			                
+								
 								list.add(marketsInfoDto);
 			                }
 			            }
@@ -177,11 +219,17 @@ public class XmlParser {
     }
 	
     private static String getTagValue(String string, Element eElement) {
-        NodeList nList = eElement.getElementsByTagName(string).item(0).getChildNodes();
+    	Node parent = eElement.getElementsByTagName(string).item(0);
+    	if(parent == null) return null;
+    	
+        NodeList nList = parent.getChildNodes();
         
         Node nValue = (Node)nList.item(0);
         if(nValue == null)
             return null;
-        return nValue.getNodeValue();
+        
+        String result = nValue.getNodeValue().trim();
+        if(result==null || result.length()==0) return null;
+        else return result;
     }
 }
