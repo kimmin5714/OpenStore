@@ -107,8 +107,9 @@ public class XmlParser {
         String numOfRows = "1000";		// 최대 1000
         // 서울에서 제주까지
 //        String[] sidoCodes = {"11","26","27","28","29","30","31","41","42","43","44","45","46","47","48","50"};
-        String[] sidoCodes = {"42","43","44","45","46","47","48","50"};
+//        String[] sidoCodes = {"42","43","44","45","46","47","48","50"};
 //        String[] sidoCodes = {"50"};
+        String[] sidoCodes = {"11"};
 		
         //페이지 생략
         try {
@@ -144,6 +145,7 @@ public class XmlParser {
 			
 			            // ===페이지 오버시 break 코드===
 			            Element header = (Element) doc.getElementsByTagName("header").item(0);
+			            if(header==null) continue;
 			            String resultMsg = header.getElementsByTagName("resultMsg").item(0).getTextContent();
 			            
 			            if("NODATA_ERROR".equals(resultMsg)) {

@@ -11,3 +11,7 @@ export const getStoreList = (params) => {
 export const getDealCostAvgByDong = (params) => {
   return local.get(`${url}/dealCost`, { params });
 };
+
+export const getEstateList = (params) => {
+  return local.get(`${url}/estateList`, { params });
+};
