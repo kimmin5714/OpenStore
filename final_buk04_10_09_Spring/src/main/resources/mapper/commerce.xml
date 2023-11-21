@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.commerce.model.mapper.CommerceMapper">
+	
+	<select id="getStoreList" parameterType="map" resultType="storeDto">
+		select bizesId,bizesNm,brchNm,indsLclsCd,indsLclsNm,indsMclsCd,indsMclsNm,indsSclsCd,indsSclsNm,ksicCd,ksicNm,ctprvnCd,ctprvnNm,signguCd,signguNm,adongCd,adongNm,ldongCd,ldongNm,lnoCd,plotSctCd,plotSctNm,lnoMnno,lnoSlno,lnoAdr,rdnmCd,rdnm,bldMnno,bldSlno,bldMngNo,bldNm,rdnmAdr,oldZipcd,newZipcd,dongNo,flrNo,hoNo,lon,lat
+			from stores
+			<where>
+				and lat between #{latStart} and #{latEnd}
+				and lon between #{lonStart} and #{lonEnd}
+				
+				<if test="indsLclsCd != null and indsLclsCd != ''">
+					and indsLclsCd = #{indsLclsCd}
+				</if>
+			</where>
+	</select>
+	
+	<select id="getDongsByCoord" parameterType="map" resultType="dongCodeLatlngDto">
+		select dongcode, addressCount, sidoName, gugunName, dongName, lat, lon
+			from dongcodeLatlng
+			<where>
+				and lat between #{latStart} and #{latEnd}
+				and lon between #{lonStart} and #{lonEnd}
+			</where>
+	</select>
+
+</mapper>
