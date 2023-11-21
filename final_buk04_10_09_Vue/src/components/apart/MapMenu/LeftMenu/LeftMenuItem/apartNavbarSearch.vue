@@ -51,8 +51,7 @@ import { useRouter, useRoute } from "vue-router";
         <div
           data-gtm-action="search_search_box_click"
           data-testid="search-bar"
-          class="sc-hsZwpi gGbVFK sc-hBAWal hbQMmF dropdown"
-        >
+          class="sc-hsZwpi gGbVFK sc-hBAWal hbQMmF dropdown">
           <form class="sc-fkxeQW lbzVUA empty">
             <input
               class="sc-gqgnwQ jCTgjP dropdown-toggle"
@@ -64,28 +63,24 @@ import { useRouter, useRoute } from "vue-router";
               type="text"
               tabindex="1"
               placeholder="주소·장소명으로 검색"
-              value=""
-            /><button
+              value="" /><button
               title="검색"
               aria-label="search"
               tabindex="3"
               type="submit"
-              class="sc-gcHwEF tbLGf"
-            >
+              class="sc-gcHwEF tbLGf">
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="#1A8CFF"
                 xmlns="http://www.w3.org/2000/svg"
-                class="swk-icon"
-              >
+                class="swk-icon">
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M16.0491 17.4633C14.7873 18.4274 13.2105 19 11.5 19C7.35786 19 4 15.6421 4 11.5C4 7.35786 7.35786 4 11.5 4C15.6421 4 19 7.35786 19 11.5C19 13.2105 18.4274 14.7873 17.4633 16.0491L20.7071 19.2929C21.0976 19.6834 21.0976 20.3166 20.7071 20.7071C20.3166 21.0976 19.6834 21.0976 19.2929 20.7071L16.0491 17.4633ZM17 11.5C17 14.5376 14.5376 17 11.5 17C8.46243 17 6 14.5376 6 11.5C6 8.46243 8.46243 6 11.5 6C14.5376 6 17 8.46243 17 11.5Z"
-                  fill="white"
-                ></path>
+                  fill="white"></path>
               </svg>
             </button>
           </form>
@@ -103,8 +98,7 @@ import { useRouter, useRoute } from "vue-router";
       <li data-pnu="1159010200102960009" class="search-list-li">
         <router-link
           :to="{ name: 'ApartDetail', params: { id: '1' } }"
-          aria-current="page"
-        >
+          aria-current="page">
           <div role="button" class="search-list-li-detail">
             <div class="sc-juGoRN cujSyQ">
               <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 296-9</h4>
@@ -128,8 +122,7 @@ import { useRouter, useRoute } from "vue-router";
           height: 340px;
           transform: translate3d(0px, 0px, 0px);
           display: block;
-        "
-      ></div>
+        "></div>
     </div>
   </div>
 </template>
