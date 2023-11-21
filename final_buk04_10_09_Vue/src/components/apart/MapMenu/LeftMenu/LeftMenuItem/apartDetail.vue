@@ -30,7 +30,7 @@
           <header
             class="sc-jhSRwE hUcgRA"
             style="opacity: 0; transition: opacity 0.2s ease 0s">
-            서울 동작구 상도동 296-9
+            서울 강남구 삼성동 26-29
           </header>
         </h2>
         <div class="sc-ciyUsT cRtaWC">
@@ -57,7 +57,10 @@
           </div>
         </div>
       </header>
-      <div class="detail-section">
+
+      <div style="padding-top: env(safe-area-inset-top, 0)"></div>
+
+      <!-- <div class="detail-section">
         <section style="flex: 1 1 0%; margin-top: 20px">
           <div style="background-color: rgb(255, 255, 255); min-height: 58px">
             <div class="word">서울 동작구 상도동 296-9</div>
@@ -87,18 +90,294 @@
             <span class="sc-hIKods cVcxSv">ㅇㅇㅇㅇㅇㅇㅇ</span>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <hr color="#F0F4F7" />
+      <!-- <hr color="#F0F4F7" />
       <span> 근방 상권 매출</span>
 
       <hr color="#F0F4F7" />
-      <span> 이 지역 평균 실거래가</span>
+      <span> 이 지역 평균 실거래가</span> -->
+
+      <div class="sc-bPOUnH iTMLih">
+        <section style="flex: 1 1 0%; margin-top: 20px">
+          <div style="background-color: rgb(255, 255, 255); min-height: 58px">
+            <div class="detail-addr">서울 강남구 삼성동 26-29</div>
+            <div class="detail-addr2">
+              <div class="detail-addr3">삼성로119길 37-15</div>
+              <div style="display: flex"></div>
+            </div>
+          </div>
+          <div style="padding-bottom: 4px">
+            <hr color="#F0F4F7" class="bar" />
+            <div class="detail-des">
+              <div class="detail-des2">
+                <div class="detail-des3">
+                  <div class="detail-text">매매가</div>
+                  <div class="detail-des4">
+                    <div class="detail-des5">
+                      <span class="detail-text2">60.0억</span
+                      ><span class="detail-text3">( 거래 종류 : 매매 )</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-des2">
+                  <div class="detail-des3">
+                    <div class="detail-text">층</div>
+                    <div class="detail-des4">
+                      <div class="detail-des5">
+                        <span class="detail-text2">4층</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-des2">
+                  <div class="detail-des3">
+                    <div class="detail-text">면적</div>
+                    <div class="detail-des4">
+                      <div class="detail-des5">
+                        <span class="detail-text2">77.7 m<sup>3</sup></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-des2">
+                  <div class="detail-des3">
+                    <div class="detail-text">매물 설명</div>
+                    <div class="detail-des4">
+                      <div class="detail-des5">
+                        <span class="detail-description"
+                          >해가 잘 드는 위치의 매물입니다. 지하철까지 도보로
+                          10분 소요됩니다.</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <header class="estate-detail-header">
+          <div class="estate-detail-subject">근방 상권 매출</div>
+        </header>
+      </div>
+      <div style="padding: 0px 20px">
+        <hr color="#F0F4F7" class="bar" />
+        <div class="detail-des">
+          <div class="detail-des2">
+            <div class="detail-des3">
+              <div class="detail-text">근처 상권</div>
+              <div class="detail-des4">
+                <div class="detail-des5">
+                  <span class="detail-text2">ㅇㅇㅇ 상권</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-des2">
+              <div class="detail-des3">
+                <div class="detail-text">상권 매출</div>
+                <div class="detail-des4">
+                  <div class="detail-des5">
+                    <span class="detail-text2">100억원</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <header class="estate-detail-header">
+          <div class="estate-detail-subject">평균 실거래가</div>
+        </header>
+      </div>
+      <div style="padding: 0px 20px">
+        <hr color="#F0F4F7" class="bar" />
+        <div class="detail-des">
+          <div class="detail-des2">
+            <div class="detail-des3">
+              <div class="detail-text">해당 동</div>
+              <div class="detail-des4">
+                <div class="detail-des5">
+                  <span class="detail-text2">ㅁㅁㅁ 동</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-des2">
+              <div class="detail-des3">
+                <div class="detail-text">평균 실거래가</div>
+                <div class="detail-des4">
+                  <div class="detail-des5">
+                    <span class="detail-text2">50억원</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.detail-description {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgb(20, 23, 26);
+}
+.detail-text2 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgb(20, 23, 26);
+}
+.detail-text3 {
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgb(90, 96, 102);
+}
+.detail-des {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.detail-des2 {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+}
+.detail-des3 {
+  flex: 1 1 0%;
+  display: flex;
+  margin-bottom: 16px;
+}
+.detail-des3 > :not(:last-child) {
+  margin-right: 16px;
+}
+.detail-des4 {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgb(20, 23, 26);
+}
+.detail-des5 {
+  display: flex;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.detail-text {
+  width: 110px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 30px;
+  color: rgb(90, 96, 102);
+}
+.bar {
+  height: 1px;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  background-color: rgb(240, 244, 247);
+  opacity: 1;
+  margin: 16px 0px;
+}
+.detail-addr2 {
+  display: flex;
+  -webkit-box-pack: start;
+  justify-content: start;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.detail-addr3 {
+  margin-right: 16px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  color: rgb(123, 132, 140);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.detail-addr {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: rgb(20, 23, 26);
+}
+.iTMLih {
+  display: flex;
+  gap: 40px;
+  flex-direction: column;
+  padding: 0px 20px;
+  margin-bottom: 20px !important;
+}
+.detail-detail {
+  display: flex;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.detail-font1 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: rgb(20, 23, 26);
+}
+.detail-font2 {
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: rgb(90, 96, 102);
+}
+.detail-container > :not(:last-child) {
+  margin-right: 16px;
+}
+.detail-container {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.apartdetail-container {
+  flex: 1 1 0%;
+  display: flex;
+  margin-bottom: 16px;
+}
+.estate-detail-header {
+  width: 100%;
+  background-color: white;
+  padding: 24px 20px 0px;
+  border-top: 12px solid rgb(245, 248, 250);
+}
+.estate-detail-subject {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: rgb(20, 23, 26);
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 8px;
+}
 .apartdetail-container {
   width: 400px;
   min-width: 400px;
@@ -111,6 +390,7 @@
 .tabbar-container {
   padding-top: 56px;
   height: 100%;
+  width: 100%;
   overflow-y: scroll;
 }
 .apartdetail-header {

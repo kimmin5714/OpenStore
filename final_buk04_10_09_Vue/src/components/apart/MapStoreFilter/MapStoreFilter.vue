@@ -12,8 +12,7 @@
               id="checkbox-land"
               data-gtm-action="search_deal_marker_off"
               type="checkbox"
-              class="check checkbox-1"
-              checked="" />
+              class="check checkbox-1" />
             <svg
               width="16"
               height="16"
@@ -25,7 +24,7 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#1A8CFF"></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">음식</label>
@@ -38,8 +37,7 @@
               id="checkbox-land"
               data-gtm-action="search_deal_marker_off"
               type="checkbox"
-              class="check checkbox-2"
-              checked="" />
+              class="check checkbox-2" />
             <svg
               width="16"
               height="16"
@@ -51,7 +49,7 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#1A8CFF"></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">소매</label>
@@ -64,8 +62,7 @@
               id="checkbox-land"
               data-gtm-action="search_deal_marker_off"
               type="checkbox"
-              class="check checkbox-3"
-              checked="" />
+              class="check checkbox-3" />
             <svg
               width="16"
               height="16"
@@ -77,7 +74,7 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#1A8CFF"></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">서비스</label>
@@ -90,8 +87,7 @@
               id="checkbox-land"
               data-gtm-action="search_deal_marker_off"
               type="checkbox"
-              class="check checkbox-4"
-              checked="" />
+              class="check checkbox-4" />
             <svg
               width="16"
               height="16"
@@ -103,7 +99,7 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#1A8CFF"></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">오락</label>
@@ -116,8 +112,7 @@
               id="checkbox-land"
               data-gtm-action="search_deal_marker_off"
               type="checkbox"
-              class="check checkbox-5"
-              checked="" />
+              class="check checkbox-5" />
             <svg
               width="16"
               height="16"
@@ -129,7 +124,7 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#1A8CFF"></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">교육</label>
@@ -142,8 +137,7 @@
               id="checkbox-land"
               data-gtm-action="search_deal_marker_off"
               type="checkbox"
-              class="check checkbox-6"
-              checked="" />
+              class="check checkbox-6" />
             <svg
               width="16"
               height="16"
@@ -155,7 +149,7 @@
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#1A8CFF"></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">숙박</label>
@@ -206,7 +200,6 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
-  color: rgb(50, 157, 79);
   cursor: pointer;
 }
 
@@ -214,35 +207,57 @@
   cursor: pointer;
 }
 
-.check .checkbox-1:checked {
-  background-color: rgb(50, 157, 79);
-}
-
-.checkbox-1 {
+.check {
   appearance: none;
   width: 100%;
   height: 100%;
-  border: 2px solid rgb(50, 157, 79);
   border-radius: 4px;
+}
+
+.checkbox-1:checked {
+  background-color: rgb(50, 157, 79);
 }
 .checkbox-2:checked {
   background-color: rgb(27, 173, 194);
 }
+.checkbox-3:checked {
+  background-color: rgb(212, 164, 63);
+}
+.checkbox-4:checked {
+  background-color: rgb(109, 133, 145);
+}
+.checkbox-5:checked {
+  background-color: rgb(204, 102, 255);
+}
+.checkbox-6:checked {
+  background-color: rgb(14, 64, 228);
+}
+
+.checkbox-1 {
+  border: 2px solid rgb(50, 157, 79);
+}
 .checkbox-2 {
-  appearance: none;
-  width: 100%;
-  height: 100%;
   border: 2px solid rgb(27, 173, 194);
-  border-radius: 4px;
 }
 .checkbox-3 {
+  border: 2px solid rgb(212, 164, 63);
 }
 .checkbox-4 {
+  border: 2px solid rgb(109, 133, 145);
 }
 .checkbox-5 {
+  border: 2px solid rgb(204, 102, 255);
 }
 .checkbox-6 {
+  border: 2px solid rgb(14, 64, 228);
 }
-.checkbox-7 {
+svg {
+  vertical-align: middle;
+}
+.swk-icon {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  pointer-events: none;
 }
 </style>

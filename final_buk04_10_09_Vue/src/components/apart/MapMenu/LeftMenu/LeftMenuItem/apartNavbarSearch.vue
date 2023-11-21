@@ -1,15 +1,45 @@
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+//  import { useEstateStore } from "@/stores/estate";
+//  import { storeToRefs } from "pinia";
+//  import aptListItem from "./item/aptListItem.vue";
 
-const router = useRouter();
-//Data
+// const router = useRouter();
+// const route = useRoute();
+//  const storeBoard = useEstateStore();
 
-//Method
-// const moveDetail = () => {
-//   router.push({
-//     name: "ApartDetail",
-//     // params: {},
-//   });
+// //Pinia
+// const { lat, lon, getterEstateList } = storeToRefs(storeEstate);
+// const { selectEstateList } = storeEstate;
+
+// //Data
+// const isListEmpty = ref(false);
+// const params = ref({
+//   lat: lat.value,
+//   lon: lon.value,
+// });
+
+// //Method
+// onMounted(() => {
+//   getEstateList();
+// });
+
+// const getEstateList = async () => {
+//   const startTime = new Date();
+//   const resp = await selectEstateList(params.value);
+//   if (resp === "success") {
+//     isListEmpty.value = false;
+//   } else if (resp === "empty") {
+//     isListEmpty.value = true;
+//   } else if (resp === "fail") {
+//     alert("목록을 가져오는데 실패했습니다.");
+//   }
+
+//   const endTime = new Date();
+//   console.log(
+//     "경과 시간 : ",
+//     endTime.getMilliseconds() - startTime.getMilliseconds()
+//   );
 // };
 </script>
 
@@ -64,210 +94,28 @@ const router = useRouter();
     </div>
 
     <!-- 검색 결과 리스트 -->
-    <!-- <div class="simplebar-content-wrapper"> -->
-    <div role="tabpanel" class="apart-list">
-      <div class="search-list-box">
-        <ul class="search-list-ul">
-          <li data-pnu="1159010200102960009" class="search-list-li">
-            <router-link
-              :to="{ name: 'ApartDetail', params: { id: '1' } }"
-              aria-current="page"
-            >
-              <div role="button" class="search-list-li-detail">
-                <div class="sc-juGoRN cujSyQ">
-                  <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 296-9</h4>
-                  <p class="sc-bKGzYo beCmdD">토지ㆍ47m²ㆍ1년이내</p>
-                </div>
-                <div class="sc-hMQQaK cymzWl">
-                  <h3 class="sc-jjykVC irPSbt">2.3억원</h3>
-                  <p class="sc-gbNofL pDonz">489만원/m²</p>
-                  <p class="sc-haGfLn cwMZDB">2023.04</p>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <!-- <li data-pnu="1159010200102560151" class="search-list-li">
-            <router-link :to="{ name: 'ApartDetail' }" aria-current="page">
-              <div role="button" class="search-list-li-detail">
-                <div class="sc-juGoRN cujSyQ">
-                  <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 256-151</h4>
-                  <p class="sc-bKGzYo beCmdD">단독다가구ㆍ254m²ㆍ16년</p>
-                </div>
-                <div class="sc-hMQQaK cymzWl">
-                  <h3 class="sc-jjykVC irPSbt">30.0억원</h3>
-                  <p class="sc-gbNofL pDonz">1,181만원/m²</p>
-                  <p class="sc-haGfLn cwMZDB">2023.02</p>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <li data-pnu="1159010200102990101" class="search-list-li">
-            <router-link :to="{ name: 'ApartDetail' }" aria-current="page">
-              <div role="button" class="search-list-li-detail">
-                <div class="sc-juGoRN cujSyQ">
-                  <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 299-101</h4>
-                  <p class="sc-bKGzYo beCmdD">단독다가구ㆍ169m²ㆍ31년</p>
-                </div>
-                <div class="sc-hMQQaK cymzWl">
-                  <h3 class="sc-jjykVC irPSbt">15.3억원</h3>
-                  <p class="sc-gbNofL pDonz">905만원/m²</p>
-                  <p class="sc-haGfLn cwMZDB">2023.01</p>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <li data-pnu="1159010200102960012" class="search-list-li">
-            <router-link :to="{ name: 'ApartDetail' }" aria-current="page">
-              <div role="button" class="search-list-li-detail">
-                <div class="sc-juGoRN cujSyQ">
-                  <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 296-12</h4>
-                  <p class="sc-bKGzYo beCmdD">상가ㆍ102m²ㆍ37년</p>
-                </div>
-                <div class="sc-hMQQaK cymzWl">
-                  <h3 class="sc-jjykVC irPSbt">10.4억원</h3>
-                  <p class="sc-gbNofL pDonz">1,020만원/m²</p>
-                  <p class="sc-haGfLn cwMZDB">2022.10</p>
-                </div>
-              </div>
-            </router-link>
-          </li>
-          <li data-pnu="1159010200102560273" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 256-273</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ235m²ㆍ35년</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">17.8억원</h3>
-                <p class="sc-gbNofL pDonz">755만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2022.05</p>
-              </div>
+    <!-- <aptListItem
+      v-for="(estate, index) in getterEstateList"
+      :key="estate.estateId"
+      :index="index"
+      :estate="estate" /> -->
+    <ul class="search-list-ul">
+      <li data-pnu="1159010200102960009" class="search-list-li">
+        <router-link :to="{ name: 'ApartDetail' }" aria-current="page">
+          <div role="button" class="search-list-li-detail">
+            <div class="sc-juGoRN cujSyQ">
+              <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 296-9</h4>
+              <p class="sc-bKGzYo beCmdD">토지ㆍ47m²ㆍ1년이내</p>
             </div>
-          </li>
-          <li data-pnu="1159010200102990001" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 299-1</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ329m²ㆍ48년</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">34.8억원</h3>
-                <p class="sc-gbNofL pDonz">1,059만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2022.03</p>
-              </div>
+            <div class="sc-hMQQaK cymzWl">
+              <h3 class="sc-jjykVC irPSbt">2.3억원</h3>
+              <p class="sc-gbNofL pDonz">489만원/m²</p>
+              <p class="sc-haGfLn cwMZDB">2023.04</p>
             </div>
-          </li>
-          <li data-pnu="1159010200102990140" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 299-140</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ357m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">34.5억원</h3>
-                <p class="sc-gbNofL pDonz">968만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.10</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200102940004" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 294-4</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ126m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">8.9억원</h3>
-                <p class="sc-gbNofL pDonz">706만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.09</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200102560214" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 256-214</h4>
-                <p class="sc-bKGzYo beCmdD">상가ㆍ264m²ㆍ27년</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">17.5억원</h3>
-                <p class="sc-gbNofL pDonz">663만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.08</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200102940015" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 294-15</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ213m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">17.7억원</h3>
-                <p class="sc-gbNofL pDonz">832만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.07</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200102980030" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 298-30</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ268m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">18.4억원</h3>
-                <p class="sc-gbNofL pDonz">685만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.05</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200102560140" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 256-140</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ175m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">17.5억원</h3>
-                <p class="sc-gbNofL pDonz">998만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.03</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200103040004" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 304-4</h4>
-                <p class="sc-bKGzYo beCmdD">상가ㆍ155m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">13.8억원</h3>
-                <p class="sc-gbNofL pDonz">890만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2021.02</p>
-              </div>
-            </div>
-          </li>
-          <li data-pnu="1159010200102990004" class="search-list-li">
-            <div role="button" class="search-list-li-detail">
-              <div class="sc-juGoRN cujSyQ">
-                <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 299-4</h4>
-                <p class="sc-bKGzYo beCmdD">단독다가구ㆍ159m²ㆍ1년이내</p>
-              </div>
-              <div class="sc-hMQQaK cymzWl">
-                <h3 class="sc-jjykVC irPSbt">14.4억원</h3>
-                <p class="sc-gbNofL pDonz">906만원/m²</p>
-                <p class="sc-haGfLn cwMZDB">2020.12</p>
-              </div>
-            </div>
-          </li> -->
-        </ul>
-      </div>
-    </div>
-    <!-- </div> -->
-
-    <!-- 검색리스트 상세 정보 -->
-    <div></div>
+          </div>
+        </router-link>
+      </li>
+    </ul>
 
     <!--스크롤바-->
     <div class="simplebar-track simplebar-vertical" style="visibility: visible">
@@ -300,32 +148,7 @@ const router = useRouter();
   position: relative;
   height: 100px;
 }
-.search-list-box {
-  padding-bottom: 100px;
-  box-sizing: border-box;
-  overflow: visible;
-}
-.search-body {
-  scroll-behavior: smooth;
-}
-.search-list-ul {
-  list-style: none;
-  padding-top: 4px;
-  margin: 0px;
-  padding: 0px;
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
-}
-.search-list-li {
-  display: list-item;
-  text-align: -webkit-match-parent;
-  padding: 16px 20px 0px;
-  transition: background-color 0.2s ease 0s;
-}
+
 .simplebar-track {
   bottom: 0;
   right: 0;
@@ -348,13 +171,7 @@ const router = useRouter();
   position: absolute;
   right: 0;
 }
-.search-list-li-detail {
-  display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  align-items: flex-start;
-}
+
 [role="button"] {
   cursor: pointer;
 }
@@ -381,5 +198,38 @@ const router = useRouter();
   position: relative;
   scrollbar-width: none;
   width: auto;
+}
+.search-list-box {
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+.search-body {
+  scroll-behavior: smooth;
+}
+.search-list-ul {
+  list-style: none;
+  padding-top: 4px;
+  margin: 0px;
+  padding: 0px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+.search-list-li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  padding: 16px 20px 0px;
+  transition: background-color 0.2s ease 0s;
+}
+.search-list-li-detail {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: flex-start;
 }
 </style>
