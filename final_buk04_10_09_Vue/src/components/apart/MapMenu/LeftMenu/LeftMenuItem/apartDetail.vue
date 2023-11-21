@@ -4,7 +4,7 @@
   <div class="apartdetail-container">
     <div class="tabbar-container">
       <header class="apartdetail-header">
-        <div class="sc-gelMue iFEMD">
+        <div class="detail-btn-container">
           <router-link
             :to="{ name: 'apart-navbar-search' }"
             aria-current="page">
@@ -26,14 +26,14 @@
             </button>
           </router-link>
         </div>
-        <h2 class="sc-lgholE fDYjZc">
+        <h2 class="header-container">
           <header
-            class="sc-jhSRwE hUcgRA"
+            class="header-text"
             style="opacity: 0; transition: opacity 0.2s ease 0s">
             서울 강남구 삼성동 26-29
           </header>
         </h2>
-        <div class="sc-ciyUsT cRtaWC">
+        <div class="detail-btn2-container">
           <div class="sc-gahUGN gKkFSe">
             <button
               type="button"
@@ -59,44 +59,6 @@
       </header>
 
       <div style="padding-top: env(safe-area-inset-top, 0)"></div>
-
-      <!-- <div class="detail-section">
-        <section style="flex: 1 1 0%; margin-top: 20px">
-          <div style="background-color: rgb(255, 255, 255); min-height: 58px">
-            <div class="word">서울 동작구 상도동 296-9</div>
-            <div></div>
-          </div>
-        </section>
-      </div>
-
-      <hr color="#F0F4F7" />
-      <span>매물 상세 정보</span>
-      <div class="sc-bvfSZU bHobPb">
-        <div class="sc-jQckMZ jsYRpn">
-          <div class="sc-dWbBLu jAMfTw">매매 가격</div>
-          <div class="sc-bbCjZD cIXtwt">
-            <span class="sc-hIKods cVcxSv">ㅇㅇㅇ억</span>
-          </div>
-        </div>
-        <div class="sc-jQckMZ jsYRpn">
-          <div class="sc-dWbBLu jAMfTw">면적</div>
-          <div class="sc-bbCjZD cIXtwt">
-            <span class="sc-hIKods cVcxSv">ㅇㅇㅇ</span>
-          </div>
-        </div>
-        <div class="sc-jQckMZ jsYRpn">
-          <div class="sc-dWbBLu jAMfTw">주소</div>
-          <div class="sc-bbCjZD cIXtwt">
-            <span class="sc-hIKods cVcxSv">ㅇㅇㅇㅇㅇㅇㅇ</span>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <hr color="#F0F4F7" />
-      <span> 근방 상권 매출</span>
-
-      <hr color="#F0F4F7" />
-      <span> 이 지역 평균 실거래가</span> -->
 
       <div class="sc-bPOUnH iTMLih">
         <section style="flex: 1 1 0%; margin-top: 20px">
@@ -225,6 +187,31 @@
 </template>
 
 <style scoped>
+.header-container {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  padding-top: 0px;
+}
+.header-text {
+  opacity: 0;
+  max-width: calc(1047px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.detail-btn2-container {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  padding: 8px;
+}
+.detail-btn-container {
+  position: absolute;
+  top: 12px;
+  left: 8px;
+  padding: 8px;
+}
 .detail-description {
   font-size: 16px;
   font-weight: 400;
