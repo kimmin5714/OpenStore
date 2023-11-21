@@ -58,6 +58,7 @@ watch(
           ctPrvnCd: "",
         };
         const resp = await selectStoreList(params);
+        console.log(resp);
         if (resp === "success") {
           console.log(storeList);
 

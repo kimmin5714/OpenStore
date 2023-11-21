@@ -35,6 +35,7 @@ public class CommerceController {
 	@GetMapping("/storeList")
 	public ResponseEntity<?> storeList(@RequestParam Map<String, String> map) throws SQLException{
 		List<StoreDto> list = commerceService.getStoreList(map);
+		System.out.println(map);
 		
 		if (list != null && list.size() > 0) {
 			return ResponseEntity
