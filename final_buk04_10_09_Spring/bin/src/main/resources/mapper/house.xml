@@ -35,7 +35,9 @@
 	<select id="getDongCodeByStringAddress" parameterType="map"	resultType="string">
 		select dongCode
 		from dongCode
-		where sidoName = #{sido} and gugunName = #{gugun} and dongName = #{dong}
+		where sidoName = #{sido}
+			and gugunName = #{gugun}
+			and dongName = #{dong}
 	</select>
 
 	<select id="getAptCodeSetByDongCode" parameterType="string" resultType="long">
@@ -50,7 +52,7 @@
 			from houseinfo
 			where aptCode = #{aptCode}
 		</foreach> -->
-		select buildYear, roadName, dong, apartmentName, lng, lat
+		select aptCode, buildYear, roadName, dong, apartmentName, lng, lat
 			from houseinfo
 			where aptCode in
 		<foreach collection="list" item="aptCode" open="(" close=")" separator=",">
@@ -59,8 +61,8 @@
 	</select>
 
 	<select id="searchAptDealByAptCode" parameterType="long" resultMap="houseDeal">
-		select *
+		select dealAmount, dealYear, dealMonth, dealDay, area, floor, cancelDealType, aptCode
 		from housedeal
-		where where aptCode = #{aptCode}
+		where aptCode = #{aptCode}
 	</select>
 </mapper>

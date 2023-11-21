@@ -43,7 +43,7 @@ checkLogin();
 
 const importData = async () => {
   await commercialProperties();
-  console.log("이예이");
+  console.log("Start Data Import");
 };
 </script>
 
@@ -73,10 +73,10 @@ const importData = async () => {
             <RouterLink
               class="nav-link"
               aria-current="page"
-              :to="{ name: 'ApartView' }"
+              :to="{ name: 'apart-view' }"
             >
-              지도</RouterLink
-            >
+              지도
+            </RouterLink>
           </li>
           <!-- <li class="nav-item">
             <a class="btn btn-outline-danger" @click="importData">

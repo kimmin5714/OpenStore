@@ -44,8 +44,7 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
             소상공인 상권 정보 솔루션<br />오픈스토어
           </h2>
           <div
-            class="sc-hsZwpi gGbVFK sc-bsqviP djZIeE sc-cWiZSr kxttkI dropdown"
-          >
+            class="sc-hsZwpi gGbVFK sc-bsqviP djZIeE sc-cWiZSr kxttkI dropdown">
             <form class="sc-fkxeQW lbzVUA empty">
               <input
                 class="sc-gqgnwQ jCTgjP dropdown-toggle"
@@ -57,28 +56,24 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
                 type="text"
                 tabindex="1"
                 placeholder="키워드 검색"
-                value=""
-              /><button
+                value="" /><button
                 title="검색"
                 aria-label="search"
                 tabindex="3"
                 type="submit"
-                class="sc-gcHwEF tbLGf"
-              >
+                class="sc-gcHwEF tbLGf">
                 <svg
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
                   fill="#1A8CFF"
                   xmlns="http://www.w3.org/2000/svg"
-                  class="swk-icon"
-                >
+                  class="swk-icon">
                   <path
                     fill-rule="evenodd"
                     clip-rule="evenodd"
                     d="M16.0491 17.4633C14.7873 18.4274 13.2105 19 11.5 19C7.35786 19 4 15.6421 4 11.5C4 7.35786 7.35786 4 11.5 4C15.6421 4 19 7.35786 19 11.5C19 13.2105 18.4274 14.7873 17.4633 16.0491L20.7071 19.2929C21.0976 19.6834 21.0976 20.3166 20.7071 20.7071C20.3166 21.0976 19.6834 21.0976 19.2929 20.7071L16.0491 17.4633ZM17 11.5C17 14.5376 14.5376 17 11.5 17C8.46243 17 6 14.5376 6 11.5C6 8.46243 8.46243 6 11.5 6C14.5376 6 17 8.46243 17 11.5Z"
-                    fill="white"
-                  ></path>
+                    fill="white"></path>
                 </svg>
               </button>
             </form>
@@ -112,20 +107,17 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
                 height="39"
                 viewBox="0 0 28 39"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M7.34171 9.67504C7.79732 9.21943 8.53601 9.21943 8.99162 9.67504L14 14.6834L19.0084 9.67504C19.464 9.21943 20.2027 9.21943 20.6583 9.67504C21.1139 10.1307 21.1139 10.8693 20.6583 11.325L14.825 17.1583C14.3693 17.6139 13.6307 17.6139 13.175 17.1583L7.34171 11.325C6.8861 10.8693 6.8861 10.1307 7.34171 9.67504Z"
-                  fill="#0064D6"
-                ></path>
+                  fill="#0064D6"></path>
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M7.34171 20.675C7.79732 20.2194 8.53601 20.2194 8.99162 20.675L14 25.6834L19.0084 20.675C19.464 20.2194 20.2027 20.2194 20.6583 20.675C21.1139 21.1307 21.1139 21.8693 20.6583 22.325L14.825 28.1583C14.3693 28.6139 13.6307 28.6139 13.175 28.1583L7.34171 22.325C6.8861 21.8693 6.8861 21.1307 7.34171 20.675Z"
-                  fill="#0064D6"
-                ></path>
+                  fill="#0064D6"></path>
               </svg></div></a
           ><a class="sc-hGNIFk bmEnfh" href="/#consult"
             ><p class="sc-hEBzJi losPqi">내 토지의 정확한 진단이 필요한가요?</p>
@@ -138,20 +130,17 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
                 height="39"
                 viewBox="0 0 28 39"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M7.34171 9.67504C7.79732 9.21943 8.53601 9.21943 8.99162 9.67504L14 14.6834L19.0084 9.67504C19.464 9.21943 20.2027 9.21943 20.6583 9.67504C21.1139 10.1307 21.1139 10.8693 20.6583 11.325L14.825 17.1583C14.3693 17.6139 13.6307 17.6139 13.175 17.1583L7.34171 11.325C6.8861 10.8693 6.8861 10.1307 7.34171 9.67504Z"
-                  fill="#0064D6"
-                ></path>
+                  fill="#0064D6"></path>
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M7.34171 20.675C7.79732 20.2194 8.53601 20.2194 8.99162 20.675L14 25.6834L19.0084 20.675C19.464 20.2194 20.2027 20.2194 20.6583 20.675C21.1139 21.1307 21.1139 21.8693 20.6583 22.325L14.825 28.1583C14.3693 28.6139 13.6307 28.6139 13.175 28.1583L7.34171 22.325C6.8861 21.8693 6.8861 21.1307 7.34171 20.675Z"
-                  fill="#0064D6"
-                ></path>
+                  fill="#0064D6"></path>
               </svg></div></a
           ><a class="sc-hGNIFk bmEnfh" href="/#pm"
             ><p class="sc-hEBzJi losPqi">혼자서는 건축이 어려우신가요?</p>
@@ -164,20 +153,17 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
                 height="39"
                 viewBox="0 0 28 39"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M7.34171 9.67504C7.79732 9.21943 8.53601 9.21943 8.99162 9.67504L14 14.6834L19.0084 9.67504C19.464 9.21943 20.2027 9.21943 20.6583 9.67504C21.1139 10.1307 21.1139 10.8693 20.6583 11.325L14.825 17.1583C14.3693 17.6139 13.6307 17.6139 13.175 17.1583L7.34171 11.325C6.8861 10.8693 6.8861 10.1307 7.34171 9.67504Z"
-                  fill="#0064D6"
-                ></path>
+                  fill="#0064D6"></path>
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M7.34171 20.675C7.79732 20.2194 8.53601 20.2194 8.99162 20.675L14 25.6834L19.0084 20.675C19.464 20.2194 20.2027 20.2194 20.6583 20.675C21.1139 21.1307 21.1139 21.8693 20.6583 22.325L14.825 28.1583C14.3693 28.6139 13.6307 28.6139 13.175 28.1583L7.34171 22.325C6.8861 21.8693 6.8861 21.1307 7.34171 20.675Z"
-                  fill="#0064D6"
-                ></path>
+                  fill="#0064D6"></path>
               </svg></div
           ></a>
         </div>
@@ -233,13 +219,11 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              class="sc-gKelgU fQGlnx"
-            >
+              class="sc-gKelgU fQGlnx">
               <rect width="24" height="24" rx="12" fill="#2DB400"></rect>
               <path
                 d="M13.5893 7V12.0457L10.4234 7H7V17H10.4116V11.9543L13.5784 17H17V7H13.5893Z"
-                fill="white"
-              ></path></svg></a
+                fill="white"></path></svg></a
           ><a
             class="sc-ezfJye gWVKUq"
             href="https://www.youtube.com/c/%EB%9E%9C%EB%93%9C%EB%B6%81"
@@ -250,13 +234,11 @@ import HeadingNav from "@/components/common/HeadingNav.vue";
               height="32"
               viewBox="0 0 32 32"
               fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <circle cx="16" cy="16" r="16" fill="#B4B9C1"></circle>
               <path
                 d="M23.6656 11.7846C23.4816 11.0821 22.9394 10.529 22.2511 10.3412C21.0032 10 16 10 16 10C16 10 10.9968 10 9.74888 10.3412C9.06044 10.529 8.51838 11.0822 8.33439 11.7846C8 13.0577 8 15.7142 8 15.7142C8 15.7142 8 18.3707 8.33439 19.6439C8.51838 20.3464 9.06058 20.8995 9.74888 21.0873C10.9966 21.4285 16 21.4285 16 21.4285C16 21.4285 21.0032 21.4285 22.2511 21.0873C22.9396 20.8995 23.4816 20.3462 23.6656 19.6439C24 18.3707 24 15.7142 24 15.7142C24 15.7142 24 13.0577 23.6656 11.7846ZM14.3999 18.1632V13.2653L18.5566 15.7142L14.3999 18.1631V18.1632Z"
-                fill="white"
-              ></path>
+                fill="white"></path>
             </svg>
           </a>
         </div>
