@@ -1,7 +1,12 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
-import { getStoreList, getDealCostAvgByDong, getEstateList } from "@/api/map";
+import {
+  getStoreList,
+  getDealCostAvgByDong,
+  getEstateList,
+  getEstate,
+} from "@/api/map";
 
 export const useMapStore = defineStore("map", () => {
   // State
@@ -9,62 +14,21 @@ export const useMapStore = defineStore("map", () => {
   const storeList = ref([]);
   const isDealCostSelected = ref(false);
   const dealCostAvgByDong = ref({});
-  const estateList = ref([
-    {
-      id: 1,
-      dealClass: "매매",
-      dealAmount: 9000,
-      floor: 1,
-      area: 25.7,
-      description: "매물입니다.",
-      join_year: "2023",
-      join_month: "06",
-      join_day: "12",
-      sido: "서울특별시",
-      gugun: "강서구",
-      dong: "등촌동",
-      jibun: "120-2",
-      dongCode: "1234567890",
-      lat: "37.56714408016501",
-      lon: "126.97878516702059",
-    },
-    {
-      id: 2,
-      dealClass: "매매",
-      dealAmount: 9000,
-      floor: 1,
-      area: 25.7,
-      description: "매물입니다.2",
-      join_year: "2023",
-      join_month: "06",
-      join_day: "12",
-      sido: "서울특별시",
-      gugun: "강서구",
-      dong: "등촌동",
-      jibun: "120-2",
-      dongCode: "1234567890",
-      lat: "37.56715519176757",
-      lon: "126.97796169885171",
-    },
-    {
-      id: 3,
-      dealClass: "매매",
-      dealAmount: 9000,
-      floor: 1,
-      area: 25.7,
-      description: "매물입니다.3",
-      join_year: "2023",
-      join_month: "06",
-      join_day: "12",
-      sido: "서울특별시",
-      gugun: "강서구",
-      dong: "등촌동",
-      jibun: "120-2",
-      dongCode: "1234567890",
-      lat: "37.56713048144187",
-      lon: "126.9783239174286",
-    },
-  ]);
+  const estateList = ref([]);
+  const estate = ref({});
+
+  // Getters (Computed: State를 가공한 결과를 리턴)
+  const getterEstateList = computed(() => {
+    //  boards.value.filter((board) => {
+    // 필요한 처리 작성
+    //  });
+
+    return estateList.value;
+  });
+
+  const getterEstate = computed(() => {
+    return estate.value;
+  });
 
   // Getters
   // Actions
@@ -128,6 +92,40 @@ export const useMapStore = defineStore("map", () => {
       return "fail";
     }
   };
+  const selectEstate = async (id) => {
+    console.log(`selectEstate : `, id);
+
+    try {
+      const response = await getEstate(id);
+      if (response.status === 200) {
+        estate.value = response.data;
+        console.log(response);
+        return "success";
+      } else if (response.status === 204) {
+        estate.value = response.data;
+        console.log(response);
+        return "empty";
+      } else {
+        throw new Error(response.status);
+      }
+    } catch (error) {
+      return "fail";
+    }
+  };
+  //   const insertEstate = async (estate) => {
+  //   console.log("insertEstate", estate);
+  //   try {
+  //     const response = await postArticle(estate);
+  //     if (response.status === 200) {
+  //       return "success";
+  //     } else {
+  //       throw new Error(response.status);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     return "fail";
+  //   }
+  // };
 
   // Return
   return {
@@ -136,8 +134,12 @@ export const useMapStore = defineStore("map", () => {
     isDealCostSelected,
     dealCostAvgByDong,
     estateList,
+    estate,
+    getterEstateList,
+    getterEstate,
     selectStoreList,
     selectDealCostAvgByDong,
     selectEstateList,
+    selectEstate,
   };
 });

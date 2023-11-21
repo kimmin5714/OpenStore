@@ -171,14 +171,12 @@ const makeEstateMarkers = async () => {
       latEnd: neLatLng.getLat().toString(),
       lonEnd: neLatLng.getLng().toString(),
     };
-    // const resp = await selectStoreList(params);
-    const resp = "success";
+    const resp = await selectEstateList(params);
     if (resp === "success") {
       console.log(estateList.value);
 
       for (let i = 0; i < estateList.value.length; i++) {
         let estate = estateList.value[i];
-
         // 마커를 생성합니다
         // let marker = new kakao.maps.Marker({
         //   map, // 마커를 표시할 지도
@@ -199,7 +197,7 @@ const makeEstateMarkers = async () => {
                       </p>
                       <div style="text-align: center;">
                         <p style="font-weight: bold; font-size: 12px;margin:0px">${estate.dealAmount}</p>
-                        <p style="color: #CCCCCC; font-size: 10px;margin:0px">${estate.join_year}.${estate.join_month}</p>
+                        <p style="color: #CCCCCC; font-size: 10px;margin:0px">${estate.joinYear}.${estate.joinMonth}</p>
                       </div>
                     </button>
                     <svg height="7" width="11" class="arrow" style="position: relative; top: -11px;">
@@ -309,11 +307,13 @@ const loadMarkers = () => {
 const deleteMarkers = () => {
   if (markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null));
+    markers.value.length = 0;
   }
 };
 const deleteInfoWindows = () => {
   if (infoWindows.value.length > 0) {
     infoWindows.value.forEach((infoWindow) => infoWindow.setMap(null));
+    infoWindows.value.length = 0;
   }
 };
 const deleteEstateOverlayList = () => {
@@ -321,6 +321,7 @@ const deleteEstateOverlayList = () => {
     estateOverlayObjList.value.forEach((estateOverlayObj) =>
       estateOverlayObj.estateOverlay.setMap(null)
     );
+    estateList.value.length = 0;
     estateOverlayObjList.value.length = 0;
   }
 };

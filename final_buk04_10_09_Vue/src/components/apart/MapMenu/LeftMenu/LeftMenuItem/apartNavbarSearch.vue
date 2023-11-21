@@ -1,12 +1,17 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 //  import { useEstateStore } from "@/stores/estate";
-//  import { storeToRefs } from "pinia";
+import { storeToRefs } from "pinia";
+import { useMapStore } from "@/stores/map";
 //  import aptListItem from "./item/aptListItem.vue";
 
-// const router = useRouter();
-// const route = useRoute();
-//  const storeBoard = useEstateStore();
+// Router
+const router = useRouter();
+const route = useRoute();
+
+// Pinia
+const storeMap = useMapStore();
+const { estateList } = storeToRefs(storeMap);
 
 // //Pinia
 // const { lat, lon, getterEstateList } = storeToRefs(storeEstate);
@@ -100,20 +105,20 @@ import { useRouter, useRoute } from "vue-router";
       :index="index"
       :estate="estate" /> -->
     <ul class="search-list-ul">
-      <li data-pnu="1159010200102960009" class="search-list-li">
+      <li v-for="estate in estateList" :key="estate.id" class="search-list-li">
         <router-link
-          :to="{ name: 'ApartDetail', params: { id: '1' } }"
+          :to="{ name: 'ApartDetail', params: { id: estate.id } }"
           aria-current="page"
         >
           <div role="button" class="search-list-li-detail">
             <div class="sc-juGoRN cujSyQ">
-              <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 296-9</h4>
+              <h4 class="sc-eFfTkT btIhdS">{{ estate.dong }}</h4>
               <p class="sc-bKGzYo beCmdD">토지ㆍ47m²ㆍ1년이내</p>
             </div>
             <div class="sc-hMQQaK cymzWl">
-              <h3 class="sc-jjykVC irPSbt">2.3억원</h3>
+              <h3 class="sc-jjykVC irPSbt">{{ estate.dealAmount }}</h3>
               <p class="sc-gbNofL pDonz">489만원/m²</p>
-              <p class="sc-haGfLn cwMZDB">2023.04</p>
+              <p class="sc-haGfLn cwMZDB">{{ estate.join_year }}</p>
             </div>
           </div>
         </router-link>
