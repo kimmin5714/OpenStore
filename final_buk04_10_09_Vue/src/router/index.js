@@ -143,7 +143,7 @@ const router = createRouter({
           // beforeEnter: onlyAuthUser,
         },
         {
-          path: "detail",
+          path: "detail/:id",
           name: "ApartDetail",
           component: () =>
             import(

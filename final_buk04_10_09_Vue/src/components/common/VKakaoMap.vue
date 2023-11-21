@@ -3,12 +3,22 @@ import { ref, watch, onMounted } from "vue";
 import MapMenu from "@/components/apart/MapMenu/MapMenu.vue";
 import { useMapStore } from "@/stores/map";
 import { storeToRefs } from "pinia";
+import { RouterLink } from "vue-router";
+import { useRouter } from "vue-router";
+
+// Route
+const router = useRouter();
 
 // MapMenu
 const storeMap = useMapStore();
-const { isStoreList, storeList, isDealCostSelected, dealCostAvgByDong } =
-  storeToRefs(storeMap);
-const { selectStoreList, selectDealCostAvgByDong } = storeMap;
+const {
+  isStoreList,
+  storeList,
+  isDealCostSelected,
+  dealCostAvgByDong,
+  // estateList
+} = storeToRefs(storeMap);
+const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 
 var map;
 // 주소-좌표 변환 객체를 생성합니다
@@ -16,6 +26,7 @@ var geocoder;
 const positions = ref([]);
 const markers = ref([]);
 const infoWindows = ref([]);
+const estateOverlayObjList = ref([]);
 
 const props = defineProps({ pointList: Array, selectPoint: Object });
 
@@ -58,6 +69,7 @@ watch(
           ctPrvnCd: "",
         };
         const resp = await selectStoreList(params);
+        console.log(resp);
         if (resp === "success") {
           console.log(storeList);
 
@@ -121,7 +133,10 @@ onMounted(() => {
     if (map.getLevel() > 2) {
       deleteMarkers();
       deleteInfoWindows();
+      deleteEstateOverlayList();
     }
+
+    makeEstateMarkers();
   });
 });
 
@@ -142,6 +157,86 @@ watch(
   { deep: true }
 );
 
+const makeEstateMarkers = async () => {
+  if (map.getLevel() <= 2) {
+    const bounds = map.getBounds();
+    // 영역의 남서쪽 좌표를 얻어옵니다
+    const swLatLng = bounds.getSouthWest();
+    // 영역의 북동쪽 좌표를 얻어옵니다
+    const neLatLng = bounds.getNorthEast();
+
+    const params = {
+      latStart: swLatLng.getLat().toString(),
+      lonStart: swLatLng.getLng().toString(),
+      latEnd: neLatLng.getLat().toString(),
+      lonEnd: neLatLng.getLng().toString(),
+    };
+    // const resp = await selectStoreList(params);
+    const resp = "success";
+    if (resp === "success") {
+      console.log(estateList.value);
+
+      for (let i = 0; i < estateList.value.length; i++) {
+        let estate = estateList.value[i];
+
+        // 마커를 생성합니다
+        // let marker = new kakao.maps.Marker({
+        //   map, // 마커를 표시할 지도
+        //   position: new kakao.maps.LatLng(estate.lat, estate.lon), // 마커를 표시할 위치
+        //   title: estate.dealAmount, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다image : markerImage // 마커 이미지
+        // });
+
+        const markerContainer = document.createElement("div");
+        markerContainer.className = "real-price-marker";
+        markerContainer.style.position = "relative";
+        markerContainer.style.zIndex = 30;
+        markerContainer.style.top = "-35px";
+        markerContainer.style.left = "30px";
+        const htmlText = `<button
+                    class="real-price-marker-content" style="border: 1px solid #58ACFA;">
+                      <p style="font-weight: bold; color: #58ACFA; font-size: 10px; margin:0px;">
+                      ${estate.dong}
+                      </p>
+                      <div style="text-align: center;">
+                        <p style="font-weight: bold; font-size: 12px;margin:0px">${estate.dealAmount}</p>
+                        <p style="color: #CCCCCC; font-size: 10px;margin:0px">${estate.join_year}.${estate.join_month}</p>
+                      </div>
+                    </button>
+                    <svg height="7" width="11" class="arrow" style="position: relative; top: -11px;">
+                      <polygon points="1,0 0,7 11,0" style="fill:#fff;stroke-width:1"></polygon>
+                      <line x1="0" y1="0" x2="0" y2="6.5" stroke="#58ACFA" stroke-width="2""></line>
+                      <line x1="0" y1="7" x2="11" y2="0" stroke="#58ACFA" stroke-width="1"></line>
+                    </svg>`;
+        markerContainer.innerHTML = htmlText;
+        markerContainer.onclick = function () {
+          router.push({ name: "ApartDetail", params: { id: estate.id } });
+        };
+
+        let estateOverlay = new kakao.maps.CustomOverlay({
+          map: map, // 인포윈도우가 표시될 지도
+          position: new kakao.maps.LatLng(estate.lat, estate.lon),
+          // content: `<div style="padding:5px;">${estate.dealAmount}</div>`,
+          content: markerContainer,
+        });
+
+        // markers.value.push(marker);
+        // infoWindows.value.push(infowindow);
+        // 커스텀 오버레이를 지도에 표시합니다
+        estateOverlay.setMap(map);
+
+        let estateOverlayObj = {
+          id: estate.id,
+          estateOverlay,
+        };
+        estateOverlayObjList.value.push(estateOverlayObj);
+      }
+    }
+  } else {
+    console.log("지도가 축소되어 매물 정보를 표시하지 않습니다.");
+  }
+};
+RouterLink;
+
 const initMap = () => {
   const container = document.getElementById("map");
   const options = {
@@ -151,7 +246,7 @@ const initMap = () => {
   map = new kakao.maps.Map(container, options);
   geocoder = new kakao.maps.services.Geocoder();
   getAddressByCoords(map.getCenter(), afterGetAddressByCoords);
-  // loadMarkers();
+  makeEstateMarkers();
 };
 
 const getAddressByCoords = async (coords, callback) => {
@@ -221,6 +316,14 @@ const deleteInfoWindows = () => {
     infoWindows.value.forEach((infoWindow) => infoWindow.setMap(null));
   }
 };
+const deleteEstateOverlayList = () => {
+  if (estateOverlayObjList.value.length > 0) {
+    estateOverlayObjList.value.forEach((estateOverlayObj) =>
+      estateOverlayObj.estateOverlay.setMap(null)
+    );
+    estateOverlayObjList.value.length = 0;
+  }
+};
 </script>
 
 <template>
@@ -236,5 +339,18 @@ const deleteInfoWindows = () => {
   width: 100vw;
   height: 100vh;
   /* height: 700px; */
+}
+.real-price-marker-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #000;
+  border-radius: 7px 7px 7px 0;
+  padding: 7px;
+  gap: 3px;
+  font-size: 12px;
+  width: 78px;
 }
 </style>
