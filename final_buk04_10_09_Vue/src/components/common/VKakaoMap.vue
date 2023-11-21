@@ -16,7 +16,7 @@ const {
   storeList,
   isDealCostSelected,
   dealCostAvgByDong,
-  // estateList
+  estateList,
 } = storeToRefs(storeMap);
 const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 

@@ -101,7 +101,10 @@ import { useRouter, useRoute } from "vue-router";
       :estate="estate" /> -->
     <ul class="search-list-ul">
       <li data-pnu="1159010200102960009" class="search-list-li">
-        <router-link :to="{ name: 'ApartDetail' }" aria-current="page">
+        <router-link
+          :to="{ name: 'ApartDetail', params: { id: '1' } }"
+          aria-current="page"
+        >
           <div role="button" class="search-list-li-detail">
             <div class="sc-juGoRN cujSyQ">
               <h4 class="sc-eFfTkT btIhdS">서울 동작구 상도동 296-9</h4>
