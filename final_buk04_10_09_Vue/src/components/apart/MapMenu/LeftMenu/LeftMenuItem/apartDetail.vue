@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useMapStore } from "@/stores/map";
@@ -10,15 +10,31 @@ const route = useRoute();
 
 // Pinia
 const storeMap = useMapStore();
-const { estate } = storeToRefs(storeMap);
+const { estate, isEstateSelected } = storeToRefs(storeMap);
 const { selectEstate } = storeMap;
 
+// Methods
+// onMounted(async () => {
+
+// });
+console.log("마운티드!!!");
+isEstateSelected.value = true;
 const resp = await selectEstate(route.params.id);
 if (resp !== "success") {
   alert("매물을 찾을 수 없습니다.");
 }
-
-// Methods
+watch(
+  () => route.params.id,
+  async () => {
+    console.log("id 변경!!!!!");
+    if (route.params.id) {
+      const resp = await selectEstate(route.params.id);
+      if (resp !== "success") {
+        alert("매물을 찾을 수 없습니다.");
+      }
+    }
+  }
+);
 onBeforeUnmount(() => {
   estate.value = undefined;
 });
@@ -56,7 +72,8 @@ onBeforeUnmount(() => {
         <h2 class="header-container">
           <header
             class="header-text"
-            style="opacity: 0; transition: opacity 0.2s ease 0s">
+            style="opacity: 0; transition: opacity 0.2s ease 0s"
+          >
             서울 강남구 삼성동 26-29
           </header>
         </h2>

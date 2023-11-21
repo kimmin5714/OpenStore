@@ -17,6 +17,8 @@ const {
   isDealCostSelected,
   dealCostAvgByDong,
   estateList,
+  estate,
+  isEstateSelected,
 } = storeToRefs(storeMap);
 const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 
@@ -97,7 +99,8 @@ watch(
       }
       isStoreList.value = false;
     }
-  }
+  },
+  { deep: true }
 );
 
 watch(
@@ -141,6 +144,18 @@ onMounted(() => {
 });
 
 watch(
+  // () => isEstateSelected.value,
+  () => estate.value,
+  () => {
+    if (estate.value) {
+      console.log("aaa");
+      map.panTo(new kakao.maps.LatLng(estate.value.lat, estate.value.lon));
+      isEstateSelected.value = false;
+    }
+  }
+);
+
+watch(
   () => props.pointList.value,
   () => {
     positions.value = [];
@@ -158,7 +173,7 @@ watch(
 );
 
 const makeEstateMarkers = async () => {
-  if (map.getLevel() <= 2) {
+  if (map.getLevel() <= 4) {
     const bounds = map.getBounds();
     // 영역의 남서쪽 좌표를 얻어옵니다
     const swLatLng = bounds.getSouthWest();
@@ -190,21 +205,24 @@ const makeEstateMarkers = async () => {
         markerContainer.style.zIndex = 30;
         markerContainer.style.top = "-35px";
         markerContainer.style.left = "30px";
-        const htmlText = `<button
-                    class="real-price-marker-content" style="border: 1px solid #58ACFA;">
-                      <p style="font-weight: bold; color: #58ACFA; font-size: 10px; margin:0px;">
-                      ${estate.dong}
-                      </p>
-                      <div style="text-align: center;">
-                        <p style="font-weight: bold; font-size: 12px;margin:0px">${estate.dealAmount}</p>
-                        <p style="color: #CCCCCC; font-size: 10px;margin:0px">${estate.joinYear}.${estate.joinMonth}</p>
-                      </div>
-                    </button>
-                    <svg height="7" width="11" class="arrow" style="position: relative; top: -11px;">
-                      <polygon points="1,0 0,7 11,0" style="fill:#fff;stroke-width:1"></polygon>
-                      <line x1="0" y1="0" x2="0" y2="6.5" stroke="#58ACFA" stroke-width="2""></line>
-                      <line x1="0" y1="7" x2="11" y2="0" stroke="#58ACFA" stroke-width="1"></line>
-                    </svg>`;
+        const htmlText = ` <button class="real-price-marker-content" style="border: 1px solid #2E9AFE; padding : 0px;">
+        <header style="background-color: #EBF7FF; width:100%; border-radius: 7px 7px 0 0; padding:2px 0;">
+            <p style=" color: #1245AB; font-size: 11px;line-height: 14px;font-weight: 700; margin:0px;">
+                ${estate.dong}
+            </p>
+        </header>
+        <section style="padding:5px;">
+            <div style="text-align: center;">
+                <p style="font-weight: bold; font-size: 12px;margin:0px">${estate.dealAmount}</p>
+                <p style="color: #CCCCCC; font-size: 10px;margin:0px">${estate.joinYear}.${estate.joinMonth}</p>
+        </section>
+        </div>
+    </button>
+    <svg height="7" width="11" class="arrow" style="position: relative; top: -11px;">
+        <polygon points="1,0 0,7 11,0" style="fill:#fff;stroke-width:1"></polygon>
+        <line x1="0" y1="0" x2="0" y2="6.5" stroke="#2E9AFE" stroke-width="2"></line>
+        <line x1=" 0" y1="7" x2="11" y2="0" stroke="#2E9AFE" stroke-width="1"></line>
+    </svg>`;
         markerContainer.innerHTML = htmlText;
         markerContainer.onclick = function () {
           router.push({ name: "ApartDetail", params: { id: estate.id } });
@@ -261,10 +279,9 @@ const afterGetAddressByCoords = (result, status) => {
     result.forEach((data) => {
       if (data.region_type === "B") {
         // 수신한 데이터 확인용
-        console.log(data);
-        console.log(data.code.substr(0, 5));
-        console.log(data.region_3depth_name);
-
+        // console.log(data);
+        // console.log(data.code.substr(0, 5));
+        // console.log(data.region_3depth_name);
         // 상업용 부동산 현재 좌표의 법정동의 평균 매매가 얻기
       }
     });

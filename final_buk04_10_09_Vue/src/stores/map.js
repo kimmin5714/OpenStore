@@ -16,6 +16,7 @@ export const useMapStore = defineStore("map", () => {
   const dealCostAvgByDong = ref({});
   const estateList = ref([]);
   const estate = ref({});
+  const isEstateSelected = ref(false);
 
   // Getters (Computed: State를 가공한 결과를 리턴)
   const getterEstateList = computed(() => {
@@ -137,6 +138,7 @@ export const useMapStore = defineStore("map", () => {
     estate,
     getterEstateList,
     getterEstate,
+    isEstateSelected,
     selectStoreList,
     selectDealCostAvgByDong,
     selectEstateList,

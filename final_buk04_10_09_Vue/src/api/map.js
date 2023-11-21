@@ -16,6 +16,5 @@ export const getEstateList = (params) => {
   return local.get(`${url}/estateList`, { params });
 };
 export const getEstate = (id) => {
-  console.log("axios : ", id);
   return local.get(`${url}/estate/${id}`);
 };
