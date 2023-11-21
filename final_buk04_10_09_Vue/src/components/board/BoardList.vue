@@ -23,6 +23,7 @@ const { selectArticles } = storeBoard;
 const isListEmpty = ref(false);
 const isAdmin = true;
 const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+
 const params = ref({
   pgno: currentPage.value,
   spp: VITE_ARTICLE_LIST_SIZE,
