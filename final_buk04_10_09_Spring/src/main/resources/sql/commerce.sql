@@ -61,6 +61,7 @@ regionalCode varchar(50)
 create table estates(
 id bigint primary key auto_increment,
 dealClass varchar(30),
+dealAmount bigint,
 floor int,
 area double,
 description varchar(30),
@@ -93,3 +94,19 @@ from dongcodeLatlng;
 select distinct substr(dongCode,1,5)
 from dongcodeLatlng;
 
+insert into estates (dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon )
+values 
+("매매",9000,1,25.7,"매물입니다.1","2023","06","12","서울특별시","강서구","등촌동","120-1", "1234567890","37.56714408016501","126.97878516702059"),
+("매매",9000,1,25.7,"매물입니다.2","2023","06","12","서울특별시","강서구","등촌동","120-2", "1234567890","37.56724408016501","126.97878516702059"),
+("매매",9000,1,25.7,"매물입니다.3","2023","06","12","서울특별시","강서구","등촌동","120-3", "1234567890","37.56734408016501","126.97878516702059")
+;
+
+
+select dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon 
+from estates
+where id = 1;
+
+select dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon 
+from estates
+where lat between 37.566849109323016 and 37.56785787711739
+and lon between 126.97753424159059 and 126.97970789218029;

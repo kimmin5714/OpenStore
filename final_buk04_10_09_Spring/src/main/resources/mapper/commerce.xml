@@ -25,5 +25,20 @@
 				and lon between #{lonStart} and #{lonEnd}
 			</where>
 	</select>
+	
+	<select id="getEstate" parameterType="string" resultType="estateDto">
+		select id, dealClass,dealAmount,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon 
+		from estates
+		where id = #{id};
+	</select>
+	
+	<select id="getEstateList" parameterType="map" resultType="estateDto">
+		select id, dealClass,dealAmount,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon 
+		from estates
+			<where>
+				and lat between #{latStart} and #{latEnd}
+				and lon between #{lonStart} and #{lonEnd}
+			</where>	
+	</select>
 
 </mapper>

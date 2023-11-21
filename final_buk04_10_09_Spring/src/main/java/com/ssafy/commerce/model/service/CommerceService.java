@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ssafy.api.model.DongCodeLatlngDto;
+import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
 
 public interface CommerceService {
@@ -11,6 +12,10 @@ public interface CommerceService {
 	List<StoreDto> getStoreList(Map<String, String> map);
 
 	List<DongCodeLatlngDto> getDongsByCoord(Map<String, String> map);
+
+	EstateDto getEstate(String id);
+
+	List<EstateDto> getEstateList(Map<String, String> map);
 
 	
 

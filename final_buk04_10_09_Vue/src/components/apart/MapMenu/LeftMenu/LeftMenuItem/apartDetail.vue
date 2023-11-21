@@ -1,4 +1,28 @@
-<script setup></script>
+<script setup>
+import { onBeforeUnmount } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useMapStore } from "@/stores/map";
+
+// Router
+const router = useRouter();
+const route = useRoute();
+
+// Pinia
+const storeMap = useMapStore();
+const { estate } = storeToRefs(storeMap);
+const { selectEstate } = storeMap;
+
+const resp = await selectEstate(route.params.id);
+if (resp !== "success") {
+  alert("매물을 찾을 수 없습니다.");
+}
+
+// Methods
+onBeforeUnmount(() => {
+  estate.value = undefined;
+});
+</script>
 
 <template>
   <div class="apartdetail-container">
@@ -7,21 +31,24 @@
         <div class="detail-btn-container">
           <router-link
             :to="{ name: 'apart-navbar-search' }"
-            aria-current="page">
+            aria-current="page"
+          >
             <button data-testid="back-button" class="detail-btn">
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M9.73839 18.1336C9.93458 18.3345 10.2577 18.3345 10.4539 18.1336L10.6502 17.9326C10.8397 17.7384 10.8398 17.4285 10.6504 17.2342L6.34615 12.8198C6.28438 12.7565 6.32927 12.65 6.41775 12.65H19.75C20.0261 12.65 20.25 12.4261 20.25 12.15V11.85C20.25 11.5739 20.0261 11.35 19.75 11.35H6.41775C6.32927 11.35 6.28438 11.2435 6.34615 11.1802L10.6504 6.76579C10.8398 6.57151 10.8397 6.26159 10.6502 6.06744L10.4539 5.86643C10.2577 5.66549 9.93458 5.66549 9.73839 5.86643L4.09103 11.6507C3.90138 11.845 3.90138 12.155 4.09103 12.3493L9.73839 18.1336Z"
                   fill="#14171A"
                   stroke="#14171A"
-                  stroke-width="0.6"></path>
+                  stroke-width="0.6"
+                ></path>
               </svg>
             </button>
           </router-link>
@@ -39,19 +66,22 @@
               type="button"
               data-testid="bookmark-button"
               data-gtm-action="analytics_basic_bookmark"
-              class="detail-btn">
+              class="detail-btn"
+            >
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="#14171A"
                 xmlns="http://www.w3.org/2000/svg"
-                class="swk-icon">
+                class="swk-icon"
+              >
                 <path
                   fill-rule="evenodd"
                   clip-rule="evenodd"
                   d="M17 5.5H7C6.44772 5.5 6 5.94772 6 6.5L6 18.554L10.8929 16.6112C11.604 16.3289 12.396 16.3289 13.1071 16.6112L18 18.554V6.5C18 5.94772 17.5523 5.5 17 5.5ZM7 3.5C5.34315 3.5 4 4.84315 4 6.5V18.554C4 19.9668 5.42502 20.9342 6.73807 20.4128L11.631 18.4701C11.868 18.3759 12.132 18.3759 12.369 18.4701L17.2619 20.4128C18.575 20.9342 20 19.9668 20 18.554V6.5C20 4.84315 18.6569 3.5 17 3.5H7Z"
-                  fill="#14171A"></path>
+                  fill="#14171A"
+                ></path>
               </svg>
             </button>
           </div>
@@ -63,7 +93,10 @@
       <div class="sc-bPOUnH iTMLih">
         <section style="flex: 1 1 0%; margin-top: 20px">
           <div style="background-color: rgb(255, 255, 255); min-height: 58px">
-            <div class="detail-addr">서울 강남구 삼성동 26-29</div>
+            <div class="detail-addr">
+              {{ estate.sido }} {{ estate.gugun }} {{ estate.dong }}
+              {{ estate.jibun }}
+            </div>
             <div class="detail-addr2">
               <div class="detail-addr3">삼성로119길 37-15</div>
               <div style="display: flex"></div>
@@ -77,8 +110,10 @@
                   <div class="detail-text">매매가</div>
                   <div class="detail-des4">
                     <div class="detail-des5">
-                      <span class="detail-text2">60.0억</span
-                      ><span class="detail-text3">( 거래 종류 : 매매 )</span>
+                      <span class="detail-text2">{{ estate.dealAmount }}</span
+                      ><span class="detail-text3"
+                        >( 거래 종류 : {{ estate.dealClass }} )</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -87,7 +122,7 @@
                     <div class="detail-text">층</div>
                     <div class="detail-des4">
                       <div class="detail-des5">
-                        <span class="detail-text2">4층</span>
+                        <span class="detail-text2">{{ estate.floor }}</span>
                       </div>
                     </div>
                   </div>
@@ -97,7 +132,9 @@
                     <div class="detail-text">면적</div>
                     <div class="detail-des4">
                       <div class="detail-des5">
-                        <span class="detail-text2">77.7 m<sup>3</sup></span>
+                        <span class="detail-text2"
+                          >{{ estate.area }} m<sup>3</sup></span
+                        >
                       </div>
                     </div>
                   </div>
@@ -107,10 +144,9 @@
                     <div class="detail-text">매물 설명</div>
                     <div class="detail-des4">
                       <div class="detail-des5">
-                        <span class="detail-description"
-                          >해가 잘 드는 위치의 매물입니다. 지하철까지 도보로
-                          10분 소요됩니다.</span
-                        >
+                        <span class="detail-description">{{
+                          estate.description
+                        }}</span>
                       </div>
                     </div>
                   </div>

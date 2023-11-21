@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.api.model.ComPropDto;
 import com.ssafy.api.model.DongCodeLatlngDto;
+import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
 import com.ssafy.commerce.model.service.CommerceService;
 import com.ssafy.happyhouse.model.HouseInfoDto;
@@ -63,5 +65,34 @@ public class CommerceController {
 //		}
 		return null;
 	}
+	@GetMapping("/estateList")
+	public ResponseEntity<?> getEstateList(@RequestParam Map<String, String> map) throws SQLException{
+		List<EstateDto> list = commerceService.getEstateList(map);
+			
+		if (list != null && list.size()>0) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(list);
+		} else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.build();
+		}
+	}
+	@GetMapping("/estate/{id}")
+	public ResponseEntity<?> getEstate(@PathVariable String id) throws SQLException{
+		EstateDto estateDto = commerceService.getEstate(id);
+			
+		if (estateDto != null) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(estateDto);
+		} else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.build();
+		}
+	}
+	
 	
 }
