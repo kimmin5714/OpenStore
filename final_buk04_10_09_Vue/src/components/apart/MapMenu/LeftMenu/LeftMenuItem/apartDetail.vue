@@ -10,7 +10,7 @@ const route = useRoute();
 
 // Pinia
 const storeMap = useMapStore();
-const { estate, isEstateSelected } = storeToRefs(storeMap);
+const { estate } = storeToRefs(storeMap);
 const { selectEstate } = storeMap;
 
 // Methods
@@ -18,7 +18,6 @@ const { selectEstate } = storeMap;
 
 // });
 console.log("마운티드!!!");
-isEstateSelected.value = true;
 const resp = await selectEstate(route.params.id);
 if (resp !== "success") {
   alert("매물을 찾을 수 없습니다.");

@@ -12,13 +12,14 @@ const router = useRouter();
 // MapMenu
 const storeMap = useMapStore();
 const {
-  isStoreList,
+  isStoreListClicked,
+  isStoreListActivated,
   storeList,
+  storeListFilter,
   isDealCostSelected,
   dealCostAvgByDong,
   estateList,
   estate,
-  isEstateSelected,
 } = storeToRefs(storeMap);
 const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 
@@ -51,57 +52,69 @@ watch(
 
 watch(
   // 주변 상가 정보 얻어오기
-  () => isStoreList.value,
+  () => isStoreListClicked.value,
   async () => {
-    if (isStoreList.value) {
-      deleteMarkers();
-      // deleteInfoWindows();
-      if (map.getLevel() <= 2) {
-        const bounds = map.getBounds();
-        // 영역의 남서쪽 좌표를 얻어옵니다
-        const swLatLng = bounds.getSouthWest();
-        // 영역의 북동쪽 좌표를 얻어옵니다
-        const neLatLng = bounds.getNorthEast();
-
-        const params = {
-          latStart: swLatLng.getLat().toString(),
-          lonStart: swLatLng.getLng().toString(),
-          latEnd: neLatLng.getLat().toString(),
-          lonEnd: neLatLng.getLng().toString(),
-          ctPrvnCd: "",
-        };
-        const resp = await selectStoreList(params);
-        console.log(resp);
-        if (resp === "success") {
-          console.log(storeList);
-
-          for (let i = 0; i < storeList.value.length; i++) {
-            let store = storeList.value[i];
-
-            // 마커를 생성합니다
-            let marker = new kakao.maps.Marker({
-              map, // 마커를 표시할 지도
-              position: new kakao.maps.LatLng(store.lat, store.lon), // 마커를 표시할 위치
-              title: store.bizesNm, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다image : markerImage // 마커 이미지
-            });
-
-            // let infowindow = new kakao.maps.InfoWindow({
-            //   map: map, // 인포윈도우가 표시될 지도
-            //   position: new kakao.maps.LatLng(store.lat, store.lon),
-            //   content: `<div style="padding:5px;">${store.bizesNm}</div>`,
-            // });
-            markers.value.push(marker);
-            // infoWindows.value.push(infowindow);
-          }
-        }
+    if (isStoreListClicked.value) {
+      if (isStoreListActivated.value) {
+        isStoreListActivated.value = false;
+        console.log("주변 상가 조회 꺼짐");
       } else {
-        alert("지도를 더 확대해주세요.");
+        isStoreListActivated.value = true;
+        console.log("주변 상가 조회 켜짐");
       }
-      isStoreList.value = false;
+
+      isStoreListClicked.value = false;
     }
-  },
-  { deep: true }
+  }
 );
+const updateStoreList = async () => {
+  deleteMarkers();
+  // deleteInfoWindows();
+  if (isStoreListActivated.value) {
+    if (map.getLevel() <= 2) {
+      const bounds = map.getBounds();
+      // 영역의 남서쪽 좌표를 얻어옵니다
+      const swLatLng = bounds.getSouthWest();
+      // 영역의 북동쪽 좌표를 얻어옵니다
+      const neLatLng = bounds.getNorthEast();
+
+      if (!storeListFilter.value) console.log("업종 필터 없음!!");
+
+      const params = {
+        latStart: swLatLng.getLat().toString(),
+        lonStart: swLatLng.getLng().toString(),
+        latEnd: neLatLng.getLat().toString(),
+        lonEnd: neLatLng.getLng().toString(),
+        ctPrvnCd: storeListFilter.value,
+      };
+      const resp = await selectStoreList(params);
+      if (resp === "success") {
+        console.log(storeList);
+
+        for (let i = 0; i < storeList.value.length; i++) {
+          let store = storeList.value[i];
+
+          // 마커를 생성합니다
+          let marker = new kakao.maps.Marker({
+            map, // 마커를 표시할 지도
+            position: new kakao.maps.LatLng(store.lat, store.lon), // 마커를 표시할 위치
+            title: store.bizesNm, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다image : markerImage // 마커 이미지
+          });
+
+          // let infowindow = new kakao.maps.InfoWindow({
+          //   map: map, // 인포윈도우가 표시될 지도
+          //   position: new kakao.maps.LatLng(store.lat, store.lon),
+          //   content: `<div style="padding:5px;">${store.bizesNm}</div>`,
+          // });
+          markers.value.push(marker);
+          // infoWindows.value.push(infowindow);
+        }
+      }
+    } else {
+      alert("지도를 더 확대해주세요.");
+    }
+  }
+};
 
 watch(
   () => isDealCostSelected.value,
@@ -140,17 +153,16 @@ onMounted(() => {
     }
 
     makeEstateMarkers();
+    updateStoreList();
   });
 });
 
 watch(
-  // () => isEstateSelected.value,
   () => estate.value,
   () => {
     if (estate.value) {
       console.log("aaa");
       map.panTo(new kakao.maps.LatLng(estate.value.lat, estate.value.lon));
-      isEstateSelected.value = false;
     }
   }
 );

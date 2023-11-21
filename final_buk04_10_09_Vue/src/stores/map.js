@@ -10,13 +10,14 @@ import {
 
 export const useMapStore = defineStore("map", () => {
   // State
-  const isStoreList = ref(false);
+  const isStoreListClicked = ref(false);
+  const isStoreListActivated = ref(false);
+  const storeListFilter = ref("");
   const storeList = ref([]);
   const isDealCostSelected = ref(false);
   const dealCostAvgByDong = ref({});
   const estateList = ref([]);
   const estate = ref({});
-  const isEstateSelected = ref(false);
 
   // Getters (Computed: State를 가공한 결과를 리턴)
   const getterEstateList = computed(() => {
@@ -130,7 +131,9 @@ export const useMapStore = defineStore("map", () => {
 
   // Return
   return {
-    isStoreList,
+    isStoreListClicked,
+    isStoreListActivated,
+    storeListFilter,
     storeList,
     isDealCostSelected,
     dealCostAvgByDong,
@@ -138,7 +141,6 @@ export const useMapStore = defineStore("map", () => {
     estate,
     getterEstateList,
     getterEstate,
-    isEstateSelected,
     selectStoreList,
     selectDealCostAvgByDong,
     selectEstateList,

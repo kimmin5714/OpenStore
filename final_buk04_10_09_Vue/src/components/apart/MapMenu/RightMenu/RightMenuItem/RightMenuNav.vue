@@ -2,10 +2,10 @@
 import { useMapStore } from "@/stores/map";
 import { storeToRefs } from "pinia";
 const storeMap = useMapStore();
-const { isStoreList, isDealCostSelected } = storeToRefs(storeMap);
+const { isStoreListClicked, isDealCostSelected } = storeToRefs(storeMap);
 
 const doStoreList = () => {
-  isStoreList.value = true;
+  isStoreListClicked.value = true;
 };
 const doDealCostAvgByDong = () => {
   isDealCostSelected.value = true;
@@ -17,9 +17,9 @@ const doDealCostAvgByDong = () => {
     <div class="nav-item">
       <button class="item-button" @click="doStoreList">주변 상가 정보</button>
     </div>
-    <div class="nav-item">
+    <!-- <div class="nav-item">
       <button class="item-button" @click="doStoreList">주변 상가 정보</button>
-    </div>
+    </div> -->
   </div>
 </template>
 

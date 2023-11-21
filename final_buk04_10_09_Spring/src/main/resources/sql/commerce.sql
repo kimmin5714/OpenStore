@@ -110,3 +110,19 @@ select dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinD
 from estates
 where lat between 37.565 and 37.58
 and lon between 126.97 and 126.98;
+
+select count(*)
+from stores;
+
+select *
+from stores
+where 1=1
+#indsLclsCd = "G2"
+#and signguCd = "11110"
+and lat between 37.565 and 37.58
+and lon between 126.97 and 126.98;
+#where bizesId = "MA010120220808011483"; 
+
+select *
+from comProp
+where regionalCode=substr("1111010100",1,5) and dong="청운동";

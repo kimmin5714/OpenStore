@@ -5,6 +5,7 @@ const local = localAxios();
 const url = "/commerce";
 
 export const getStoreList = (params) => {
+  // console.log("=================  getStoreList()  ===================");
   return local.get(`${url}/storeList`, { params });
 };
 
