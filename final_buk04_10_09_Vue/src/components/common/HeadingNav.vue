@@ -30,8 +30,8 @@ const moveBoard = () => {
   router.push({ name: "BoardList" });
 };
 
-const moveEstateBoard = () => {
-  router.push({ name: "EstateList" });
+const moveEstateInsert = () => {
+  router.push({ name: "EstateInsert" });
 };
 const checkLogin = () => {
   let token = sessionStorage.getItem("accessToken");
@@ -125,8 +125,8 @@ const importData = async () => {
               <button
                 class="nav-link"
                 aria-current="page"
-                @click="moveEstateBoard">
-                매물
+                @click="moveEstateInsert">
+                매물 등록
               </button>
             </li>
             <li class="nav-item">

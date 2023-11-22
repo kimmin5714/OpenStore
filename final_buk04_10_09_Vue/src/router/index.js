@@ -159,9 +159,9 @@ const router = createRouter({
       redirect: { name: "EstateList" },
       children: [
         {
-          path: "list",
-          name: "EstateList",
-          component: () => import("@/components/estate/EstateList.vue"),
+          path: "insert",
+          name: "EstateInsert",
+          component: () => import("@/components/estate/EstateInsert.vue"),
         },
         // {
         //   path: "detail/:articleNo",
