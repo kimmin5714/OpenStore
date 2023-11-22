@@ -50,7 +50,7 @@
 		order by join_date
 	</select>
 
-	<select id="userInfo" parameterType="string" resultMap="member">
+	<select id="userInfo" parameterType="string" resultMap="memberAll">
 		select user_name, user_id, email_id, email_domain, join_date
 		from members
 		where user_id = #{userId}

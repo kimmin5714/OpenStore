@@ -17,16 +17,15 @@ function memberList() {
 // }
 
 function joinMember(member) {
-  console.log("boardjs article", member);
-  return local.post(`${url}/adminUserList/join`, JSON.stringify(member));
+  return local.post(`${url}/join`, JSON.stringify(member));
 }
 
 function modify(member) {
-  return local.put(`${url}/adminUserList/modify`, JSON.stringify(member));
+  return local.put(`${url}/modify`, JSON.stringify(member));
 }
 
 function deleteUser(userId) {
-  return local.delete(`${url}/adminUserList/delete, ${userId}`);
+  return local.delete(`${url}/delete, ${userId}`);
 }
 
 async function findById(userid, success, fail) {

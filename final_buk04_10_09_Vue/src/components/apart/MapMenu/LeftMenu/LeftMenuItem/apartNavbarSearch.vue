@@ -130,32 +130,9 @@ if (searchType.value === "D") {
               class="form-check-input"
               type="radio"
               name="search"
-              id="searchByDong" />
+              id="searchByDong"
+            />
             <label class="form-check-label" for="searchByDong">동 검색</label>
-          </div>
-          <div class="py-1 px-2 d-flex">
-            <div class="form-check pe-3">
-              <input
-                value="D"
-                v-model="searchType"
-                class="form-check-input"
-                type="radio"
-                id="searchByDong"
-              />
-              <label class="form-check-label" for="searchByDong">동 검색</label>
-            </div>
-            <div class="form-check">
-              <input
-                value="K"
-                v-model="searchType"
-                class="form-check-input"
-                type="radio"
-                id="searchByKeyword"
-              />
-              <label class="form-check-label" for="searchByKeyword"
-                >키워드 검색</label
-              >
-            </div>
           </div>
         </div>
         <div
@@ -217,23 +194,6 @@ if (searchType.value === "D") {
             <i class="bi bi-search"></i>
           </button>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-          <fieldset>
-            <select
-              v-model="selectDongName"
-              @change="onDongMenuChange"
-              class="array-select form-control form-select"
-              aria-label="example">
-              <option value="default" selected>동 선택</option>
-              <option
-                v-for="(item, index) in dong"
-                :key="index"
-                :value="item.dongName">
-                {{ item.dongName }}
-              </option>
-            </select>
-          </fieldset>
-        </div>
       </div>
       <div v-if="searchType == 'K'" class="input-group pb-2 px-3">
         <input
@@ -241,11 +201,13 @@ if (searchType.value === "D") {
           type="text"
           v-model="inputKeyword"
           class="form-control d-inline-block"
-          placeholder="건물명 또는 동을 입력하세요" />
+          placeholder="건물명 또는 동을 입력하세요"
+        />
         <button
           @click="onKeywordSearch"
           class="btn btn-primary d-inline-block"
-          type="button">
+          type="button"
+        >
           <i class="bi bi-search"></i>
         </button>
       </div>

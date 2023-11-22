@@ -139,6 +139,5 @@ from dongcodelatlng
 order by (abs(lat-37.5459)+abs(lon-126.9634))
 limit 1;
 
-
-
-
+select *
+from members;

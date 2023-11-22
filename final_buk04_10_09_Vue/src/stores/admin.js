@@ -81,6 +81,7 @@ export const useAdminStore = defineStore("admin", () => {
         isLogin.value = true;
         isLoginError.value = false;
         isValidToken.value = true;
+        return "success";
       } else {
         console.log("유저 정보 없음!!!!");
       }
@@ -159,7 +160,7 @@ export const useAdminStore = defineStore("admin", () => {
     console.log("insertMember", member);
     try {
       const response = await joinMember(member);
-      if (response.status === 200) {
+      if (response.status === 201) {
         return "success";
       } else {
         throw new Error(response.status);
@@ -208,7 +209,7 @@ export const useAdminStore = defineStore("admin", () => {
     console.log("updateUser", user.value);
     try {
       const { status } = await modify(user.value);
-      if (status === 200) {
+      if (status === 201) {
         return "success";
       } else {
         throw new Error(status);

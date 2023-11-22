@@ -35,18 +35,18 @@ const moveBoard = () => {
 const moveEstateInsert = () => {
   router.push({ name: "EstateInsert" });
 };
-const checkLogin = () => {
+const checkLogin = async () => {
   let token = sessionStorage.getItem("accessToken");
   if (token) {
-    getUserInfo(token);
+    await getUserInfo(token);
   }
 };
 const logout = () => {
   userLogout(userInfo.value.userId);
 };
-onMounted(() => {
-  checkLogin();
-});
+// onMounted(() => {
+checkLogin();
+// });
 
 const importData = async () => {
   await commercialProperties();

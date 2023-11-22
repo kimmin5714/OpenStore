@@ -15,9 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -244,7 +246,7 @@ public class MemberRestController {
 		}
 	}
 
-	@PostMapping("/modify")
+	@PutMapping("/modify")
 	private ResponseEntity<?> modify(@RequestBody Map<String,String> map, HttpSession session) {
 		//MemberDto user = (MemberDto) session.getAttribute("userinfo");
 		MemberDto user = new MemberDto();
@@ -270,7 +272,7 @@ public class MemberRestController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@DeleteMapping("/delete")
 	private ResponseEntity<?> deleteUser(@RequestBody Map<String,String> map, HttpSession session) {
 
 		try { //관리자 계정이면 adminUserList페이지로, 아니면 index페이지로
@@ -313,6 +315,7 @@ public class MemberRestController {
 			try {
 //				로그인 사용자 정보.
 				MemberDto memberDto = memberService.userInfo(userId);
+				System.out.println(memberDto);
 				resultMap.put("userInfo", memberDto);
 				status = HttpStatus.OK;
 			} catch (Exception e) {

@@ -94,6 +94,11 @@ const router = createRouter({
           name: "user-join",
           component: () => import("@/components/member/MemberJoin.vue"),
         },
+        {
+          path: "modify",
+          name: "user-modify",
+          component: () => import("@/components/member/MemberModify.vue"),
+        },
         // {
         //   path: "mypage",
         //   name: "user-mypage",
