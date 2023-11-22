@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from "vue";
 import { modify } from "@/api/admin.js";
+import { useAdminStore } from "@/stores/admin";
+import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
@@ -8,9 +10,13 @@ const route = useRoute();
 
 const props = defineProps({ type: String });
 
+//Pinia
+const { userInfo } = storeToRefs(useAdminStore());
+const { getUserInfo } = useAdminStore();
+
 const isUseId = ref(false);
 
-const userInfo = ref({
+const userInfoNew = ref({
   userName: "",
   userId: "",
   userEmail: "",
@@ -62,18 +68,18 @@ function onSubmit() {
 }
 
 function writeUserInfo() {
-  console.log("사용자 등록하자!!", userInfo.value);
+  console.log("사용자 등록하자!!", userInfoNew.value);
   // API 호출
 }
 
 function updateUserInfo() {
-  console.log(userInfo.value.userId + " 수정하자!!", userInfo.value);
+  console.log(userInfoNew.value.userId + " 수정하자!!", userInfoNew.value);
   // API 호출
   modify(
-    userInfo,
+    userInfoNew,
     ({ data }) => {
       console.log(data);
-      userInfo.value = data.member;
+      userInfoNew.value = data.member;
     },
     (error) => {
       console.log(error);
@@ -84,11 +90,22 @@ function updateUserInfo() {
 function moveList() {
   router.push({ name: "member-list" });
 }
+const checkUser = () => {
+  let token = sessionStorage.getItem("accessToken");
+  if (token) {
+    getUserInfo(token);
+  }
+};
+onMounted(() => {
+  checkUser();
+  userInfoNew.userName;
+});
 </script>
 
 <template>
   <div
-    class="mask d-flex align-items-center h-100 gradient-custom-3 register-ch">
+    class="mask d-flex align-items-center h-100 gradient-custom-3 register-ch"
+  >
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
@@ -97,7 +114,8 @@ function moveList() {
               @submit.prevent="onSubmit"
               id="form-join"
               method="post"
-              action="">
+              action=""
+            >
               <input type="hidden" name="action" value="modify" />
               <div class="form-outline mb-4">
                 <input
@@ -106,7 +124,8 @@ function moveList() {
                   name="username"
                   class="form-control form-control-lg"
                   placeholder="이름"
-                  v-model="userInfo.userName" />
+                  v-model="userInfoNew.userName"
+                />
               </div>
               <div class="form-outline mb-4">
                 <input
@@ -115,7 +134,8 @@ function moveList() {
                   name="userid"
                   class="form-control form-control-lg"
                   placeholder="아이디 입력 (수정 불가)"
-                  v-model="userInfo.userId" />
+                  v-model="userInfoNew.userId"
+                />
               </div>
 
               <div class="form-outline mb-4">
@@ -124,14 +144,16 @@ function moveList() {
                   class="form-control"
                   id="emailid"
                   name="emailid"
-                  v-model="userInfo.userEmail" />
+                  v-model="userInfoNew.userEmail"
+                />
                 <span class="input-group-text">@</span>
                 <select
                   class="form-select"
                   id="emaildomain"
                   name="emaildomain"
                   aria-label="이메일 도메인 선택"
-                  v-model="userInfo.userDomain">
+                  v-model="userInfoNew.userDomain"
+                >
                   <option selected>선택</option>
                   <option value="ssafy.com">싸피</option>
                   <option value="google.com">구글</option>
@@ -146,8 +168,9 @@ function moveList() {
                   id="userpwdR"
                   name="userpwd"
                   class="form-control form-control-lg"
-                  v-model="userInfo.userPwd"
-                  placeholder="비밀번호" />
+                  v-model="userInfoNew.userPwd"
+                  placeholder="비밀번호"
+                />
               </div>
 
               <div class="form-outline mb-4">
@@ -155,8 +178,9 @@ function moveList() {
                   type="password"
                   id="pwdcheck"
                   class="form-control form-control-lg"
-                  v-model="userInfo.userPwdCheck"
-                  placeholder="비밀번호 확인" />
+                  v-model="userInfoNew.userPwdCheck"
+                  placeholder="비밀번호 확인"
+                />
               </div>
 
               <div class="d-flex justify-content-center">
@@ -168,13 +192,15 @@ function moveList() {
                 <button
                   type="submit"
                   id="btn-modify"
-                  class="btn btn-outline-primary mb-3 me-3">
+                  class="btn btn-outline-primary mb-3 me-3"
+                >
                   수정하기
                 </button>
                 <button
                   type="button"
                   class="btn btn-outline-danger mb-3 ms-1"
-                  @click="moveList">
+                  @click="moveList"
+                >
                   목록으로이동...
                 </button>
                 <!-- <button

@@ -27,6 +27,7 @@ const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 var map;
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder;
+var mapLevelForStoreList;
 const positions = ref([]);
 const markers = ref([]);
 const infoWindows = ref([]);
@@ -55,13 +56,19 @@ watch(
   // 주변 상가 정보 얻어오기
   () => isStoreListClicked.value,
   async () => {
+    const limitLevel = 2;
     if (isStoreListClicked.value) {
-      if (isStoreListActivated.value) {
+      if (!storeListFilter.value) {
         isStoreListActivated.value = false;
         console.log("주변 상가 조회 꺼짐");
       } else {
         isStoreListActivated.value = true;
         console.log("주변 상가 조회 켜짐");
+        if (map.getLevel() <= limitLevel) {
+          updateStoreList();
+        } else {
+          alert("주변 상가 조회를 위해 지도를 더 확대해주세요.");
+        }
       }
 
       isStoreListClicked.value = false;
@@ -133,22 +140,21 @@ watch(
 const updateStoreList = async () => {
   deleteMarkers();
   // deleteInfoWindows();
+  const levelLimit = 2;
   if (isStoreListActivated.value) {
-    if (map.getLevel() <= 2) {
+    if (map.getLevel() <= levelLimit) {
       const bounds = map.getBounds();
       // 영역의 남서쪽 좌표를 얻어옵니다
       const swLatLng = bounds.getSouthWest();
       // 영역의 북동쪽 좌표를 얻어옵니다
       const neLatLng = bounds.getNorthEast();
 
-      if (!storeListFilter.value) console.log("업종 필터 없음!!");
-
       const params = {
         latStart: swLatLng.getLat().toString(),
         lonStart: swLatLng.getLng().toString(),
         latEnd: neLatLng.getLat().toString(),
         lonEnd: neLatLng.getLng().toString(),
-        ctPrvnCd: storeListFilter.value,
+        indsLclsCd: storeListFilter.value,
       };
       const resp = await selectStoreList(params);
       if (resp === "success") {
@@ -174,7 +180,9 @@ const updateStoreList = async () => {
         }
       }
     } else {
-      alert("지도를 더 확대해주세요.");
+      if (mapLevelForStoreList <= levelLimit) {
+        alert("주변 상가 조회를 위해 지도를 더 확대해주세요.");
+      }
     }
   }
 };
@@ -217,6 +225,7 @@ onMounted(() => {
 
     makeEstateMarkers();
     updateStoreList();
+    mapLevelForStoreList = map.getLevel();
   });
 });
 
@@ -336,6 +345,7 @@ const initMap = () => {
   };
   map = new kakao.maps.Map(container, options);
   geocoder = new kakao.maps.services.Geocoder();
+  mapLevelForStoreList = map.getLevel();
   getAddressByCoords(map.getCenter(), afterGetAddressByCoords);
   makeEstateMarkers();
 };

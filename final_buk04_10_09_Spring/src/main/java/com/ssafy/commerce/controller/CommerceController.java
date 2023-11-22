@@ -111,6 +111,23 @@ public class CommerceController {
 					.build();
 		}
 	}
+	@PostMapping("/writeEstate")
+	public ResponseEntity<?> writeEstate(@RequestBody Map<String, String> map) throws SQLException{
+		int result = commerceService.writeEstate(map);
+			
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.build();
+	}
+	
+	@GetMapping("/writeEstateRandomly/{count}")
+	public ResponseEntity<?> writeEstateRandomly(@PathVariable int count) throws SQLException{
+		int result = commerceService.writeEstateRandomly(count);
+			
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(result);
+	}
 	
 	
 }

@@ -1,14 +1,18 @@
 <script setup>
+import { ref } from "vue";
 import { useMapStore } from "@/stores/map";
 import { storeToRefs } from "pinia";
 
 const storeMap = useMapStore();
-const { storeListFilter } = storeToRefs(storeMap);
+const { isStoreListClicked, storeListFilter } = storeToRefs(storeMap);
 
 const setFilter = (filter) => {
-  console.log("setFilter");
-  storeListFilter.value = "filter";
-  console.log(filter);
+  if (storeListFilter.value !== filter) {
+    storeListFilter.value = filter;
+    isStoreListClicked.value = true;
+
+    console.log(storeListFilter.value);
+  }
 };
 </script>
 
@@ -16,29 +20,64 @@ const setFilter = (filter) => {
   <div class="filter-btn-container">
     <div
       class="filter-btn"
-      style="transform: scaleY(1); transform-origin: 0% 0%">
+      style="transform: scaleY(1); transform-origin: 0% 0%"
+    >
       <div>
         <div role="checkbox" class="filter-checkbox">
           <div class="filter-content">
             <input
               id="checkbox-land"
               name="filter"
-              @click="setFilter('food')"
+              @click="setFilter('')"
               data-gtm-action="search_deal_marker_off"
               type="radio"
-              class="check checkbox-1" />
+              class="check checkbox-0"
+              checked="true"
+            />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon">
+              class="swk-icon"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"></path>
+                fill="#FFFFFF"
+              ></path>
+            </svg>
+          </div>
+          <label for="checkbox-land" class="filter-text">일반</label>
+        </div>
+      </div>
+      <div>
+        <div role="checkbox" class="filter-checkbox">
+          <div class="filter-content">
+            <input
+              id="checkbox-land"
+              name="filter"
+              @click="setFilter('I2')"
+              data-gtm-action="search_deal_marker_off"
+              type="radio"
+              class="check checkbox-1"
+            />
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="#FFFFFF"
+              xmlns="http://www.w3.org/2000/svg"
+              class="swk-icon"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
+                fill="#FFFFFF"
+              ></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">음식</label>
@@ -50,22 +89,25 @@ const setFilter = (filter) => {
             <input
               id="checkbox-land"
               name="filter"
-              @click="setFilter('retail')"
+              @click="setFilter('G2')"
               data-gtm-action="search_deal_marker_off"
               type="radio"
-              class="check checkbox-2" />
+              class="check checkbox-2"
+            />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon">
+              class="swk-icon"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"></path>
+                fill="#FFFFFF"
+              ></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">소매</label>
@@ -77,22 +119,25 @@ const setFilter = (filter) => {
             <input
               id="checkbox-land"
               name="filter"
-              @click="setFilter('service')"
+              @click="setFilter('S2')"
               data-gtm-action="search_deal_marker_off"
               type="radio"
-              class="check checkbox-3" />
+              class="check checkbox-3"
+            />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon">
+              class="swk-icon"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"></path>
+                fill="#FFFFFF"
+              ></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">서비스</label>
@@ -104,22 +149,25 @@ const setFilter = (filter) => {
             <input
               id="checkbox-land"
               name="filter"
-              @click="setFilter('game')"
+              @click="setFilter('R1')"
               data-gtm-action="search_deal_marker_off"
               type="radio"
-              class="check checkbox-4" />
+              class="check checkbox-4"
+            />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon">
+              class="swk-icon"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"></path>
+                fill="#FFFFFF"
+              ></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">오락</label>
@@ -131,22 +179,25 @@ const setFilter = (filter) => {
             <input
               id="checkbox-land"
               name="filter"
-              @click="setFilter('edu')"
+              @click="setFilter('P1')"
               data-gtm-action="search_deal_marker_off"
               type="radio"
-              class="check checkbox-5" />
+              class="check checkbox-5"
+            />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon">
+              class="swk-icon"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"></path>
+                fill="#FFFFFF"
+              ></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">교육</label>
@@ -158,22 +209,25 @@ const setFilter = (filter) => {
             <input
               id="checkbox-land"
               name="filter"
-              @click="setFilter('accommodation')"
+              @click="setFilter('I1')"
               data-gtm-action="search_deal_marker_off"
               type="radio"
-              class="check checkbox-6" />
+              class="check checkbox-6"
+            />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon">
+              class="swk-icon"
+            >
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"></path>
+                fill="#FFFFFF"
+              ></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">숙박</label>
@@ -237,7 +291,9 @@ const setFilter = (filter) => {
   height: 100%;
   border-radius: 4px;
 }
-
+.checkbox-0:checked {
+  background-color: black;
+}
 .checkbox-1:checked {
   background-color: rgb(50, 157, 79);
 }
@@ -256,7 +312,9 @@ const setFilter = (filter) => {
 .checkbox-6:checked {
   background-color: rgb(14, 64, 228);
 }
-
+.checkbox-0 {
+  border: 2px solid black;
+}
 .checkbox-1 {
   border: 2px solid rgb(50, 157, 79);
 }

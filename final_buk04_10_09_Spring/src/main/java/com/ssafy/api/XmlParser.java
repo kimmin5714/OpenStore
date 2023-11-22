@@ -103,13 +103,15 @@ public class XmlParser {
 	private void marketsInfo() {
 
         String encServiceKey = "7C%2BxWt7OqCU8ncUPvV4pgjVRC5dhQSNGhNaJln3ouoK4URf6jDkAunQIc7mCCnW3JtC5%2Bo7pjwWaQmh1FCpOUg%3D%3D";
-        String divId = "ctprvnCd";
+//        String divId = "ctprvnCd";
+        String divId = "signguCd";
         String numOfRows = "1000";		// 최대 1000
         // 서울에서 제주까지
 //        String[] sidoCodes = {"11","26","27","28","29","30","31","41","42","43","44","45","46","47","48","50"};
 //        String[] sidoCodes = {"42","43","44","45","46","47","48","50"};
 //        String[] sidoCodes = {"50"};
-        String[] sidoCodes = {"11"};
+//        String[] sidoCodes = {"11"};
+        String[] sidoCodes = {"11140"};
 		
         //페이지 생략
         try {
@@ -121,8 +123,7 @@ public class XmlParser {
 //    			Thread.sleep(10000);
             	System.out.println("==== 시도 코드 : "+sidoCode);
             	
-//            	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
-            	String indsLclsCdList[] = {"G2","S2","I1","R1","I2"};
+            	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
             	
             	for(String indsLclsCd : indsLclsCdList) {
 //        			Thread.sleep(10000);
@@ -131,10 +132,6 @@ public class XmlParser {
 	            		if(page%5==0)
 //	            			Thread.sleep(10000);
 	            			System.out.println("============== "+page+"번째 페이지 저장 중");
-	            		if(indsLclsCd.equals("G2") && page<64) {
-            				page = 64;
-            				System.out.println(sidoCode+" "+indsLclsCd+" "+page);
-	            		}
 	            		
 	            		
 		                String pageNo = String.valueOf(page);

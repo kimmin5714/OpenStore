@@ -6,6 +6,8 @@ import {
   getDealCostAvgByDong,
   getEstateList,
   getEstate,
+  postEstate,
+  getEstateRandomly,
 } from "@/api/map";
 
 export const useMapStore = defineStore("map", () => {
@@ -41,6 +43,10 @@ export const useMapStore = defineStore("map", () => {
 
     try {
       const response = await getStoreList(params);
+      // const response = {
+      //   status: 200,
+      //   data: `주변 상가 정보!!! : ${params.indsLclsCd}`,
+      // };
       if (response.status === 200) {
         storeList.value = response.data;
         console.log(response);
@@ -116,20 +122,35 @@ export const useMapStore = defineStore("map", () => {
       return "fail";
     }
   };
-  //   const insertEstate = async (estate) => {
-  //   console.log("insertEstate", estate);
-  //   try {
-  //     const response = await postArticle(estate);
-  //     if (response.status === 200) {
-  //       return "success";
-  //     } else {
-  //       throw new Error(response.status);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     return "fail";
-  //   }
-  // };
+  const insertEstate = async (estate) => {
+    console.log("insertEstate", estate);
+    try {
+      const response = await postEstate(estate);
+      if (response.status === 200) {
+        return "success";
+      } else {
+        throw new Error(response.status);
+      }
+    } catch (error) {
+      console.log(error);
+      return "fail";
+    }
+  };
+
+  const insertEstateRandomly = async () => {
+    console.log("insertEstateRandomly");
+    try {
+      const response = await getEstateRandomly();
+      if (response.status === 200) {
+        return "success";
+      } else {
+        throw new Error(response.status);
+      }
+    } catch (error) {
+      console.log(error);
+      return "fail";
+    }
+  };
 
   // Return
   return {
@@ -148,5 +169,7 @@ export const useMapStore = defineStore("map", () => {
     selectDealCostAvgByDong,
     selectEstateList,
     selectEstate,
+    insertEstate,
+    insertEstateRandomly,
   };
 });

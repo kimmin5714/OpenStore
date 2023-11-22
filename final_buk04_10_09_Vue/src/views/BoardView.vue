@@ -4,6 +4,7 @@ import { useBoardStore } from "@/stores/board";
 import { storeToRefs } from "pinia";
 import { nextTick } from "vue";
 import { onBeforeUnmount } from "vue";
+import HeadingNav from "@/components/common/HeadingNav.vue";
 
 // Tools
 const storeBoard = useBoardStore();
@@ -21,6 +22,7 @@ const { currentPage, totalPage, key, word } = storeToRefs(storeBoard);
 </script>
 
 <template>
+  <HeadingNav />
   <Suspense>
     <RouterView />
   </Suspense>

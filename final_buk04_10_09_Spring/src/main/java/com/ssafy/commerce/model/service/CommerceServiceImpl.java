@@ -1,6 +1,7 @@
 package com.ssafy.commerce.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +29,15 @@ public class CommerceServiceImpl implements CommerceService{
 	public List<StoreDto> getStoreList(Map<String, String> map) {
 		return commerceMapper.getStoreList(map);
 	}
+	@Override
+	public List<DongCodeLatlngDto> getDongsByCoords(Map<String, String> map) {
+		return commerceMapper.getDongsByCoords(map);
+	}
+
 
 	@Override
-	public List<DongCodeLatlngDto> getDongsByCoord(Map<String, String> map) {
-		return commerceMapper.getDongsByCoord(map);
+	public DongCodeLatlngDto getDongsNearest(Map<String, String> map) {
+		return commerceMapper.getDongsNearest(map);
 	}
 
 	@Override
@@ -67,7 +73,7 @@ public class CommerceServiceImpl implements CommerceService{
 
 	@Override
 	public List<DealCostAvgAndDongDto> getDealCostAvgList(Map<String, String> map) {
-		List<DongCodeLatlngDto> dongList = getDongsByCoord(map);
+		List<DongCodeLatlngDto> dongList = getDongsByCoords(map);
 		
 		// dongList의 동마다 동별 평균 매매가+면적당매매가를 얻어옴
 		// 그 결과를 리스트로 저장
@@ -104,4 +110,56 @@ public class CommerceServiceImpl implements CommerceService{
 		return null;
 	}
 
+	@Override
+	public int writeEstate(Map<String, String> map) {
+		System.out.println(map.get("dealAmount"));
+		System.out.println(map.get("dealAmount").getClass());
+		return commerceMapper.writeEstate(map);
+	}
+
+	@Override
+	public int writeEstateRandomly(int count) {
+		List<EstateDto> list = new ArrayList<EstateDto>();
+		double latStart = 37.5459;
+		double lonStart = 126.9634;
+		double latEnd = 37.5714;
+		double lonEnd = 127.0230;
+		
+		double latRandomSize = latEnd - latStart;
+		double lonRandomSize = lonEnd - lonStart;
+		
+		for(int i=0; i<count; i++) {
+			 double lat = latStart + Math.random() * latRandomSize;
+			 double lon = lonStart + Math.random() * lonRandomSize;
+			 double area = (int)(Math.random() * 150) + 50;
+			 long dealAmount = (long)(Math.random() * 400 + 500 * area);
+			 int floor = (int)(Math.random() * 7) + 1;
+			 String jibun = String.valueOf((int)(Math.random()*290) + 110);
+			 // 매물 등록 시각은 쿼리문에서 현재 시각 등록
+			 // 시군구는 현재 좌표와 가장 가까운 쿼리문을 호출
+			 Map<String, String> params = new HashMap<String, String>();
+			 params.put("lat", String.valueOf(lat));
+			 params.put("lon", String.valueOf(lon));
+			 DongCodeLatlngDto dongCodeLatlngDto = commerceMapper.getDongsNearest(params);
+			 
+			 EstateDto estate = new EstateDto();
+			 estate.setDealClass("매매");
+			 estate.setDealAmount(dealAmount);
+			 estate.setArea(area);
+			 estate.setFloor(floor);
+			 estate.setSido(dongCodeLatlngDto.getSidoName());
+			 estate.setGugun(dongCodeLatlngDto.getGugunName());
+			 estate.setDong(dongCodeLatlngDto.getDongName());
+			 estate.setJibun(jibun);
+			 estate.setDongCode(dongCodeLatlngDto.getDongCode());
+			 estate.setLat(lat);
+			 estate.setLon(lon);
+			 
+			 list.add(estate);
+		}
+		
+		return commerceMapper.writeEstateRandomly(list);
+//		return 0;
+	}
+	
 }
