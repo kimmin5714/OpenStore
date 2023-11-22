@@ -2,20 +2,35 @@
 import { useMapStore } from "@/stores/map";
 import { storeToRefs } from "pinia";
 const storeMap = useMapStore();
-const { isStoreListClicked, isDealCostSelected } = storeToRefs(storeMap);
+const { isStoreListClicked, mapType } = storeToRefs(storeMap);
 
 const doStoreList = () => {
   isStoreListClicked.value = true;
 };
-const doDealCostAvgByDong = () => {
-  isDealCostSelected.value = true;
+const setMapType = (typeStr) => {
+  mapType.value = typeStr;
+  console.log(mapType.value);
 };
 </script>
 
 <template>
   <div id="right-menu-nav">
     <div class="nav-item">
-      <button class="item-button" @click="doStoreList">주변 상가 정보</button>
+      <button class="item-button" @click="setMapType('roadmap')">버튼1</button>
+    </div>
+    <div class="nav-item">
+      <button class="item-button" @click="setMapType('traffic')">버튼2</button>
+    </div>
+    <div class="nav-item">
+      <button class="item-button" @click="setMapType('use_district')">
+        버튼3
+      </button>
+    </div>
+    <div class="nav-item">
+      <button class="item-button" @click="setMapType('skyview')">버튼4</button>
+    </div>
+    <div class="nav-item">
+      <button class="item-button" @click="setMapType('hybrid')">버튼5</button>
     </div>
     <!-- <div class="nav-item">
       <button class="item-button" @click="doStoreList">주변 상가 정보</button>
@@ -27,7 +42,6 @@ const doDealCostAvgByDong = () => {
 #right-menu-nav {
   /* position: absolute;
   right: 20px;
-
   display: flex;
   flex-direction: column;
   -webkit-box-align: center;

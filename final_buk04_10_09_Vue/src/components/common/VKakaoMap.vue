@@ -20,6 +20,7 @@ const {
   dealCostAvgByDong,
   estateList,
   estate,
+  mapType,
 } = storeToRefs(storeMap);
 const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 
@@ -67,6 +68,68 @@ watch(
     }
   }
 );
+
+watch(
+  // 카카오맵 지도 타입 변경
+  () => mapType.value,
+  (newValue, oldValue) => {
+    let currentTypeId;
+    // maptype에 따라 지도에 추가할 지도타입을 결정합니다
+    if (oldValue === "roadmap") {
+      currentTypeId = kakao.maps.MapTypeId.ROADMAP;
+    } else if (oldValue === "skyview") {
+      // 교통정보 지도타입
+      currentTypeId = kakao.maps.MapTypeId.SKYVIEW;
+    } else if (oldValue === "traffic") {
+      // 교통정보 지도타입
+      currentTypeId = kakao.maps.MapTypeId.TRAFFIC;
+    } else if (oldValue === "hybrid") {
+      // 교통정보 지도타입
+      currentTypeId = kakao.maps.MapTypeId.HYBRID;
+    } else if (oldValue === "roadview") {
+      // 로드뷰 도로정보 지도타입
+      currentTypeId = kakao.maps.MapTypeId.ROADVIEW;
+    } else if (oldValue === "terrain") {
+      // 지형정보 지도타입
+      currentTypeId = kakao.maps.MapTypeId.TERRAIN;
+    } else if (oldValue === "use_district") {
+      // 지적편집도 지도타입
+      currentTypeId = kakao.maps.MapTypeId.USE_DISTRICT;
+    }
+
+    let changeMaptype;
+    // maptype에 따라 지도에 추가할 지도타입을 결정합니다
+    if (newValue === "roadmap") {
+      changeMaptype = kakao.maps.MapTypeId.ROADMAP;
+    } else if (newValue === "skyview") {
+      // 교통정보 지도타입
+      changeMaptype = kakao.maps.MapTypeId.SKYVIEW;
+    } else if (newValue === "traffic") {
+      // 교통정보 지도타입
+      changeMaptype = kakao.maps.MapTypeId.TRAFFIC;
+    } else if (newValue === "hybrid") {
+      // 교통정보 지도타입
+      changeMaptype = kakao.maps.MapTypeId.HYBRID;
+    } else if (newValue === "roadview") {
+      // 로드뷰 도로정보 지도타입
+      changeMaptype = kakao.maps.MapTypeId.ROADVIEW;
+    } else if (newValue === "terrain") {
+      // 지형정보 지도타입
+      changeMaptype = kakao.maps.MapTypeId.TERRAIN;
+    } else if (newValue === "use_district") {
+      // 지적편집도 지도타입
+      changeMaptype = kakao.maps.MapTypeId.USE_DISTRICT;
+    }
+
+    // 이미 등록된 지도 타입이 있으면 제거합니다
+    if (oldValue) {
+      map.removeOverlayMapTypeId(currentTypeId);
+    }
+    // maptype에 해당하는 지도타입을 지도에 추가합니다
+    map.addOverlayMapTypeId(changeMaptype);
+  }
+);
+
 const updateStoreList = async () => {
   deleteMarkers();
   // deleteInfoWindows();
