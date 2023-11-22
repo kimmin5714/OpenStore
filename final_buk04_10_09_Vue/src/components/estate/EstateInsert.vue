@@ -260,7 +260,7 @@ sendRequest("sido", "*00000000");
 <style scoped>
 .estate-list-header {
   font-weight: 700;
-  font-size: 36px;
+  font-size: 30px;
   line-height: 48px;
   text-align: center;
   color: rgb(54, 59, 64);

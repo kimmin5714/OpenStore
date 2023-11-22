@@ -81,6 +81,7 @@ const validateSearch = () => {
   params.value.pgno = 1;
   params.value.word = word.value;
   params.value.key = key.value;
+  
   getArticleList();
 };
 </script>

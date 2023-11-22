@@ -114,13 +114,24 @@ if (searchType.value === "D") {
 </script>
 
 <template>
-  <div id="wrapper">
-    <div id="searchBox" class="card">
-      <div>
-        <div class="p-2">
-          <div class="d-flex">
-            <i class="fa fa-search"></i>
-            <h6 class="ps-2">검색 방법을 선택하세요</h6>
+  <!--검색창-->
+  <div id="searchBox" class="card">
+    <div>
+      <div class="p-2">
+        <div class="d-flex">
+          <i class="fa fa-search"></i>
+          <h6 class="ps-2">검색 방법을 선택하세요</h6>
+        </div>
+        <div class="py-1 px-2 d-flex">
+          <div class="form-check pe-3">
+            <input
+              value="D"
+              v-model="searchType"
+              class="form-check-input"
+              type="radio"
+              name="search"
+              id="searchByDong" />
+            <label class="form-check-label" for="searchByDong">동 검색</label>
           </div>
           <div class="py-1 px-2 d-flex">
             <div class="form-check pe-3">
@@ -206,51 +217,40 @@ if (searchType.value === "D") {
             <i class="bi bi-search"></i>
           </button>
         </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+          <fieldset>
+            <select
+              v-model="selectDongName"
+              @change="onDongMenuChange"
+              class="array-select form-control form-select"
+              aria-label="example">
+              <option value="default" selected>동 선택</option>
+              <option
+                v-for="(item, index) in dong"
+                :key="index"
+                :value="item.dongName">
+                {{ item.dongName }}
+              </option>
+            </select>
+          </fieldset>
+        </div>
+      </div>
+      <div v-if="searchType == 'K'" class="input-group pb-2 px-3">
+        <input
+          @keyup.enter="onKeywordSearch"
+          type="text"
+          v-model="inputKeyword"
+          class="form-control d-inline-block"
+          placeholder="건물명 또는 동을 입력하세요" />
+        <button
+          @click="onKeywordSearch"
+          class="btn btn-primary d-inline-block"
+          type="button">
+          <i class="bi bi-search"></i>
+        </button>
       </div>
     </div>
   </div>
-  <!-- 검색창 -->
-  <!-- <div class="search-body-up">
-      <div class="search-body-search">
-        <div
-          data-gtm-action="search_search_box_click"
-          data-testid="search-bar"
-          class="sc-hsZwpi gGbVFK sc-hBAWal hbQMmF dropdown">
-          <form class="sc-fkxeQW lbzVUA empty">
-            <input
-              class="sc-gqgnwQ jCTgjP dropdown-toggle"
-              aria-haspopup="true"
-              aria-expanded="false"
-              aria-label="keyword"
-              autocomplete="off"
-              name="keyword"
-              type="text"
-              tabindex="1"
-              placeholder="주소·장소명으로 검색"
-              value="" /><button
-              title="검색"
-              aria-label="search"
-              tabindex="3"
-              type="submit"
-              class="sc-gcHwEF tbLGf">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="#1A8CFF"
-                xmlns="http://www.w3.org/2000/svg"
-                class="swk-icon">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M16.0491 17.4633C14.7873 18.4274 13.2105 19 11.5 19C7.35786 19 4 15.6421 4 11.5C4 7.35786 7.35786 4 11.5 4C15.6421 4 19 7.35786 19 11.5C19 13.2105 18.4274 14.7873 17.4633 16.0491L20.7071 19.2929C21.0976 19.6834 21.0976 20.3166 20.7071 20.7071C20.3166 21.0976 19.6834 21.0976 19.2929 20.7071L16.0491 17.4633ZM17 11.5C17 14.5376 14.5376 17 11.5 17C8.46243 17 6 14.5376 6 11.5C6 8.46243 8.46243 6 11.5 6C14.5376 6 17 8.46243 17 11.5Z"
-                  fill="white"></path>
-              </svg>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div> -->
 
   <!-- 검색 결과 리스트 -->
   <!-- <aptListItem
@@ -297,17 +297,6 @@ if (searchType.value === "D") {
 :after,
 :before {
   box-sizing: border-box;
-}
-.search-body-up {
-  width: 100%;
-  height: 15%;
-  /* height : auto; */
-}
-.search-body-search {
-  width: 100%;
-  padding: 24px 20px 0px;
-  position: relative;
-  height: 100px;
 }
 
 .simplebar-track {
@@ -360,20 +349,12 @@ if (searchType.value === "D") {
   scrollbar-width: none;
   width: auto;
 }
-.search-list-box {
-  padding-bottom: 100px;
-  box-sizing: border-box;
-  overflow: visible;
-}
-.search-body {
-  scroll-behavior: smooth;
-}
 .search-list-ul {
   list-style: none;
   padding-top: 4px;
   margin: 0px;
   padding: 0px;
-  display: block;
+  display: inline;
   margin-block-start: 1em;
   margin-block-end: 1em;
   margin-inline-start: 0px;
@@ -383,7 +364,7 @@ if (searchType.value === "D") {
 .search-list-li {
   display: list-item;
   text-align: -webkit-match-parent;
-  padding: 16px 20px 0px;
+  padding: 25px 20px 0px;
   transition: background-color 0.2s ease 0s;
 }
 .search-list-li-detail {
@@ -392,5 +373,15 @@ if (searchType.value === "D") {
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: flex-start;
+}
+#searchBox {
+  top: 20px;
+  left: 20px;
+  width: 360px;
+  padding: 10px;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.7);
+  overflow-y: auto;
+  margin-bottom: 24px;
 }
 </style>

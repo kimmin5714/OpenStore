@@ -210,7 +210,7 @@ onMounted(() => {
                   탈퇴하기
                 </button> -->
 
-                <!-- <button type="button" class="btn btn-outline-success mb-3">초기화</button> -->
+                <button type="button" class="btn btn-outline-success mb-3">초기화</button> 
               </div>
             </form>
           </div>
