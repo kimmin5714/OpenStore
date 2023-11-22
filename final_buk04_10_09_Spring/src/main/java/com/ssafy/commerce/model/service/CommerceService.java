@@ -14,7 +14,9 @@ public interface CommerceService {
 
 	List<StoreDto> getStoreList(Map<String, String> map);
 
-	List<DongCodeLatlngDto> getDongsByCoord(Map<String, String> map);
+	DongCodeLatlngDto getDongsNearest(Map<String, String> map);
+	
+	List<DongCodeLatlngDto> getDongsByCoords(Map<String, String> map);
 
 	EstateDto getEstate(String id);
 
@@ -24,8 +26,7 @@ public interface CommerceService {
 
 	List<DealCostAvgAndDongDto> getDealCostAvgList(Map<String, String> map);
 
-	
+	int writeEstate(Map<String, String> map);
 
-	
-
+	int writeEstateRandomly(int count);
 }

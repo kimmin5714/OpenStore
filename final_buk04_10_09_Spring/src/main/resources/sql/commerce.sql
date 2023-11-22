@@ -123,6 +123,20 @@ and lat between 37.565 and 37.58
 and lon between 126.97 and 126.98;
 #where bizesId = "MA010120220808011483"; 
 
-select *
+select avg(dealAmount/buildingArea)
 from comProp
 where regionalCode=substr("1111010100",1,5) and dong="청운동";
+
+select count(*)
+from stores
+where indsLclsCd= "I2";
+
+select *
+from estates;
+
+select *
+from dongcodelatlng
+order by (abs(lat-37.5459)+abs(lon-126.9634))
+limit 1;
+
+

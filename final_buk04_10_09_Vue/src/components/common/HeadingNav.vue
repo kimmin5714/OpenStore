@@ -1,7 +1,8 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAdminStore } from "@/stores/admin";
+import { useMapStore } from "@/stores/map";
 import { storeToRefs } from "pinia";
 
 import { commercialProperties } from "@/api/api";
@@ -12,6 +13,7 @@ const router = useRouter();
 // Pinia
 const { userInfo, isLogin } = storeToRefs(useAdminStore());
 const { userLogout, getUserInfo } = useAdminStore();
+const { insertEstateRandomly } = useMapStore();
 
 // Data
 // const userinfo = null;
@@ -38,12 +40,21 @@ const checkLogin = () => {
 const logout = () => {
   userLogout(userInfo.value.userId);
 };
-
-checkLogin();
+onMounted(() => {
+  checkLogin();
+});
 
 const importData = async () => {
   await commercialProperties();
   console.log("Start Data Import");
+};
+const createRandomEstate = async () => {
+  const resp = await insertEstateRandomly();
+  if (resp === "success") {
+    alert("자동생성 성공");
+  } else {
+    alert("자동생성 실패");
+  }
 };
 </script>
 
@@ -78,11 +89,16 @@ const importData = async () => {
               지도
             </RouterLink>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="btn btn-outline-danger" @click="importData">
               DATA IMPORT
             </a>
           </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-danger" @click="createRandomEstate">
+              !!!매물 랜덤 생성!!!
+            </a>
+          </li> -->
         </ul>
 
         <ul

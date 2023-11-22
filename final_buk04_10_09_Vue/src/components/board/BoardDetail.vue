@@ -2,13 +2,16 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useBoardStore } from "@/stores/board";
+import { useAdminStore } from "@/stores/admin";
 import { storeToRefs } from "pinia";
 
 // Router를 프로그래밍 방식으로 사용하기 위해
 // Router 객체를 얻기
 const route = useRoute();
 const router = useRouter();
+// Pinia
 const storeBoard = useBoardStore();
+const { userInfo, isLogin } = storeToRefs(useAdminStore());
 
 // 반응성이 있게 Pinia에서 가져올 때
 const { getterArticle } = storeToRefs(storeBoard);
@@ -18,10 +21,6 @@ const { selectArticle, removeArticle } = storeBoard;
 
 // Data
 const article = ref({});
-const userinfo = {
-  userId: "admin",
-  userName: "관리자",
-};
 
 // Method
 const deleteArticle = async () => {
@@ -42,9 +41,10 @@ const deleteArticle = async () => {
 const articleNo = route.params.articleNo;
 
 const resp = await selectArticle(articleNo);
-if (resp === "fail"){
-  alert("불러오기 실패했습니다.")
+if (resp === "fail") {
+  alert("불러오기 실패했습니다.");
 }
+console.log(userInfo);
 </script>
 
 <template>
@@ -87,7 +87,7 @@ if (resp === "fail"){
           >
             글목록
           </RouterLink>
-          <span v-if="userinfo.userId == 'admin'">
+          <span v-if="isLogin && userInfo.userId == 'admin'">
             <RouterLink
               id="btn-mv-modify"
               class="btn btn-outline-success mb-3 ms-1"

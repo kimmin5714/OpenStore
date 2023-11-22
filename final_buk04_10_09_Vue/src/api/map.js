@@ -19,3 +19,13 @@ export const getEstateList = (params) => {
 export const getEstate = (id) => {
   return local.get(`${url}/estate/${id}`);
 };
+export const postEstate = (estate) => {
+  // console.log("=================  getStoreList()  ===================");
+  return local.post(`${url}/writeEstate`, JSON.stringify(estate));
+};
+
+export const getEstateRandomly = () => {
+  // 랜덤하게 만들 매물 리스트 1000개
+  const count = 100;
+  return local.get(`${url}/writeEstateRandomly/${count}`);
+};

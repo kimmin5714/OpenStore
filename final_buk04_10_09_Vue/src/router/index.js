@@ -150,6 +150,15 @@ const router = createRouter({
               "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/ApartDetail.vue"
             ),
         },
+        {
+          path: "create",
+          name: "ApartCreate",
+          component: () =>
+            import(
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartCreateTest.vue"
+            ),
+          // beforeEnter: onlyAuthUser,
+        },
       ],
     },
   ],

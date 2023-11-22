@@ -146,6 +146,7 @@ export const useAdminStore = defineStore("admin", () => {
         isLoginError.value = false;
         userInfo.value = null;
         isValidToken.value = false;
+        console.log("로그아웃 성공");
       } else {
         console.error("유저 정보 없음!!!!");
       }

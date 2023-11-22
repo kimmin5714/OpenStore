@@ -272,10 +272,6 @@ public class MemberRestController {
 
 	@PostMapping("/delete")
 	private ResponseEntity<?> deleteUser(@RequestBody Map<String,String> map, HttpSession session) {
-		//MemberDto user = (MemberDto) session.getAttribute("userinfo");
-		MemberDto user = new MemberDto();
-		user.setUserId("admin");
-		user.setUserPwd("1234");
 
 		try { //관리자 계정이면 adminUserList페이지로, 아니면 index페이지로
 			String userId = map.get("userId");

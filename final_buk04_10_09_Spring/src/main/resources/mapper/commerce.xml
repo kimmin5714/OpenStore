@@ -17,13 +17,20 @@
 			</where>
 	</select>
 	
-	<select id="getDongsByCoord" parameterType="map" resultType="dongCodeLatlngDto">
+	<select id="getDongsByCoords" parameterType="map" resultType="dongCodeLatlngDto">
 		select dongcode, addressCount, sidoName, gugunName, dongName, lat, lon
 			from dongcodeLatlng
 			<where>
 				and lat between #{latStart} and #{latEnd}
 				and lon between #{lonStart} and #{lonEnd}
 			</where>
+	</select>
+	
+	<select id="getDongsNearest" parameterType="map" resultType="dongCodeLatlngDto">
+		select dongcode, addressCount, sidoName, gugunName, dongName, lat, lon
+			from dongcodeLatlng
+			order by (abs(lat-#{lat})+abs(lon-#{lon}))
+			limit 1
 	</select>
 	
 	<select id="getEstate" parameterType="string" resultType="estateDto">
@@ -56,5 +63,18 @@
 		</foreach> 	
 		group by concat(regionalCode,dong);
 	</select>
+	
+	<insert id="writeEstate" parameterType="map">
+		insert into estates (dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon )
+		values (#{dealClass},#{dealAmount},#{floor},#{area},#{description},#{joinYear},#{joinMonth},#{joinDay},#{sido},#{gugun},#{dong},#{jibun},#{dongCode},#{lat},#{lon})
+	</insert>
+	
+ 	<insert id="writeEstateRandomly" parameterType="list">
+    	insert into estates (dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon )
+    	values 
+    	<foreach collection="list" item="item" open="(" close=")" separator="),(">
+			 #{item.dealClass},#{item.dealAmount},#{item.floor},#{item.area},#{item.description},DATE_FORMAT(now(), "%Y"),DATE_FORMAT(now(), "%m"),DATE_FORMAT(now(), "%d"),#{item.sido},#{item.gugun},#{item.dong},#{item.jibun},#{item.dongCode},#{item.lat},#{item.lon}
+		</foreach> 	
+    </insert>
 
 </mapper>

@@ -16,7 +16,6 @@ public interface CommerceMapper {
 
 	List<StoreDto> getStoreList(Map<String, String> map);
 
-	List<DongCodeLatlngDto> getDongsByCoord(Map<String, String> map);
 
 	EstateDto getEstate(String id);
 
@@ -25,6 +24,15 @@ public interface CommerceMapper {
 	List<ComPropDto> getDealCostAvgByDong(Map<String, String> map);
 
 	List<DealCostAvgDto> getDealCostAvgByDongList(List<DongCodeLatlngDto> dongList);
+
+	int writeEstate(Map<String, String> map);
+
+	List<DongCodeLatlngDto> getDongsByCoords(Map<String, String> map);
+
+	DongCodeLatlngDto getDongsNearest(Map<String, String> map);
+
+
+	int writeEstateRandomly(List<EstateDto> list);
 
 
 }
