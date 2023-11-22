@@ -152,6 +152,36 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/estate",
+      name: "EstateView",
+      component: () => import("@/views/EstateView.vue"),
+      redirect: { name: "EstateList" },
+      children: [
+        {
+          path: "list",
+          name: "EstateList",
+          component: () => import("@/components/estate/EstateList.vue"),
+        },
+        // {
+        //   path: "detail/:articleNo",
+        //   name: "BoardDetail",
+        //   component: () => import("@/components/board/BoardDetail.vue"),
+        // },
+        // {
+        //   path: "modify/:articleNo",
+        //   name: "BoardModify",
+        //   component: () => import("@/components/board/BoardModify.vue"),
+        //   beforeEnter: onlyAuthUser,
+        // },
+        // {
+        //   path: "create",
+        //   name: "BoardCreate",
+        //   component: () => import("@/components/board/BoardCreate.vue"),
+        //   beforeEnter: onlyAuthUser,
+        // },
+      ],
+    },
   ],
 });
 

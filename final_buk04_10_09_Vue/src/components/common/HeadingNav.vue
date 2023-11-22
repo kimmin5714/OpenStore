@@ -29,6 +29,10 @@ const moveBoard = () => {
   // router.replace({ name: "BoardList" });
   router.push({ name: "BoardList" });
 };
+
+const moveEstateBoard = () => {
+  router.push({ name: "EstateList" });
+};
 const checkLogin = () => {
   let token = sessionStorage.getItem("accessToken");
   if (token) {
@@ -52,8 +56,7 @@ const importData = async () => {
     <div class="container">
       <RouterLink
         class="navbar-brand text-warning fw-bold"
-        :to="{ name: 'IndexView' }"
-      >
+        :to="{ name: 'IndexView' }">
         Open Store
       </RouterLink>
       <button
@@ -63,8 +66,7 @@ const importData = async () => {
         data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -73,8 +75,7 @@ const importData = async () => {
             <RouterLink
               class="nav-link"
               aria-current="page"
-              :to="{ name: 'apart-view' }"
-            >
+              :to="{ name: 'apart-view' }">
               지도
             </RouterLink>
           </li>
@@ -87,8 +88,7 @@ const importData = async () => {
 
         <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
-          style="--bs-scroll-height: 100px"
-        >
+          style="--bs-scroll-height: 100px">
           <template v-if="isLogin">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" style="font-weight: bold">
@@ -121,6 +121,14 @@ const importData = async () => {
             </li>
           </template>
           <template v-else>
+            <li class="nav-item">
+              <button
+                class="nav-link"
+                aria-current="page"
+                @click="moveEstateBoard">
+                매물
+              </button>
+            </li>
             <li class="nav-item">
               <button class="nav-link" aria-current="page" @click="moveBoard">
                 공지사항
