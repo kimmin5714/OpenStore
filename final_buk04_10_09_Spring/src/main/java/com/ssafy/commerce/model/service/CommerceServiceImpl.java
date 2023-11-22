@@ -112,8 +112,21 @@ public class CommerceServiceImpl implements CommerceService{
 
 	@Override
 	public int writeEstate(Map<String, String> map) {
-		System.out.println(map.get("dealAmount"));
-		System.out.println(map.get("dealAmount").getClass());
+//		 double lat = map.get("lat");
+//		 double lon = lonStart + Math.random() * lonRandomSize;
+		DongCodeLatlngDto dongCodeLatlngDto = commerceMapper.getDongByAddress(map);
+		System.out.println(dongCodeLatlngDto);
+		map.put("dongCode", dongCodeLatlngDto.getDongCode());
+
+		double latRandomSize = 0.020;
+		double lonRandomSize = 0.020;
+
+		 double lat = dongCodeLatlngDto.getLat() + (Math.random() * latRandomSize - (latRandomSize/2));
+		 double lon = dongCodeLatlngDto.getLon() + (Math.random() * lonRandomSize - (lonRandomSize/2));
+		
+		 map.put("lat", String.valueOf(lat));
+		 map.put("lon", String.valueOf(lon));
+		
 		return commerceMapper.writeEstate(map);
 	}
 

@@ -33,6 +33,15 @@
 			limit 1
 	</select>
 	
+	<select id="getDongByAddress" parameterType="map" resultType="dongCodeLatlngDto">
+		select dongcode, addressCount, sidoName, gugunName, dongName, lat, lon 
+		from dongcodelatlng
+		where sidoname = #{sido}
+		and gugunName = #{gugun}
+		and dongName = #{dong}
+		limit 1;
+	</select>
+	
 	<select id="getEstate" parameterType="string" resultType="estateDto">
 		select id, dealClass,dealAmount,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon 
 		from estates
@@ -66,7 +75,7 @@
 	
 	<insert id="writeEstate" parameterType="map">
 		insert into estates (dealClass,dealAmount ,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon )
-		values (#{dealClass},#{dealAmount},#{floor},#{area},#{description},#{joinYear},#{joinMonth},#{joinDay},#{sido},#{gugun},#{dong},#{jibun},#{dongCode},#{lat},#{lon})
+		values (#{dealClass},#{dealAmount},#{floor},#{area},#{description},DATE_FORMAT(now(), "%Y"),DATE_FORMAT(now(), "%m"),DATE_FORMAT(now(), "%d"),#{sido},#{gugun},#{dong},#{jibun},#{dongCode},#{lat},#{lon})
 	</insert>
 	
  	<insert id="writeEstateRandomly" parameterType="list">

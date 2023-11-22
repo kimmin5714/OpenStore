@@ -35,4 +35,7 @@ public interface CommerceMapper {
 	int writeEstateRandomly(List<EstateDto> list);
 
 
+	DongCodeLatlngDto getDongByAddress(Map<String, String> params);
+
+
 }

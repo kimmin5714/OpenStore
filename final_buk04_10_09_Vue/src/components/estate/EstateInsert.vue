@@ -1,6 +1,42 @@
 <script setup>
 import HeadingNav from "@/components/common/HeadingNav.vue";
 import Footer from "../common/Footer.vue";
+import { reactive } from "vue";
+import { useMapStore } from "@/stores/map";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+
+// Router
+const router = useRouter();
+
+// Pinia
+const storeMap = useMapStore();
+const { insertEstate } = storeMap;
+
+// State
+const estate = reactive({
+  dealClass: "매매",
+  dealAmount: 0,
+  floor: 0,
+  area: 0,
+  description: "",
+  sido: "",
+  gugun: "",
+  dong: "",
+  jibun: "",
+});
+
+// Action
+const submitEstate = async () => {
+  const resp = await insertEstate(estate);
+  if (resp === "success") {
+    alert("등록이 완료되었습니다.");
+    console.log(router);
+    router.push({ name: "IndexView" });
+  } else {
+    alert("등록 실패하였습니다.");
+  }
+};
 </script>
 
 <template>
@@ -26,7 +62,7 @@ import Footer from "../common/Footer.vue";
       <div class="col-lg-3 col-md-6"></div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
-          <select disabled class="form-select">
+          <select disabled class="form-select" v-model="estate.dealClass">
             <option selected>매매</option>
             <option>전세</option>
             <option>월세</option>
@@ -37,70 +73,77 @@ import Footer from "../common/Footer.vue";
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="dealAmount"
             type="text"
             class="form-control"
-            placeholder="실거래가" />
+            placeholder="실거래가"
+            v-model="estate.dealAmount"
+          />
           <label>매매가 <span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="floor"
+            v-model="estate.floor"
             type="text"
             class="form-control"
-            placeholder="해당 층  *" />
+            placeholder="해당 층  *"
+          />
           <label>해당 층 <span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="area"
+            v-model="estate.area"
             type="text"
             class="form-control"
-            placeholder="면적(평) *" />
+            placeholder="면적(평) *"
+          />
           <label>면적(평) <span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="sido"
+            v-model="estate.sido"
             type="text"
             class="form-control"
-            placeholder="주소(시도) *" />
+            placeholder="주소(시도) *"
+          />
           <label>주소(시도) <span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="gugun"
+            v-model="estate.gugun"
             type="text"
             class="form-control"
-            placeholder="주소(구군) *" />
+            placeholder="주소(구군) *"
+          />
           <label>주소(구군) <span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="dong"
+            v-model="estate.dong"
             type="text"
             class="form-control"
-            placeholder="주소(동) *" />
+            placeholder="주소(동) *"
+          />
           <label>주소(동) <span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
         <div class="form-floating">
           <input
-            v-model="jibeon"
+            v-model="estate.jibun"
             type="text"
             class="form-control"
-            placeholder="지번 *" />
+            placeholder="지번 *"
+          />
           <label>지번 <span class="text-danger">*</span></label>
         </div>
       </div>
@@ -108,22 +151,21 @@ import Footer from "../common/Footer.vue";
       <div class="col-12">
         <div class="form-floating">
           <input
-            v-model="des"
+            v-model="estate.description"
             type="text"
             class="form-control"
-            placeholder="매물 설명 *" />
+            placeholder="매물 설명 *"
+          />
           <label>매물 설명 <span class="text-danger">*</span></label>
         </div>
       </div>
 
       <div class="col-12">
-        <button
-          @click.prevent="ongoingInsert"
-          class="btn btn-primary float-end lift">
+        <button @click="submitEstate" class="btn btn-primary float-end lift">
           작성완료
         </button>
         <router-link
-          to="/house/ongoing/list"
+          :to="{ name: 'IndexView' }"
           class="me-2 ml-3 btn btn-secondary float-end lift"
           >취소</router-link
         >
