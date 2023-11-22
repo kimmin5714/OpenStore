@@ -40,5 +40,21 @@
 				and lon between #{lonStart} and #{lonEnd}
 			</where>	
 	</select>
+	
+	<select id="getDealCostAvgByDong" parameterType="map" resultType="comPropDto">
+		select id, dealAmount, buildingArea, buildingUse, buildYear, dealYear, plottage, dong, sigungu, landUse, dealMonth, buildingType, dealDay, regionalCode 
+		from comProp
+		where regionalCode=substr(#{dongCode},1,5) and dong=#{dong}
+	</select>
+	
+	<select id="getDealCostAvgByDongList" parameterType="list" resultType="dealCostAvgDto">
+		select avg(dealAmount) as "dealAmountAvg" , avg(dealAmount/buildingArea) as "dealAmountPerArea", concat(regionalCode,dong) as "regionCodeAndDong"
+		from comProp
+		where concat(regionalCode,dong) in 
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			 concat(substr(#{item.dongCode},1,5),#{item.dongName})
+		</foreach> 	
+		group by concat(regionalCode,dong);
+	</select>
 
 </mapper>

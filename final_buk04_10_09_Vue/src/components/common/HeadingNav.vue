@@ -78,11 +78,11 @@ const importData = async () => {
               지도
             </RouterLink>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="btn btn-outline-danger" @click="importData">
               DATA IMPORT
             </a>
-          </li> -->
+          </li>
         </ul>
 
         <ul

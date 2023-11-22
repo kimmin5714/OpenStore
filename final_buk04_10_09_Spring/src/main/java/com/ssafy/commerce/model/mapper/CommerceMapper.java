@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.ssafy.api.model.ComPropDto;
 import com.ssafy.api.model.DongCodeLatlngDto;
+import com.ssafy.commerce.model.DealCostAvgDto;
 import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
 
@@ -19,6 +21,10 @@ public interface CommerceMapper {
 	EstateDto getEstate(String id);
 
 	List<EstateDto> getEstateList(Map<String, String> map);
+
+	List<ComPropDto> getDealCostAvgByDong(Map<String, String> map);
+
+	List<DealCostAvgDto> getDealCostAvgByDongList(List<DongCodeLatlngDto> dongList);
 
 
 }

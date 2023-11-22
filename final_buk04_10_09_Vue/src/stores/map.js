@@ -10,7 +10,9 @@ import {
 
 export const useMapStore = defineStore("map", () => {
   // State
-  const isStoreList = ref(false);
+  const isStoreListClicked = ref(false);
+  const isStoreListActivated = ref(false);
+  const storeListFilter = ref("");
   const storeList = ref([]);
   const isDealCostSelected = ref(false);
   const dealCostAvgByDong = ref({});
@@ -129,7 +131,9 @@ export const useMapStore = defineStore("map", () => {
 
   // Return
   return {
-    isStoreList,
+    isStoreListClicked,
+    isStoreListActivated,
+    storeListFilter,
     storeList,
     isDealCostSelected,
     dealCostAvgByDong,

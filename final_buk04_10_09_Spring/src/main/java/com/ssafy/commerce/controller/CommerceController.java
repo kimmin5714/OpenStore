@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.api.model.ComPropDto;
 import com.ssafy.api.model.DongCodeLatlngDto;
+import com.ssafy.commerce.model.DealCostAvgAndDongDto;
+import com.ssafy.commerce.model.DealCostAvgDto;
 import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
 import com.ssafy.commerce.model.service.CommerceService;
@@ -37,7 +39,6 @@ public class CommerceController {
 	@GetMapping("/storeList")
 	public ResponseEntity<?> storeList(@RequestParam Map<String, String> map) throws SQLException{
 		List<StoreDto> list = commerceService.getStoreList(map);
-		System.out.println(map);
 		
 		if (list != null && list.size() > 0) {
 			return ResponseEntity
@@ -52,18 +53,35 @@ public class CommerceController {
 	
 	@GetMapping("/dealCost")
 	public ResponseEntity<?> dealCostAvgByDong(@RequestParam Map<String, String> map) throws SQLException{
-//		List<ComPropDto> list = commerceService.getDealCostAvgByDong(map);
+		DealCostAvgDto dealCostAvgDto = commerceService.getDealCostAvgByDong(map);
 		
-//		if (list != null && list.size() > 0) {
-//			return ResponseEntity
-//					.status(HttpStatus.OK)
-//					.body(list);
-//		} else {
-//			return ResponseEntity
-//					.status(HttpStatus.NO_CONTENT)
-//					.build();
-//		}
-		return null;
+		if (dealCostAvgDto != null) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(dealCostAvgDto);
+		} else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.build();
+		}
+	}
+	@GetMapping("/dealCostList")
+	public ResponseEntity<?> dealCostAvgList(@RequestParam Map<String, String> map) throws SQLException{
+		List<DealCostAvgAndDongDto> list = commerceService.getDealCostAvgList(map);
+		
+		System.out.println(list);
+		System.out.println(list.size());
+		System.out.println(list.get(0));
+		
+		if (list != null && list.size()>0) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(list);
+		} else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.build();
+		}
 	}
 	@GetMapping("/estateList")
 	public ResponseEntity<?> getEstateList(@RequestParam Map<String, String> map) throws SQLException{
