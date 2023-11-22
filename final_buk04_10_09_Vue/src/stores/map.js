@@ -18,6 +18,8 @@ export const useMapStore = defineStore("map", () => {
   const dealCostAvgByDong = ref({});
   const estateList = ref([]);
   const estate = ref({});
+  // 카카오맵 추가 기능 상태 변수
+  const mapType = ref("roadmap");
 
   // Getters (Computed: State를 가공한 결과를 리턴)
   const getterEstateList = computed(() => {
@@ -139,6 +141,7 @@ export const useMapStore = defineStore("map", () => {
     dealCostAvgByDong,
     estateList,
     estate,
+    mapType,
     getterEstateList,
     getterEstate,
     selectStoreList,
