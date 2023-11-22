@@ -121,7 +121,8 @@ public class XmlParser {
 //    			Thread.sleep(10000);
             	System.out.println("==== 시도 코드 : "+sidoCode);
             	
-            	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
+//            	String indsLclsCdList[] = {"P1","K1","Q1","G2","S2","I1","R1","I2"};
+            	String indsLclsCdList[] = {"G2","S2","I1","R1","I2"};
             	
             	for(String indsLclsCd : indsLclsCdList) {
 //        			Thread.sleep(10000);
@@ -130,12 +131,10 @@ public class XmlParser {
 	            		if(page%5==0)
 //	            			Thread.sleep(10000);
 	            			System.out.println("============== "+page+"번째 페이지 저장 중");
-//	            		if(sidoCode.equals("41")) {
-//	            			if(indsLclsCd.equals("I2")) {
-//	            				page = 145;
-//	            				System.out.println(sidoCode+" "+indsLclsCd+" "+page);
-//	            			}else break;
-//	            		}
+	            		if(indsLclsCd.equals("G2") && page<64) {
+            				page = 64;
+            				System.out.println(sidoCode+" "+indsLclsCd+" "+page);
+	            		}
 	            		
 	            		
 		                String pageNo = String.valueOf(page);
