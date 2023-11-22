@@ -120,7 +120,7 @@ const createRandomEstate = async () => {
             </li>
             <li class="nav-item">
               <router-link
-                :to="{ name: 'member-modify' }"
+                :to="{ name: 'user-modify' }"
                 class="nav-link"
                 aria-current="page"
                 >정보 수정</router-link
@@ -160,7 +160,7 @@ const createRandomEstate = async () => {
             </li>
             <li class="nav-item">
               <router-link
-                :to="{ name: 'member-join' }"
+                :to="{ name: 'user-join' }"
                 class="nav-link"
                 aria-current="page"
                 >회원가입</router-link
