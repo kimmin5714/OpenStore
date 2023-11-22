@@ -56,6 +56,13 @@
 				and lon between #{lonStart} and #{lonEnd}
 			</where>	
 	</select>
+	<select id="getEstateListByAddress" parameterType="map" resultType="estateDto">
+		select id, dealClass,dealAmount,floor ,area ,description,joinYear ,joinMonth ,joinDay ,sido ,gugun,dong ,jibun,dongCode,lat ,lon
+		from estates
+		where sido = #{sido}
+		and gugun = #{gugun}
+		and dong = #{dong}
+	</select>
 	
 	<select id="getDealCostAvgByDong" parameterType="map" resultType="comPropDto">
 		select id, dealAmount, buildingArea, buildingUse, buildYear, dealYear, plottage, dong, sigungu, landUse, dealMonth, buildingType, dealDay, regionalCode 
@@ -71,6 +78,16 @@
 			 concat(substr(#{item.dongCode},1,5),#{item.dongName})
 		</foreach> 	
 		group by concat(regionalCode,dong);
+	</select>
+	
+	<select id="getSalesByDong" parameterType="map" resultType="salesDto">
+		select s.year_month,s.busi_area_div_code,s.busi_area_div_code_name,s.busi_area_code,s.busi_area_code_name,service_code,service_code_name,month_sales,month_sales_count,x_pos,y_pos,gugun_code,gugun_name,dong_code,dong_name,area 
+		from  salesposition p
+		join sales s on s.busi_area_code = p.busi_area_code
+		where s.busi_area_code = (select busi_area_code
+		from salesposition
+		order by (abs(y_pos-#{y_pos})+abs(x_pos-#{x_pos}))
+		limit 1);
 	</select>
 	
 	<insert id="writeEstate" parameterType="map">

@@ -3,6 +3,7 @@ import { useRouter, useRoute } from "vue-router";
 //  import { useEstateStore } from "@/stores/estate";
 import { storeToRefs } from "pinia";
 import { useMapStore } from "@/stores/map";
+import { onMounted, reactive, ref, watch } from "vue";
 //  import aptListItem from "./item/aptListItem.vue";
 
 // Router
@@ -12,6 +13,71 @@ const route = useRoute();
 // Pinia
 const storeMap = useMapStore();
 const { estateList } = storeToRefs(storeMap);
+const { insertEstate, sendRequest, initOption, selectEstateListByAddress } =
+  storeMap;
+
+// Data
+const searchAddress = reactive({
+  sido: "1100000000 서울특별시",
+  gugun: "",
+  dong: "",
+});
+
+const searchType = ref("D");
+
+// Method
+watch(
+  () => searchAddress.gugun,
+  () => {
+    if (searchAddress.gugun) {
+      let regcode = searchAddress.gugun.substr(0, 5) + "*";
+      sendRequest("dong", regcode);
+    } else {
+      initOption("dong");
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => searchAddress.dong,
+  async () => {
+    if (searchAddress.dong) {
+      if (!searchAddress.sido) {
+        alert("주소(시도)를 찾을 수 없습니다.");
+        return;
+      } else if (!searchAddress.gugun) {
+        alert("주소(구군)를 찾을 수 없습니다.");
+        return;
+      } else if (!searchAddress.dong) {
+        alert("주소(동)를 찾을 수 없습니다.");
+        return;
+      }
+
+      const address = {
+        sido: searchAddress.sido.substr(11),
+        gugun: searchAddress.gugun.substr(11),
+        dong: searchAddress.dong.substr(11),
+      };
+
+      const resp = await selectEstateListByAddress(address);
+    }
+  }
+);
+
+watch(
+  () => searchType.value,
+  () => {
+    if (searchType.value === "D") {
+      sendRequest("gugun", "11*00000");
+    }
+  },
+  { deep: true }
+);
+
+if (searchType.value === "D") {
+  sendRequest("gugun", "11*00000");
+}
 
 // //Pinia
 // const { lat, lon, getterEstateList } = storeToRefs(storeEstate);
@@ -23,7 +89,6 @@ const { estateList } = storeToRefs(storeMap);
 //   lat: lat.value,
 //   lon: lon.value,
 // });
-
 // //Method
 // onMounted(() => {
 //   getEstateList();
@@ -64,7 +129,8 @@ const { estateList } = storeToRefs(storeMap);
                 v-model="searchType"
                 class="form-check-input"
                 type="radio"
-                id="searchByDong" />
+                id="searchByDong"
+              />
               <label class="form-check-label" for="searchByDong">동 검색</label>
             </div>
             <div class="form-check">
@@ -73,7 +139,8 @@ const { estateList } = storeToRefs(storeMap);
                 v-model="searchType"
                 class="form-check-input"
                 type="radio"
-                id="searchByKeyword" />
+                id="searchByKeyword"
+              />
               <label class="form-check-label" for="searchByKeyword"
                 >키워드 검색</label
               >
@@ -82,13 +149,14 @@ const { estateList } = storeToRefs(storeMap);
         </div>
         <div
           v-if="searchType == 'D'"
-          class="pb-2 d-flex justify-content-evenly">
+          class="pb-2 d-flex justify-content-evenly"
+        >
           <div class="btn-group">
             <button type="button" class="btn btn-primary">서울시</button>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-6">
             <fieldset>
-              <select
+              <!-- <select
                 v-model="selectGuName"
                 @change="onGuMenuChange"
                 class="array-select form-control form-select"
@@ -100,23 +168,24 @@ const { estateList } = storeToRefs(storeMap);
                   :value="item.guCode">
                   {{ item.guName }}
                 </option>
+              </select> -->
+              <select
+                id="gugun"
+                class="array-select form-control form-select"
+                v-model="searchAddress.gugun"
+              >
+                <option value="">주소(구군)</option>
               </select>
             </fieldset>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-6">
             <fieldset>
               <select
-                v-model="selectDongName"
-                @change="onDongMenuChange"
-                class="array-select form-control form-select"
-                aria-label="example">
-                <option value="default" selected>동 선택</option>
-                <option
-                  v-for="(item, index) in dong"
-                  :key="index"
-                  :value="item.dongName">
-                  {{ item.dongName }}
-                </option>
+                id="dong"
+                class="form-select"
+                v-model="searchAddress.dong"
+              >
+                <option value="">주소(동)</option>
               </select>
             </fieldset>
           </div>
@@ -127,11 +196,13 @@ const { estateList } = storeToRefs(storeMap);
             type="text"
             v-model="inputKeyword"
             class="form-control d-inline-block"
-            placeholder="건물명 또는 동을 입력하세요" />
+            placeholder="건물명 또는 동을 입력하세요"
+          />
           <button
             @click="onKeywordSearch"
             class="btn btn-primary d-inline-block"
-            type="button">
+            type="button"
+          >
             <i class="bi bi-search"></i>
           </button>
         </div>
@@ -191,7 +262,8 @@ const { estateList } = storeToRefs(storeMap);
     <li v-for="estate in estateList" :key="estate.id" class="search-list-li">
       <router-link
         :to="{ name: 'ApartDetail', params: { id: estate.id } }"
-        aria-current="page">
+        aria-current="page"
+      >
         <div role="button" class="search-list-li-detail">
           <div class="sc-juGoRN cujSyQ">
             <h4 class="sc-eFfTkT btIhdS">{{ estate.dong }}</h4>
@@ -215,7 +287,8 @@ const { estateList } = storeToRefs(storeMap);
         height: 340px;
         transform: translate3d(0px, 0px, 0px);
         display: block;
-      "></div>
+      "
+    ></div>
   </div>
 </template>
 

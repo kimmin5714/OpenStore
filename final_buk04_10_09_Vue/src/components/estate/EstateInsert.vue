@@ -1,7 +1,7 @@
 <script setup>
 import HeadingNav from "@/components/common/HeadingNav.vue";
 import Footer from "../common/Footer.vue";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import { useMapStore } from "@/stores/map";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -11,7 +11,7 @@ const router = useRouter();
 
 // Pinia
 const storeMap = useMapStore();
-const { insertEstate } = storeMap;
+const { insertEstate, sendRequest, initOption } = storeMap;
 
 // State
 const estate = reactive({
@@ -27,7 +27,68 @@ const estate = reactive({
 });
 
 // Action
+watch(
+  () => estate.sido,
+  () => {
+    if (estate.sido) {
+      let regcode = estate.sido.substr(0, 2) + "*00000";
+      sendRequest("gugun", regcode);
+    } else {
+      initOption("gugun");
+      initOption("dong");
+    }
+  },
+  { deep: true }
+);
+
+watch(
+  () => estate.gugun,
+  () => {
+    if (estate.gugun) {
+      let regcode = estate.gugun.substr(0, 5) + "*";
+      sendRequest("dong", regcode);
+    } else {
+      initOption("dong");
+    }
+  },
+  { deep: true }
+);
+
 const submitEstate = async () => {
+  // 값 검증
+  if (!estate.dealClass) {
+    alert("매매를 입력해주세요.");
+    return;
+  } else if (!estate.dealAmount) {
+    alert("매매가를 입력해주세요.");
+    return;
+  } else if (!estate.floor) {
+    alert("층을 입력해주세요.");
+    return;
+  } else if (!estate.area) {
+    alert("면적을 입력해주세요.");
+    return;
+  } else if (!estate.description) {
+    alert("매물 설명을 입력해주세요.");
+    return;
+  } else if (!estate.sido) {
+    alert("주소(시도)를 선택해주세요.");
+    return;
+  } else if (!estate.gugun) {
+    alert("주소(구군)을 선택해주세요.");
+    return;
+  } else if (!estate.dong) {
+    alert("주소(동)을 선택해주세요.");
+    return;
+  } else if (!estate.jibun) {
+    alert("주소(지번)을 입력해주세요.");
+    return;
+  }
+
+  estate.sido = estate.sido.substr(11);
+  estate.gugun = estate.gugun.substr(11);
+  estate.dong = estate.dong.substr(11);
+
   const resp = await insertEstate(estate);
   if (resp === "success") {
     alert("등록이 완료되었습니다.");
@@ -37,6 +98,8 @@ const submitEstate = async () => {
     alert("등록 실패하였습니다.");
   }
 };
+
+sendRequest("sido", "*00000000");
 </script>
 
 <template>
@@ -104,7 +167,7 @@ const submitEstate = async () => {
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
-        <div class="form-floating">
+        <!-- <div class="form-floating">
           <input
             v-model="estate.sido"
             type="text"
@@ -112,10 +175,16 @@ const submitEstate = async () => {
             placeholder="주소(시도) *"
           />
           <label>주소(시도) <span class="text-danger">*</span></label>
+        </div> -->
+        <div class="form-floating">
+          <select id="sido" class="form-select" v-model="estate.sido">
+            <option value="">주소(시도)</option>
+          </select>
+          <label>주소(시도)<span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
-        <div class="form-floating">
+        <!-- <div class="form-floating">
           <input
             v-model="estate.gugun"
             type="text"
@@ -123,10 +192,16 @@ const submitEstate = async () => {
             placeholder="주소(구군) *"
           />
           <label>주소(구군) <span class="text-danger">*</span></label>
+        </div> -->
+        <div class="form-floating">
+          <select id="gugun" class="form-select" v-model="estate.gugun">
+            <option value="">주소(구군)</option>
+          </select>
+          <label>주소(구군)<span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
-        <div class="form-floating">
+        <!-- <div class="form-floating">
           <input
             v-model="estate.dong"
             type="text"
@@ -134,6 +209,12 @@ const submitEstate = async () => {
             placeholder="주소(동) *"
           />
           <label>주소(동) <span class="text-danger">*</span></label>
+        </div> -->
+        <div class="form-floating">
+          <select id="dong" class="form-select" v-model="estate.dong">
+            <option value="">주소(동)</option>
+          </select>
+          <label>주소(동)<span class="text-danger">*</span></label>
         </div>
       </div>
       <div class="col-lg-3 col-md-6">
@@ -142,9 +223,9 @@ const submitEstate = async () => {
             v-model="estate.jibun"
             type="text"
             class="form-control"
-            placeholder="지번 *"
+            placeholder="주소(지번) *"
           />
-          <label>지번 <span class="text-danger">*</span></label>
+          <label>주소(지번) <span class="text-danger">*</span></label>
         </div>
       </div>
 
@@ -171,7 +252,7 @@ const submitEstate = async () => {
         >
       </div>
     </div>
-    <select-house-no-modal @modal-close="afterClose" />
+    <!-- <select-house-no-modal @modal-close="afterClose" /> -->
   </div>
   <Footer></Footer>
 </template>

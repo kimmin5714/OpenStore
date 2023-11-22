@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="iNhMIC">
+  <!-- <div class="iNhMIC">
     <div class="sc-hZjMBx dyWAXD">
       <div class="sc-gtBfHm iaEmqK">
         <p>스페이스워크 주식회사</p>
@@ -196,7 +196,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

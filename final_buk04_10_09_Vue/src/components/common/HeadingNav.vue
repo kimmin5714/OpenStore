@@ -67,7 +67,8 @@ const createRandomEstate = async () => {
     <div class="container">
       <RouterLink
         class="navbar-brand text-warning fw-bold"
-        :to="{ name: 'IndexView' }">
+        :to="{ name: 'IndexView' }"
+      >
         Open Store
       </RouterLink>
       <button
@@ -77,7 +78,8 @@ const createRandomEstate = async () => {
         data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
-        aria-label="Toggle navigation">
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -86,11 +88,12 @@ const createRandomEstate = async () => {
             <RouterLink
               class="nav-link"
               aria-current="page"
-              :to="{ name: 'apart-view' }">
+              :to="{ name: 'apart-view' }"
+            >
               지도
             </RouterLink>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
             <a class="btn btn-outline-danger" @click="importData">
               DATA IMPORT
             </a>
@@ -99,12 +102,13 @@ const createRandomEstate = async () => {
             <a class="btn btn-outline-danger" @click="createRandomEstate">
               !!!매물 랜덤 생성!!!
             </a>
-          </li> -->
+          </li>
         </ul>
 
         <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
-          style="--bs-scroll-height: 100px">
+          style="--bs-scroll-height: 100px"
+        >
           <template v-if="isLogin">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" style="font-weight: bold">
@@ -141,7 +145,8 @@ const createRandomEstate = async () => {
               <button
                 class="nav-link"
                 aria-current="page"
-                @click="moveEstateInsert">
+                @click="moveEstateInsert"
+              >
                 매물 등록
               </button>
             </li>

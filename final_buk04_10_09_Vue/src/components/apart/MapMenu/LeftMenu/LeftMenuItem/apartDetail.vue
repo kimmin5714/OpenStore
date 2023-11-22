@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted, onBeforeUnmount, watch } from "vue";
+import { onMounted, onBeforeUnmount, watch, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useMapStore } from "@/stores/map";
+import proj4Src from "proj4";
 
 // Router
 const router = useRouter();
@@ -10,32 +11,69 @@ const route = useRoute();
 
 // Pinia
 const storeMap = useMapStore();
-const { estate } = storeToRefs(storeMap);
-const { selectEstate } = storeMap;
+const { estate, dealCostAvgByDong, salesByDong } = storeToRefs(storeMap);
+const { selectEstate, selectDealCostAvgByDong, selectSalesByDong } = storeMap;
+
+
+// Proj4
+const proj4 = proj4Src;
+
+// Data
+const monthSales = computed(()=>{
+  let sum = 0;
+  for(let i=0; i<salesByDong.value.length; i++){
+    const sale = salesByDong.value[i];
+    sum += Number(sale.month_sales);
+  }
+  return sum;
+})
 
 // Methods
-// onMounted(async () => {
+const initEstateDetail = async () => {
+  const resp = await selectEstate(route.params.id);
+  if (resp === "success") {
+    
+    // 매물의 동 평균 매매가
+    const dealResp = await selectDealCostAvgByDong(estate.value);
 
-// });
-console.log("마운티드!!!");
-const resp = await selectEstate(route.params.id);
-if (resp !== "success") {
-  alert("매물을 찾을 수 없습니다.");
+
+    // 매물의 상권 매출
+    //wgs84(위경도)좌표계
+    const wgs84 = "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees";
+    const epsg5181 = "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs"
+    // proj4(proj4(fromProjection, toProjection, coordinates);
+    // console.log(estate.value.lat, estate.value.lon);
+    // console.log(proj4(wgs84, epsg5181, [ estate.value.lon, estate.value.lat]));
+    // console.log(proj4(epsg5181, wgs84, proj4(wgs84, epsg5181, [ estate.value.lon, estate.value.lat])));
+    
+    const pos = proj4(wgs84, epsg5181, [ estate.value.lon, estate.value.lat])
+    const dealSales = await selectSalesByDong({
+      x_pos : pos[0],
+      y_pos : pos[1]
+    });
+
+    
+  }else{
+    alert("매물을 찾을 수 없습니다.");
+  }
 }
+
+
+onMounted(() => {
+  initEstateDetail();
+});
+
 watch(
   () => route.params.id,
-  async () => {
-    console.log("id 변경!!!!!");
-    if (route.params.id) {
-      const resp = await selectEstate(route.params.id);
-      if (resp !== "success") {
-        alert("매물을 찾을 수 없습니다.");
-      }
+  () => {
+    if(route.params.id){
+      initEstateDetail();
     }
   }
 );
+
 onBeforeUnmount(() => {
-  estate.value = undefined;
+  // estate.value = {};
 });
 </script>
 
@@ -126,10 +164,13 @@ onBeforeUnmount(() => {
                   <div class="detail-text">매매가</div>
                   <div class="detail-des4">
                     <div class="detail-des5">
-                      <span class="detail-text2">{{ estate.dealAmount }}</span
-                      ><span class="detail-text3"
-                        >( 거래 종류 : {{ estate.dealClass }} )</span
+                      <span class="detail-text2">{{
+                        (Math.round(estate.dealAmount / 10000 * 10 ) / 100)
+                      }}억원</span
                       >
+                      <!-- <span class="detail-text3"
+                        >( 거래 종류 : {{ estate.dealClass }} )</span
+                      > -->
                     </div>
                   </div>
                 </div>
@@ -186,7 +227,8 @@ onBeforeUnmount(() => {
               <div class="detail-text">근처 상권</div>
               <div class="detail-des4">
                 <div class="detail-des5">
-                  <span class="detail-text2">ㅇㅇㅇ 상권</span>
+                  <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ salesByDong[0].busi_area_code_name }} 상권</span>
+                  <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
                 </div>
               </div>
             </div>
@@ -195,7 +237,10 @@ onBeforeUnmount(() => {
                 <div class="detail-text">상권 매출</div>
                 <div class="detail-des4">
                   <div class="detail-des5">
-                    <span class="detail-text2">100억원</span>
+                    <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ Math.round(monthSales / 100000000)
+                          .toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") }}억원
+                      </span>
+                  <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
                   </div>
                 </div>
               </div>
@@ -217,7 +262,7 @@ onBeforeUnmount(() => {
               <div class="detail-text">해당 동</div>
               <div class="detail-des4">
                 <div class="detail-des5">
-                  <span class="detail-text2">ㅁㅁㅁ 동</span>
+                  <span class="detail-text2">{{ estate.dong }}</span>
                 </div>
               </div>
             </div>
@@ -226,7 +271,36 @@ onBeforeUnmount(() => {
                 <div class="detail-text">평균 실거래가</div>
                 <div class="detail-des4">
                   <div class="detail-des5">
-                    <span class="detail-text2">50억원</span>
+                    <span v-show="dealCostAvgByDong.dealAmountAvg" class="detail-text2"
+                      >{{
+                        (Math.round(dealCostAvgByDong.dealAmountAvg / 10000 * 10 ) / 100)
+                      }}
+                      억원</span
+                    ><span v-show="!dealCostAvgByDong.dealAmountAvg" class="detail-text3 m-0 fs-6"
+                      >데이터 없음</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="detail-des2">
+              <div class="detail-des3">
+                <div class="detail-text">
+                  면적당<br />
+                  평균 실거래가
+                </div>
+                <div class="detail-des4">
+                  <div class="detail-des5">
+                    <span v-show="dealCostAvgByDong.dealAmountPerArea" class="detail-text2"
+                      >{{
+                        Math.round(dealCostAvgByDong.dealAmountPerArea)
+                          .toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+                      }}
+                      만원</span
+                    >
+                    <span v-show="!dealCostAvgByDong.dealAmountPerArea" class="detail-text3 m-0 fs-6"
+                      >데이터 없음</span
+                    >
                   </div>
                 </div>
               </div>

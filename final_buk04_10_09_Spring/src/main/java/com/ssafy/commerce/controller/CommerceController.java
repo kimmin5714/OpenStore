@@ -21,6 +21,7 @@ import com.ssafy.commerce.model.DealCostAvgAndDongDto;
 import com.ssafy.commerce.model.DealCostAvgDto;
 import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
+import com.ssafy.commerce.model.SalesDto;
 import com.ssafy.commerce.model.service.CommerceService;
 import com.ssafy.happyhouse.model.HouseInfoDto;
 
@@ -83,9 +84,38 @@ public class CommerceController {
 					.build();
 		}
 	}
+	@GetMapping("/sales")
+	public ResponseEntity<?> getSalesByDong(@RequestParam Map<String, String> map) throws SQLException{
+		List<SalesDto> list = commerceService.getSalesByDong(map);
+		
+		if (list != null && list.size()>0) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(list);
+		} else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.build();
+		}
+	}
 	@GetMapping("/estateList")
 	public ResponseEntity<?> getEstateList(@RequestParam Map<String, String> map) throws SQLException{
 		List<EstateDto> list = commerceService.getEstateList(map);
+			
+		if (list != null && list.size()>0) {
+			return ResponseEntity
+					.status(HttpStatus.OK)
+					.body(list);
+		} else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT)
+					.build();
+		}
+	}
+	@GetMapping("/estateListByAddress")
+	public ResponseEntity<?> getEstateListByAddress(@RequestParam Map<String, String> map) throws SQLException{
+		System.out.println(map);
+		List<EstateDto> list = commerceService.getEstateListByAddress(map);
 			
 		if (list != null && list.size()>0) {
 			return ResponseEntity
