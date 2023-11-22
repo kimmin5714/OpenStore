@@ -21,6 +21,7 @@ const {
   estateList,
   estate,
   mapType,
+  isSearchedByAddress,
 } = storeToRefs(storeMap);
 const { selectStoreList, selectDealCostAvgByDong, selectEstateList } = storeMap;
 
@@ -72,6 +73,18 @@ watch(
       }
 
       isStoreListClicked.value = false;
+    }
+  }
+);
+
+watch(
+  () => isSearchedByAddress.value,
+  () => {
+    if (isSearchedByAddress.value && estateList.value.length > 0) {
+      map.panTo(
+        new kakao.maps.LatLng(estateList.value[0].lat, estateList.value[0].lon)
+      );
+      isSearchedByAddress.value = false;
     }
   }
 );
@@ -233,7 +246,6 @@ watch(
   () => estate.value,
   () => {
     if (estate.value) {
-      console.log("aaa");
       map.panTo(new kakao.maps.LatLng(estate.value.lat, estate.value.lon));
     }
   }
@@ -272,8 +284,6 @@ const makeEstateMarkers = async () => {
     };
     const resp = await selectEstateList(params);
     if (resp === "success") {
-      console.log(estateList.value);
-
       for (let i = 0; i < estateList.value.length; i++) {
         let estate = estateList.value[i];
         // 마커를 생성합니다

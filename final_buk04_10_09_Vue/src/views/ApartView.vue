@@ -1,6 +1,7 @@
 <script setup>
 import VKakaoMap from "@/components/common/VKakaoMap.vue";
 import MapStoreFilter from "../components/apart/MapStoreFilter/MapStoreFilter.vue";
+// import Apartmap from "../components/apart/Apartmap.vue";
 
 const list = [];
 const a = {};

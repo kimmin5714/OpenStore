@@ -13,6 +13,7 @@ import com.ssafy.commerce.model.DealCostAvgAndDongDto;
 import com.ssafy.commerce.model.DealCostAvgDto;
 import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
+import com.ssafy.commerce.model.SalesDto;
 import com.ssafy.commerce.model.mapper.CommerceMapper;
 
 @Service
@@ -54,21 +55,23 @@ public class CommerceServiceImpl implements CommerceService{
 	public DealCostAvgDto getDealCostAvgByDong(Map<String, String> map) {
 		List<ComPropDto> list = commerceMapper.getDealCostAvgByDong(map);
 		
-		int sum = 0;
-		double costAvgPerAreaSum = 0;
-		for(int i=0; i<list.size(); i++) {
-			sum += list.get(i).getDealAmount();
-			costAvgPerAreaSum += list.get(i).getDealAmount() / list.get(i).getBuildingArea();
-		}
-		
-		double costAvg = sum / list.size();
-		double costAvgPerArea = costAvgPerAreaSum / list.size();
-		
-		DealCostAvgDto dealCostAvgDto = new DealCostAvgDto(); 
-		dealCostAvgDto.setDealAmountAvg(costAvg);
-		dealCostAvgDto.setDealAmountPerArea(costAvgPerArea);
-		
-		return dealCostAvgDto;
+		if(list != null && list.size()>0) {
+			int sum = 0;
+			double costAvgPerAreaSum = 0;
+			for(int i=0; i<list.size(); i++) {
+				sum += list.get(i).getDealAmount();
+				costAvgPerAreaSum += list.get(i).getDealAmount() / list.get(i).getBuildingArea();
+			}
+			
+			double costAvg = sum / list.size();
+			double costAvgPerArea = costAvgPerAreaSum / list.size();
+			
+			DealCostAvgDto dealCostAvgDto = new DealCostAvgDto(); 
+			dealCostAvgDto.setDealAmountAvg(costAvg);
+			dealCostAvgDto.setDealAmountPerArea(costAvgPerArea);
+			
+			return dealCostAvgDto;
+		}else return null;		
 	}
 
 	@Override
@@ -112,8 +115,21 @@ public class CommerceServiceImpl implements CommerceService{
 
 	@Override
 	public int writeEstate(Map<String, String> map) {
-		System.out.println(map.get("dealAmount"));
-		System.out.println(map.get("dealAmount").getClass());
+//		 double lat = map.get("lat");
+//		 double lon = lonStart + Math.random() * lonRandomSize;
+		DongCodeLatlngDto dongCodeLatlngDto = commerceMapper.getDongByAddress(map);
+		System.out.println(dongCodeLatlngDto);
+		map.put("dongCode", dongCodeLatlngDto.getDongCode());
+
+		double latRandomSize = 0.020;
+		double lonRandomSize = 0.020;
+
+		 double lat = dongCodeLatlngDto.getLat() + (Math.random() * latRandomSize - (latRandomSize/2));
+		 double lon = dongCodeLatlngDto.getLon() + (Math.random() * lonRandomSize - (lonRandomSize/2));
+		
+		 map.put("lat", String.valueOf(lat));
+		 map.put("lon", String.valueOf(lon));
+		
 		return commerceMapper.writeEstate(map);
 	}
 
@@ -160,6 +176,16 @@ public class CommerceServiceImpl implements CommerceService{
 		
 		return commerceMapper.writeEstateRandomly(list);
 //		return 0;
+	}
+
+	@Override
+	public List<EstateDto> getEstateListByAddress(Map<String, String> map) {
+		return commerceMapper.getEstateListByAddress(map);
+	}
+
+	@Override
+	public List<SalesDto> getSalesByDong(Map<String, String> map) {
+		return commerceMapper.getSalesByDong(map);
 	}
 	
 }

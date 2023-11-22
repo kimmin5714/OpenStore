@@ -13,8 +13,15 @@ export const getDealCostAvgByDong = (params) => {
   return local.get(`${url}/dealCost`, { params });
 };
 
+export const getSalesByDong = (params) => {
+  return local.get(`${url}/sales`, { params });
+};
+
 export const getEstateList = (params) => {
   return local.get(`${url}/estateList`, { params });
+};
+export const getEstateListByAddress = (params) => {
+  return local.get(`${url}/estateListByAddress`, { params });
 };
 export const getEstate = (id) => {
   return local.get(`${url}/estate/${id}`);

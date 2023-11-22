@@ -9,6 +9,7 @@ import com.ssafy.commerce.model.DealCostAvgAndDongDto;
 import com.ssafy.commerce.model.DealCostAvgDto;
 import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
+import com.ssafy.commerce.model.SalesDto;
 
 public interface CommerceService {
 
@@ -29,4 +30,8 @@ public interface CommerceService {
 	int writeEstate(Map<String, String> map);
 
 	int writeEstateRandomly(int count);
+
+	List<EstateDto> getEstateListByAddress(Map<String, String> map);
+
+	List<SalesDto> getSalesByDong(Map<String, String> map);
 }

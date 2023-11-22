@@ -10,6 +10,7 @@ import com.ssafy.api.model.DongCodeLatlngDto;
 import com.ssafy.commerce.model.DealCostAvgDto;
 import com.ssafy.commerce.model.EstateDto;
 import com.ssafy.commerce.model.StoreDto;
+import com.ssafy.commerce.model.SalesDto;
 
 @Mapper
 public interface CommerceMapper {
@@ -31,8 +32,12 @@ public interface CommerceMapper {
 
 	DongCodeLatlngDto getDongsNearest(Map<String, String> map);
 
-
 	int writeEstateRandomly(List<EstateDto> list);
 
+	DongCodeLatlngDto getDongByAddress(Map<String, String> params);
 
+	List<EstateDto> getEstateListByAddress(Map<String, String> map);
+
+
+	List<SalesDto> getSalesByDong(Map<String, String> map);
 }
