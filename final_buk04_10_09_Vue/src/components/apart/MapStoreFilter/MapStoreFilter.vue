@@ -5,9 +5,10 @@ import { storeToRefs } from "pinia";
 const storeMap = useMapStore();
 const { storeListFilter } = storeToRefs(storeMap);
 
-const setFilter = () => {
+const setFilter = (filter) => {
   console.log("setFilter");
-  storeListFilter.value = "";
+  storeListFilter.value = "filter";
+  console.log(filter);
 };
 </script>
 
@@ -15,31 +16,29 @@ const setFilter = () => {
   <div class="filter-btn-container">
     <div
       class="filter-btn"
-      style="transform: scaleY(1); transform-origin: 0% 0%"
-    >
+      style="transform: scaleY(1); transform-origin: 0% 0%">
       <div>
         <div role="checkbox" class="filter-checkbox">
           <div class="filter-content">
             <input
               id="checkbox-land"
+              name="filter"
+              @click="setFilter('food')"
               data-gtm-action="search_deal_marker_off"
-              type="checkbox"
-              class="check checkbox-1"
-            />
+              type="radio"
+              class="check checkbox-1" />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon"
-            >
+              class="swk-icon">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"
-              ></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">음식</label>
@@ -50,24 +49,23 @@ const setFilter = () => {
           <div class="filter-content">
             <input
               id="checkbox-land"
+              name="filter"
+              @click="setFilter('retail')"
               data-gtm-action="search_deal_marker_off"
-              type="checkbox"
-              class="check checkbox-2"
-            />
+              type="radio"
+              class="check checkbox-2" />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon"
-            >
+              class="swk-icon">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"
-              ></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">소매</label>
@@ -78,24 +76,23 @@ const setFilter = () => {
           <div class="filter-content">
             <input
               id="checkbox-land"
+              name="filter"
+              @click="setFilter('service')"
               data-gtm-action="search_deal_marker_off"
-              type="checkbox"
-              class="check checkbox-3"
-            />
+              type="radio"
+              class="check checkbox-3" />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon"
-            >
+              class="swk-icon">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"
-              ></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">서비스</label>
@@ -106,24 +103,23 @@ const setFilter = () => {
           <div class="filter-content">
             <input
               id="checkbox-land"
+              name="filter"
+              @click="setFilter('game')"
               data-gtm-action="search_deal_marker_off"
-              type="checkbox"
-              class="check checkbox-4"
-            />
+              type="radio"
+              class="check checkbox-4" />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon"
-            >
+              class="swk-icon">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"
-              ></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">오락</label>
@@ -134,24 +130,23 @@ const setFilter = () => {
           <div class="filter-content">
             <input
               id="checkbox-land"
+              name="filter"
+              @click="setFilter('edu')"
               data-gtm-action="search_deal_marker_off"
-              type="checkbox"
-              class="check checkbox-5"
-            />
+              type="radio"
+              class="check checkbox-5" />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon"
-            >
+              class="swk-icon">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"
-              ></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">교육</label>
@@ -162,24 +157,23 @@ const setFilter = () => {
           <div class="filter-content">
             <input
               id="checkbox-land"
+              name="filter"
+              @click="setFilter('accommodation')"
               data-gtm-action="search_deal_marker_off"
-              type="checkbox"
-              class="check checkbox-6"
-            />
+              type="radio"
+              class="check checkbox-6" />
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="#FFFFFF"
               xmlns="http://www.w3.org/2000/svg"
-              class="swk-icon"
-            >
+              class="swk-icon">
               <path
                 fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M20.7071 6.29289C21.0976 6.68342 21.0976 7.31658 20.7071 7.70711L10.7071 17.7071C10.3166 18.0976 9.68342 18.0976 9.29289 17.7071L3.29289 11.7071C2.90237 11.3166 2.90237 10.6834 3.29289 10.2929C3.68342 9.90237 4.31658 9.90237 4.70711 10.2929L10 15.5858L19.2929 6.29289C19.6834 5.90237 20.3166 5.90237 20.7071 6.29289Z"
-                fill="#FFFFFF"
-              ></path>
+                fill="#FFFFFF"></path>
             </svg>
           </div>
           <label for="checkbox-land" class="filter-text">숙박</label>
