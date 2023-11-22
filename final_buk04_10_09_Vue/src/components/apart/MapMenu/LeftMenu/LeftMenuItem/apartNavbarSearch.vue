@@ -49,9 +49,97 @@ const { estateList } = storeToRefs(storeMap);
 </script>
 
 <template>
-  <div class="search-body">
-    <!-- 검색창 -->
-    <div class="search-body-up">
+  <div id="wrapper">
+    <div id="searchBox" class="card">
+      <div>
+        <div class="p-2">
+          <div class="d-flex">
+            <i class="fa fa-search"></i>
+            <h6 class="ps-2">검색 방법을 선택하세요</h6>
+          </div>
+          <div class="py-1 px-2 d-flex">
+            <div class="form-check pe-3">
+              <input
+                value="D"
+                v-model="searchType"
+                class="form-check-input"
+                type="radio"
+                id="searchByDong" />
+              <label class="form-check-label" for="searchByDong">동 검색</label>
+            </div>
+            <div class="form-check">
+              <input
+                value="K"
+                v-model="searchType"
+                class="form-check-input"
+                type="radio"
+                id="searchByKeyword" />
+              <label class="form-check-label" for="searchByKeyword"
+                >키워드 검색</label
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="searchType == 'D'"
+          class="pb-2 d-flex justify-content-evenly">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary">서울시</button>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <fieldset>
+              <select
+                v-model="selectGuName"
+                @change="onGuMenuChange"
+                class="array-select form-control form-select"
+                aria-label="example">
+                <option value="default" selected>구 선택</option>
+                <option
+                  v-for="(item, index) in gu"
+                  :key="index"
+                  :value="item.guCode">
+                  {{ item.guName }}
+                </option>
+              </select>
+            </fieldset>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <fieldset>
+              <select
+                v-model="selectDongName"
+                @change="onDongMenuChange"
+                class="array-select form-control form-select"
+                aria-label="example">
+                <option value="default" selected>동 선택</option>
+                <option
+                  v-for="(item, index) in dong"
+                  :key="index"
+                  :value="item.dongName">
+                  {{ item.dongName }}
+                </option>
+              </select>
+            </fieldset>
+          </div>
+        </div>
+        <div v-if="searchType == 'K'" class="input-group pb-2 px-3">
+          <input
+            @keyup.enter="onKeywordSearch"
+            type="text"
+            v-model="inputKeyword"
+            class="form-control d-inline-block"
+            placeholder="건물명 또는 동을 입력하세요" />
+          <button
+            @click="onKeywordSearch"
+            class="btn btn-primary d-inline-block"
+            type="button">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 검색창 -->
+  <!-- <div class="search-body-up">
       <div class="search-body-search">
         <div
           data-gtm-action="search_search_box_click"
@@ -91,45 +179,43 @@ const { estateList } = storeToRefs(storeMap);
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- 검색 결과 리스트 -->
-    <!-- <aptListItem
+  <!-- 검색 결과 리스트 -->
+  <!-- <aptListItem
       v-for="(estate, index) in getterEstateList"
       :key="estate.estateId"
       :index="index"
       :estate="estate" /> -->
-    <ul class="search-list-ul">
-      <li v-for="estate in estateList" :key="estate.id" class="search-list-li">
-        <router-link
-          :to="{ name: 'ApartDetail', params: { id: estate.id } }"
-          aria-current="page"
-        >
-          <div role="button" class="search-list-li-detail">
-            <div class="sc-juGoRN cujSyQ">
-              <h4 class="sc-eFfTkT btIhdS">{{ estate.dong }}</h4>
-              <p class="sc-bKGzYo beCmdD">토지ㆍ47m²ㆍ1년이내</p>
-            </div>
-            <div class="sc-hMQQaK cymzWl">
-              <h3 class="sc-jjykVC irPSbt">{{ estate.dealAmount }}</h3>
-              <p class="sc-gbNofL pDonz">489만원/m²</p>
-              <p class="sc-haGfLn cwMZDB">{{ estate.join_year }}</p>
-            </div>
+  <ul class="search-list-ul">
+    <li v-for="estate in estateList" :key="estate.id" class="search-list-li">
+      <router-link
+        :to="{ name: 'ApartDetail', params: { id: estate.id } }"
+        aria-current="page">
+        <div role="button" class="search-list-li-detail">
+          <div class="sc-juGoRN cujSyQ">
+            <h4 class="sc-eFfTkT btIhdS">{{ estate.dong }}</h4>
+            <p class="sc-bKGzYo beCmdD">토지ㆍ47m²ㆍ1년이내</p>
           </div>
-        </router-link>
-      </li>
-    </ul>
+          <div class="sc-hMQQaK cymzWl">
+            <h3 class="sc-jjykVC irPSbt">{{ estate.dealAmount }}</h3>
+            <p class="sc-gbNofL pDonz">489만원/m²</p>
+            <p class="sc-haGfLn cwMZDB">{{ estate.join_year }}</p>
+          </div>
+        </div>
+      </router-link>
+    </li>
+  </ul>
 
-    <!--스크롤바-->
-    <div class="simplebar-track simplebar-vertical" style="visibility: visible">
-      <div
-        class="simplebar-scrollbar"
-        style="
-          height: 340px;
-          transform: translate3d(0px, 0px, 0px);
-          display: block;
-        "></div>
-    </div>
+  <!--스크롤바-->
+  <div class="simplebar-track simplebar-vertical" style="visibility: visible">
+    <div
+      class="simplebar-scrollbar"
+      style="
+        height: 340px;
+        transform: translate3d(0px, 0px, 0px);
+        display: block;
+      "></div>
   </div>
 </template>
 
