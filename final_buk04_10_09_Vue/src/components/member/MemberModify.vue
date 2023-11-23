@@ -14,17 +14,23 @@ const memberStore = useAdminStore();
 const { updateUser, getUserInfo } = memberStore;
 
 // Data
-const userinfoNew = reactive({
+const userinfoNew = ref({
   username: "",
   userid: "",
   emailid: "",
   emaildomain: "",
   userpwd: "",
 });
+const checkPwd = ref("");
 
 // Method
 const modifyUser = async () => {
-  const resp = await updateUser(userinfoNew);
+  if (checkPwd.value !== userinfoNew.value.userpwd) {
+    alert("비밀번호를 확인해주세요.");
+    return;
+  }
+  console.log("aaaaaaaaaaaaaaaaaaaaa", userinfoNew.value);
+  const resp = await updateUser(userinfoNew.value);
   if (resp === "success") {
     alert("회원 수정이 완료되었습니다.");
     router.push({ name: "IndexView" });
@@ -41,10 +47,10 @@ const getUser = async () => {
 
   console.log(userInfo);
   console.log(userInfo.value.userName);
-  userinfoNew.username = userInfo.value.userName;
-  userinfoNew.userid = userInfo.value.userId;
-  userinfoNew.emailid = userInfo.value.emailId;
-  userinfoNew.emaildomain = userInfo.value.emailDomain;
+  userinfoNew.value.username = userInfo.value.userName;
+  userinfoNew.value.userid = userInfo.value.userId;
+  userinfoNew.value.emailid = userInfo.value.emailId;
+  userinfoNew.value.emaildomain = userInfo.value.emailDomain;
 };
 
 onMounted(() => {
@@ -59,8 +65,7 @@ onMounted(() => {
   </div>
   <!-- <div style="margin-bottom: 100px">
     <div
-      class="mask d-flex align-items-center h-100 gradient-custom-3 register-ch"
-    >
+      class="mask d-flex align-items-center h-100 gradient-custom-3 register-ch">
       <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-12 col-md-9 col-lg-7 col-xl-6">
@@ -70,47 +75,41 @@ onMounted(() => {
                 id="form-join"
                 method="post"
                 class="join-form"
-                action=""
-              >
+                action="">
                 <input type="hidden" name="action" value="modify" />
                 <div class="form-outline mb-4">
                   <input
                     type="text"
-                    v-model="userinfoNew.username"
+                    v-model="userinfo.username"
                     id="username"
                     name="username"
                     class="form-control form-control-lg"
-                    placeholder="이름"
-                  />
+                    placeholder="이름" />
                 </div>
                 <div class="form-outline mb-4">
                   <input
-                    disabled
                     type="text"
-                    v-model="userinfoNew.useridRegister"
+                    v-model="userinfo.useridRegister"
                     id="useridR"
                     name="userid"
                     class="form-control form-control-lg"
-                    placeholder="아이디 입력 (수정 불가)"
-                  />
+                    placeholder="아이디 입력" />
                 </div>
 
                 <div class="form-outline mb-4">
                   <input
                     type="text"
-                    v-model="userinfoNew.emailid"
+                    v-model="userinfo.emailid"
                     class="form-control"
                     id="emailid"
-                    name="emailid"
-                  />
+                    name="emailid" />
                   <span class="input-group-text">@</span>
                   <select
+                    v-model="userinfo.emaildomain"
                     class="form-select"
-                    v-model="userinfoNew.emaildomain"
                     id="emaildomain"
                     name="emaildomain"
-                    aria-label="이메일 도메인 선택"
-                  >
+                    aria-label="이메일 도메인 선택">
                     <option selected>선택</option>
                     <option value="ssafy.com">싸피</option>
                     <option value="google.com">구글</option>
@@ -122,12 +121,11 @@ onMounted(() => {
                 <div class="form-outline mb-4">
                   <input
                     type="password"
-                    v-model="userinfoNew.userpwdRegister"
+                    v-model="userinfo.userpwdRegister"
                     id="userpwdR"
                     name="userpwd"
                     class="form-control form-control-lg"
-                    placeholder="비밀번호"
-                  />
+                    placeholder="비밀번호" />
                 </div>
 
                 <div class="form-outline mb-4">
@@ -135,8 +133,7 @@ onMounted(() => {
                     type="password"
                     id="pwdcheck"
                     class="form-control form-control-lg"
-                    placeholder="비밀번호 확인"
-                  />
+                    placeholder="비밀번호 확인" />
                 </div>
 
                 <div class="d-flex justify-content-center">
@@ -144,19 +141,14 @@ onMounted(() => {
                     type="submit"
                     id="btn-modify"
                     class="btn btn-outline-primary"
-                    @click="modifyUser"
-                  >
-                    회원 정보 수정
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger ms-3"
-                    @click="moveIndex"
-                  >
-                    취소
+                    @click="registerUser">
+                    회원 가입
                   </button>
                   <button type="button" class="btn btn-outline-success ms-3">
-                    탈퇴하기
+                    초기화
+                  </button>
+                  <button type="button" class="btn btn-outline-danger ms-3">
+                    취소
                   </button>
                 </div>
               </form>
@@ -166,89 +158,143 @@ onMounted(() => {
       </div>
     </div>
   </div> -->
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <div class="login_wrap">
-          <ul class="panel_wrap">
-            <li class="panel_item" style="display: block">
-              <div class="panel_inner" role="tabpanel" aria-controls="loinid">
-                <div class="id_pw_wrap">
-                  <div class="input_row" id="id_line">
-                    <div class="icon_cell" id="id_cell">
-                      <span class="icon_id">
-                        <span class="blind">아이디</span>
-                      </span>
-                    </div>
-                    <input
-                      disabled
-                      type="text"
-                      id="id"
-                      name="id"
-                      placeholder="아이디"
-                      title="아이디"
-                      class="input_text"
-                      maxlength="41"
-                      v-model="userinfoNew.userid"
-                      style="color: #aaa"
-                    />
-                    <span
-                      role="button"
-                      class="btn_delete"
-                      id="id_clear"
-                      style="display: none"
-                    >
-                      <span class="icon_delete">
-                        <span class="blind">삭제</span>
-                      </span>
-                    </span>
-                  </div>
+  <div class="inner">
+    <div class="content">
+      <form id="join_form" method="post" action="/user2/join/end" class="form">
+        <input
+          type="hidden"
+          id="token_sjoin"
+          name="token_sjoin"
+          value="26Sdblo4Lq25nf34"
+        />
+        <input type="hidden" id="nid_kb2" name="nid_kb2" value="" />
+        <input
+          type="hidden"
+          id="joinMode"
+          name="joinMode"
+          value="joinIdentity"
+        />
+        <input type="hidden" id="encPswd" name="encPswd" value="" />
+        <input type="hidden" id="encKey" name="encKey" value="" />
+        <input type="hidden" id="telecom" name="telecom" value="" />
+        <input type="hidden" id="birthday" name="birthday" value="" />
 
-                  <div class="input_row" id="pw_line">
-                    <div class="icon_cell" id="pw_cell">
-                      <span class="icon_pw">
-                        <span class="blind">비밀번호</span>
-                      </span>
-                    </div>
-                    <input
-                      type="password"
-                      id="pw"
-                      name="pw"
-                      placeholder="비밀번호"
-                      title="비밀번호"
-                      class="input_text"
-                      maxlength="16"
-                      v-model="userinfoNew.userpwd"
-                      @keyup.enter="login"
-                    />
-                    <span
-                      role="button"
-                      class="btn_delete"
-                      id="pw_clear"
-                      style="display: none"
-                    >
-                      <span class="icon_delete">
-                        <span class="blind">삭제</span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="btn_login_wrap">
-                  <button
-                    type="submit"
-                    class="btn_login"
-                    id="log.login"
-                    @click="modifyUser"
-                  >
-                    <span class="btn_text">정보 수정</span>
-                  </button>
-                </div>
+        <div class="form_content">
+          <div class="form_section">
+            <div class="form_list">
+              <div class="form_item user" id="divName">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="이름"
+                  class="input"
+                  v-model="userinfoNew.username"
+                  maxlength="40"
+                />
               </div>
-            </li>
-          </ul>
+              <!-- <div class="form_item calendar" id="divBirthday">
+                <input
+                  type="text"
+                  id="birthdayInput"
+                  placeholder="생년월일 8자리"
+                  class="input"
+                  value=""
+                  maxlength="10" />
+              </div> -->
+            </div>
+            <div class="form_list">
+              <div class="form_item user" id="divId">
+                <input
+                  disabled
+                  type="text"
+                  v-model="userinfoNew.userid"
+                  id="id"
+                  name="id"
+                  placeholder="아이디"
+                  class="input"
+                  maxlength="20"
+                  autocapitalize="off"
+                  style="cursor: default; color: #bbb"
+                />
+              </div>
+              <div class="form_item lock password" id="divPasswd">
+                <input
+                  type="password"
+                  id="pswd1"
+                  name="pswd1"
+                  placeholder="비밀번호"
+                  class="input"
+                  v-model="userinfoNew.userpwd"
+                  maxlength="20"
+                  autocomplete="new-password"
+                />
+              </div>
+              <div class="form_item lock password" id="divPasswd">
+                <input
+                  type="password"
+                  id="pswd2"
+                  name="pswd2"
+                  placeholder="비밀번호 확인"
+                  class="input"
+                  maxlength="20"
+                  autocomplete="new-password"
+                  v-model="checkPwd"
+                />
+              </div>
+              <div class="form_item email" id="divEmail">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="이메일 아이디"
+                  class="input"
+                  v-model="userinfoNew.emailid"
+                  maxlength="100"
+                /><span class="input-group-text">@</span>
+                <select
+                  v-model="userinfoNew.emaildomain"
+                  class="form-select select"
+                  id="emaildomain"
+                  name="emaildomain"
+                  aria-label="이메일 도메인 선택"
+                >
+                  <option selected value="">example.com</option>
+                  <option value="ssafy.com">ssafy.com</option>
+                  <option value="google.com">gmail.com</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="kakao.com">kakao.com</option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="error_text item_style"
+              id="idMsg"
+              style="display: none"
+            ></div>
+            <div
+              class="error_text item_style"
+              id="pswd1Msg"
+              style="display: none"
+            ></div>
+            <div
+              class="error_text item_style"
+              id="emailMsg"
+              style="display: none"
+            ></div>
+          </div>
         </div>
-      </div>
+        <div class="btn_submit_wrap" id="divBtnJoin">
+          <button
+            type="button"
+            class="btn_submit"
+            id="btnJoin"
+            @click="modifyUser"
+          >
+            수정하기
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -256,6 +302,150 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.btn_submit {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgb(58, 155, 250);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  color: #fff;
+}
+.btn_submit_wrap {
+  flex: none;
+  padding: 20px;
+}
+.check_normal {
+  display: inline-block;
+  vertical-align: top;
+}
+.check_list .item {
+  display: inline-block;
+  min-width: 50%;
+  vertical-align: top;
+  padding-top: 7px;
+}
+.form_item.check_box .check_list {
+  display: none;
+  padding: 9px 14px 16px;
+  border-top: 1px solid #dfdfdf;
+}
+.form_item.check_box .btn_expand {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+}
+.form_item.check_box .btn_expand::before {
+  background-position: -96px -244px;
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 17px;
+  display: inline-block;
+  vertical-align: top;
+  content: "";
+}
+.check_circle .option + .text {
+  font-weight: 600;
+}
+.check_circle .text {
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.8px;
+  color: #222;
+  vertical-align: middle;
+}
+.check_circle .option.point {
+  color: rgb(58, 155, 250);
+}
+.check_circle .option {
+  display: inline-block;
+  margin-right: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.6px;
+  color: #929294;
+  vertical-align: middle;
+}
+address,
+em {
+  font-style: normal;
+}
+.check_circle label::before {
+  background-position: -342px -200px;
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+}
+.check_circle label {
+  display: inline-block;
+  position: relative;
+  padding-left: 28px;
+  vertical-align: middle;
+}
+label {
+  cursor: pointer;
+}
+.blind {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+.check_circle input:checked + label::before {
+  border-radius: 0;
+  background-position: -342px -224px;
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.form_item.check_box .title_area {
+  position: relative;
+  padding: 14px 45px 14px 14px;
+}
+.form_item::before {
+  position: absolute;
+  top: 10px;
+  left: 9px;
+  content: "";
+}
+.form_item.check_box {
+  display: block;
+  padding: 0;
+}
+
+.form_item:last-of-type {
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.form_item:first-of-type {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.error_text + .form_list {
+  margin-top: 10px;
+}
+.form_list {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.form_item.email::before {
+  background-position: -96px -296px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
 .user-join-header {
   font-weight: 700;
   font-size: 30px;
@@ -277,217 +467,11 @@ h3 {
   margin: 20px 20px;
   padding: 20px 100px;
 }
-
-.estate-list-header {
-  font-weight: 700;
-  font-size: 30px;
-  line-height: px;
-  text-align: center;
-  color: rgb(54, 59, 64);
-}
-
-h3 {
-  margin: 0px;
-  display: block;
-  font-size: 1.17em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-}
-.panel_wrap {
-  position: relative;
-  z-index: 3;
-  margin-top: -8px;
-}
-.panel_item {
-  display: block;
-  border: 1px solid #c6c6c6;
-  border-radius: 6px;
-  background-color: #fff;
-  box-shadow: 0 5px 8px 0 rgba(68, 68, 68, 0.04);
-}
-.panel_inner {
-  padding: 40px 30px;
-}
-.login_keep_wrap {
-  position: relative;
-  margin-top: 13px;
-  padding-right: 90px;
-}
-.keep_check {
-  position: relative;
-  padding-left: 23px;
-  cursor: pointer;
-  color: #777;
-}
-.keep_check .keep_text {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 17px;
-  color: #777;
-}
-label {
-  cursor: pointer;
-}
-.btn_login_wrap {
-  margin-top: 38px;
-}
-.btn_login {
-  display: block;
-  width: 100%;
-  padding: 13px 0 13px;
-  border-radius: 6px;
-  background-color: rgb(58, 155, 250);
-  background-color: rgb(58, 155, 250);
+.form {
+  display: flex;
   box-sizing: border-box;
-}
-.btn_login .btn_text {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  color: white;
-}
-.id_pw_wrap .input_row:first-child {
-  border-radius: 6px 6px 0 0;
-  box-shadow: none;
-}
-.id_pw_wrap .input_row {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  padding: 14px 17px 13px;
-  box-sizing: border-box;
-}
-.input_row {
-  position: relative;
-  display: block;
+  flex-direction: column;
   height: 100%;
-  border: 1px solid #dadada;
-  padding: 16px 18px 15px;
-  border-radius: 6px;
-  box-sizing: border-box;
-  text-align: left;
-  box-shadow: 0 2px 6px 0 rgba(68, 68, 68, 0.08);
-}
-.id_pw_wrap .input_row .icon_cell {
-  display: table-cell;
-  width: 24px;
-  vertical-align: middle;
-}
-.id_pw_wrap .input_row .input_text {
-  display: table-cell;
-  padding-right: 30px;
-}
-.input_text {
-  position: relative;
-  display: block;
-  width: 100%;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: -0.5px;
-  color: #222;
-  box-sizing: border-box;
-  z-index: 4;
-}
-input {
-  border-radius: 0;
-  border: none;
-  background: 0 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: 0;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-text-size-adjust: none;
-}
-.keep_check .input_keep {
-  position: absolute;
-  top: 2px;
-  left: 3px;
-  width: 15px;
-  height: 15px;
-}
-.id_pw_wrap .input_row .icon_cell .icon_pw {
-  position: absolute;
-  top: 50%;
-  left: 17px;
-  margin-top: -8px;
-  background-position: -129px -203px;
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
-}
-
-.id_pw_wrap .input_row .icon_cell .icon_id {
-  position: absolute;
-  top: 50%;
-  left: 17px;
-  margin-top: -8px;
-  background-position: -93px -203px;
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
-}
-button,
-input,
-select,
-textarea {
-  border-radius: 0;
-  border: none;
-  background: 0 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: 0;
-  text-decoration: none;
-  cursor: pointer;
-  -webkit-text-size-adjust: none;
-}
-.id_pw_wrap .input_row:last-child {
-  border-radius: 0 0 6px 6px;
-}
-.id_pw_wrap .input_row {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  padding: 14px 17px 13px;
-  box-sizing: border-box;
-}
-.input_row + .input_row {
-  margin-top: -1px;
-}
-.input_row {
-  position: relative;
-  display: block;
-  height: 100%;
-  border: 1px solid #dadada;
-  padding: 16px 18px 15px;
-  border-radius: 6px;
-  box-sizing: border-box;
-  text-align: left;
-  box-shadow: 0 2px 6px 0 rgba(68, 68, 68, 0.08);
-}
-.blind {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-}
-.find_wrap,
-.relogin_find_wrap {
-  padding: 20px 0 35px;
-  text-align: center;
-}
-ol,
-ul {
-  list-style: none;
 }
 body,
 button,
@@ -516,119 +500,232 @@ ul {
   margin: 0;
   padding: 0;
   -webkit-text-size-adjust: none;
-  font-family: -apple-system, BlinkMacSystemFont, helvetica,
-    "Apple SD Gothic Neo", sans-serif;
 }
-.find_wrap .en_find_text,
-.find_wrap .find_text,
-.relogin_find_wrap .en_find_text,
-.relogin_find_wrap .find_text {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 17px;
-  text-decoration: none;
-  color: #888;
+.form_item:first-of-type {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
-a {
-  text-decoration: none;
+.form_item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: 50px;
+  padding: 0 10px 0 45px;
+}
+.input {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  width: 70%;
+  font-size: 16px;
+  line-height: 22px;
+  color: #222;
+}
+.select {
+  padding: 0 20px;
+  width: 310px;
+  text-align: center;
+
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 22px;
+  color: #777;
+}
+.form_list::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  border: 1px solid #c6c6c6;
+  pointer-events: none;
+  content: "";
+}
+.how_secure {
+  display: none;
+  padding: 4px 6px 3px 6px;
+  border-radius: 10px;
+  background: rgba(255, 168, 0, 0.12);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 13px;
+  letter-spacing: -0.4px;
+  color: #ffa41c;
+  vertical-align: middle;
+}
+.btn_show {
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+button {
   cursor: pointer;
 }
-.login_wrap {
-  box-sizing: border-box;
-  width: 460px;
+address,
+em {
+  font-style: normal;
+}
+.form_item .id_naver {
+  flex: none;
+  padding: 0 4px 0 6px;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.2px;
+  color: #767678;
+}
+.form_item.email::before {
+  background-position: -96px -296px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.form_item + .form_item {
+  margin-top: -1px;
+}
+.form_item:last-of-type {
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.form_item::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  border: 1px solid #dfdfdf;
+  pointer-events: none;
+  content: "";
+}
+
+button,
+input,
+select,
+textarea {
+  border-radius: 0;
+  border: none;
+  background: 0 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-text-size-adjust: none;
+}
+.form_item.user::before {
+  background-position: -342px -64px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.form_item + .form_item {
+  margin-top: -1px;
+}
+.form_list {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.form_item.lock::before {
+  background-position: -310px 0;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.form_content {
+  flex: 1 1 auto;
+}
+.form_section {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.inner {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  width: 500px;
   margin: 0 auto;
 }
-li {
-  margin: 0;
-  padding: 0;
-  -webkit-text-size-adjust: none;
-  font-family: -apple-system, BlinkMacSystemFont, helvetica,
-    "Apple SD Gothic Neo", sans-serif;
+.content {
+  flex: 1 1 auto;
+  padding-top: 30px;
 }
-.find_wrap li + li::before,
-.relogin_find_wrap li + li::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 12px;
-  width: 1px;
-  height: 12px;
-  border-radius: 0.5px;
-  background-color: #dadada;
-}
-.find_wrap li + li,
-.relogin_find_wrap li + li {
-  padding-left: 28px;
-}
-.find_wrap li,
-.relogin_find_wrap li {
-  position: relative;
-  display: inline-block;
-}
-.keep_check .keep_text::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  background-position: -244px -87px;
-  background-repeat: no-repeat;
-  width: 18px;
-  height: 18px;
-  background-color: #fff;
-}
-.keep_check input:checked + .keep_text::before {
-  background-position: -244px -87px;
-  background-repeat: no-repeat;
-  width: 18px;
-  height: 18px;
-  background-color: rgb(58, 155, 250);
-  border-radius: 100%;
-}
-.bullet_help,
-.captcha_form .image::after,
-.captcha_form .reload::after,
-.captcha_form .voice::after,
-.captcha_wrap .voice_box .icon_voice,
-.chatbot .icon_chatbot,
-.icon_delete,
-.id_pw_wrap .input_row .icon_cell .icon_id,
-.id_pw_wrap .input_row .icon_cell .icon_pw,
-.id_pw_wrap .input_row.on .icon_cell .icon_id,
-.id_pw_wrap .input_row.on .icon_cell .icon_pw,
-.img_lock,
-.img_wowpoint,
-.ip_relogin_box .relogin_close::after,
-.ip_relogin_box .relogin_tip::before,
-.keep_check .keep_text::before,
-.keep_check input:checked + .keep_text::before,
-.lang::after,
-.menu_id .menu_text::before,
-.menu_id.on .menu_text::before,
-.menu_id.on::after,
-.menu_ones .menu_text::before,
-.menu_ones.on .menu_text::before,
-.menu_ones.on::after,
-.menu_ones.on::before,
-.menu_qr .menu_text::before,
-.menu_qr.on .menu_text::before,
-.menu_qr.on::before,
-.nudge_banner .nudge_close .icon_nudge_close,
-.ones_text .bullet_set,
-.pop_img_lock,
-.qrcode_help_stepbox .popup_close::after,
-.qrcode_help_stepbox .step_title::before,
-.reconfirm_sub .captcha_form .image::after,
-.reconfirm_sub .captcha_form .reload::after,
-.reconfirm_sub .captcha_form .voice::after,
-.reconfirm_sub .captcha_wrap .voice_box .icon_voice,
-.sns_wrap li:nth-child(1) .sns_text::before,
-.sns_wrap li:nth-child(2) .sns_text::before,
-.sns_wrap li:nth-child(3) .sns_text::before,
-.step_ask .ask_text::before,
-.sub_desc .bullet_greendot,
-.sub_desc .bullet_lens,
-.time_wrap .btn_renewal::before {
-  background-image: url(https://ssl.pstatic.net/static/nid/login/m_sp_01_login_008d5216.png);
-  background-size: 266px 225px;
+.admit_tab .tab .text::before,
+.admit_tab .tab[aria-selected="true"] .text::before,
+.bottom_popup .benefit_item.gift::before,
+.bottom_popup .benefit_item.remit::before,
+.bottom_popup .benefit_item.touch::before,
+.bottom_popup .btn_area .text.logo_n::before,
+.bottom_popup .btn_expand .text::before,
+.bottom_popup .title.icon_phone::before,
+.btn_show.hide::before,
+.btn_show::before,
+.btn_telecom::after,
+.check_circle input:checked + label::before,
+.check_circle label::before,
+.check_circle.error label::before,
+.check_normal .link_arrow::before,
+.check_normal input:checked + label::before,
+.check_normal label::before,
+.check_terms .link_arrow::before,
+.check_terms input:checked + label::before,
+.check_terms label::before,
+.form_item.calendar.error::before,
+.form_item.calendar.on::before,
+.form_item.calendar::before,
+.form_item.check_box .btn_expand::before,
+.form_item.check_box.error .check_circle label::before,
+.form_item.email.error::before,
+.form_item.email.on::before,
+.form_item.email::before,
+.form_item.globe.error::before,
+.form_item.globe::before,
+.form_item.group.error::before,
+.form_item.group.on::before,
+.form_item.group::before,
+.form_item.group_type.error::before,
+.form_item.group_type.on::before,
+.form_item.group_type::before,
+.form_item.lock.error::before,
+.form_item.lock.on::before,
+.form_item.lock::before,
+.form_item.phone.error::before,
+.form_item.phone.on::before,
+.form_item.phone::before,
+.form_item.registration_number.error::before,
+.form_item.registration_number.on::before,
+.form_item.registration_number::before,
+.form_item.telecom.error::before,
+.form_item.telecom.on::before,
+.form_item.telecom::before,
+.form_item.user.error::before,
+.form_item.user.on::before,
+.form_item.user::before,
+.help_modal_wrap .btn_close::before,
+.help_modal_wrap .btn_expand::after,
+.join_link_area .link::after,
+.join_toggle input:checked + label::after,
+.join_toggle label::after,
+.lang_select_wrap::after,
+.lang_select_wrap::before,
+.link_certify::after,
+.logo_naver .link::before,
+.select_box::after,
+.welcome_wrap .main_title::before,
+.welcome_wrap .service_link.blog::before,
+.welcome_wrap .service_link.cafe::before,
+.welcome_wrap .service_link.home::before,
+.welcome_wrap .service_link.id::before,
+.welcome_wrap .service_link.mail::before,
+.welcome_wrap .service_link.shopping::before,
+.welcome_wrap .service_link::after {
+  background-image: url(https://ssl.pstatic.net/static/nid/join/m_sp_06_realname_48b1e603.png);
+  background-size: 372px 326px;
   background-repeat: no-repeat;
 }
 </style>

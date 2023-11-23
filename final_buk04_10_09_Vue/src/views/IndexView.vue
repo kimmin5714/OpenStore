@@ -1,6 +1,27 @@
 <script setup>
 import HeadingNavIndex from "@/components/common/HeadingNavIndex.vue";
 import Footer from "../components/common/Footer.vue";
+import { onMounted, onBeforeUpdate } from "vue";
+
+// onMounted(() => {
+//   init();
+// });
+// onBeforeUpdate(() => {
+//   init();
+// });
+
+// const init = () => {
+//   console.log("start");
+//   document.getElementsByClassName("nQjLg")[0].style.color = "rgba(0,0,0,0)";
+//   console.log(document.getElementsByClassName("nQjLg")[0].style.color);
+//   document.getElementsByClassName("nQjLg")[0].style.transition =
+//     "color 2s ease-in-out";
+//   document.getElementsByClassName("nQjLg")[0].style.color = "rgb(255,255,255)";
+//   console.log(document.getElementsByClassName("nQjLg")[0].style.color);
+//   document.getElementsByClassName("nQjLg")[0].style.transition =
+//     "color 2s ease-in-out";
+//   console.log("end");
+// };
 </script>
 
 <template>
@@ -112,8 +133,12 @@ import Footer from "../components/common/Footer.vue";
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 30px;
+  transition: background-color 0.3s ease-in-out;
+}
+.fKwRBh:hover {
+  background: rgba(255, 255, 255, 1);
 }
 .fKwRBh a {
   width: 100%;
@@ -193,9 +218,12 @@ import Footer from "../components/common/Footer.vue";
   font-size: 74px;
   line-height: 96px;
   text-align: center;
-  color: rgb(255, 255, 255);
+  /* color: rgb(255, 255, 255); */
   margin-bottom: 30px;
   letter-spacing: 0.1px;
+  transition: color 2s ease-in-out;
+  color: rgba(0, 0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 .djZIeE {
   margin-left: 24px;
@@ -334,7 +362,7 @@ import Footer from "../components/common/Footer.vue";
 body {
   font-family: "Pretendard Variable", Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif !important;
 }
 * {
   /* font-family: "Nanum Gothic" !important; */

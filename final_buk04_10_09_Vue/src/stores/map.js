@@ -106,7 +106,7 @@ export const useMapStore = defineStore("map", () => {
   });
   const dataByGenderAgeMale = computed(() => {
     if (salesByDong.value) {
-      let age_10_sales = 0;
+      // let age_10_sales = 0;
       let age_20_sales = 0;
       let age_30_sales = 0;
       let age_40_sales = 0;
@@ -115,19 +115,23 @@ export const useMapStore = defineStore("map", () => {
 
       for (let i = 0; i < salesByDong.value.length; i++) {
         let sale = salesByDong.value[i];
+        let maleRatio =
+          salesByDong.value[i].male_sales_count /
+          (salesByDong.value[i].male_sales_count +
+            salesByDong.value[i].female_sales_count);
         if (sale.male_sales_count !== 0) {
-          age_10_sales += Math.round(sale.age_10_sales / sale.male_sales_count);
-          age_20_sales += Math.round(sale.age_20_sales / sale.male_sales_count);
-          age_30_sales += Math.round(sale.age_30_sales / sale.male_sales_count);
-          age_40_sales += Math.round(sale.age_40_sales / sale.male_sales_count);
-          age_50_sales += Math.round(sale.age_50_sales / sale.male_sales_count);
+          // age_10_sales += Math.round(sale.age_10_sales_count * maleRatio);
+          age_20_sales += Math.round(sale.age_20_sales_count * maleRatio);
+          age_30_sales += Math.round(sale.age_30_sales_count * maleRatio);
+          age_40_sales += Math.round(sale.age_40_sales_count * maleRatio);
+          age_50_sales += Math.round(sale.age_50_sales_count * maleRatio);
           age_60_above_sales += Math.round(
-            sale.age_60_above_sales / sale.male_sales_count
+            sale.age_60_above_sales_count * maleRatio
           );
         }
       }
       console.log([
-        age_10_sales,
+        // age_10_sales,
         age_20_sales,
         age_30_sales,
         age_40_sales,
@@ -135,7 +139,7 @@ export const useMapStore = defineStore("map", () => {
         age_60_above_sales,
       ]);
       return [
-        age_10_sales,
+        // age_10_sales,
         age_20_sales,
         age_30_sales,
         age_40_sales,
@@ -147,7 +151,7 @@ export const useMapStore = defineStore("map", () => {
   });
   const dataByGenderAgeFemale = computed(() => {
     if (salesByDong.value) {
-      let age_10_sales = 0;
+      // let age_10_sales = 0;
       let age_20_sales = 0;
       let age_30_sales = 0;
       let age_40_sales = 0;
@@ -156,29 +160,23 @@ export const useMapStore = defineStore("map", () => {
 
       for (let i = 0; i < salesByDong.value.length; i++) {
         let sale = salesByDong.value[i];
+        let femaleRatio =
+          salesByDong.value[i].female_sales_count /
+          (salesByDong.value[i].male_sales_count +
+            salesByDong.value[i].female_sales_count);
         if (sale.female_sales_count !== 0) {
-          age_10_sales += Math.round(
-            sale.age_10_sales / sale.female_sales_count
-          );
-          age_20_sales += Math.round(
-            sale.age_20_sales / sale.female_sales_count
-          );
-          age_30_sales += Math.round(
-            sale.age_30_sales / sale.female_sales_count
-          );
-          age_40_sales += Math.round(
-            sale.age_40_sales / sale.female_sales_count
-          );
-          age_50_sales += Math.round(
-            sale.age_50_sales / sale.female_sales_count
-          );
+          // age_10_sales += Math.round(sale.age_10_sales_count * femaleRatio);
+          age_20_sales += Math.round(sale.age_20_sales_count * femaleRatio);
+          age_30_sales += Math.round(sale.age_30_sales_count * femaleRatio);
+          age_40_sales += Math.round(sale.age_40_sales_count * femaleRatio);
+          age_50_sales += Math.round(sale.age_50_sales_count * femaleRatio);
           age_60_above_sales += Math.round(
-            sale.age_60_above_sales / sale.female_sales_count
+            sale.age_60_above_sales_count * femaleRatio
           );
         }
       }
       console.log([
-        age_10_sales,
+        // age_10_sales,
         age_20_sales,
         age_30_sales,
         age_40_sales,
@@ -186,7 +184,7 @@ export const useMapStore = defineStore("map", () => {
         age_60_above_sales,
       ]);
       return [
-        age_10_sales,
+        // age_10_sales,
         age_20_sales,
         age_30_sales,
         age_40_sales,
@@ -264,13 +262,13 @@ export const useMapStore = defineStore("map", () => {
           {
             label: "요일별 매출",
             backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-              "rgba(255, 205, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
-              "rgba(54, 162, 235, 0.2)",
-              "rgba(153, 102, 255, 0.2)",
-              "rgba(201, 203, 207, 0.2)",
+              "rgba(255, 99, 132, 0.4)",
+              "rgba(255, 159, 64, 0.4)",
+              "rgba(255, 205, 86, 0.4)",
+              "rgba(75, 192, 192, 0.4)",
+              "rgba(54, 162, 235, 0.4)",
+              "rgba(153, 102, 255, 0.4)",
+              "rgba(201, 203, 207, 0.4)",
             ],
             borderColor: [
               "rgb(255, 99, 132)",
@@ -360,7 +358,8 @@ export const useMapStore = defineStore("map", () => {
     };
     chartByGenderAge.value = {
       data: ref({
-        labels: ["10대", "20대", "30대", "40대", "50대", "60대 이상"],
+        // labels: ["10대", "20대", "30대", "40대", "50대", "60대 이상"],
+        labels: ["20대", "30대", "40대", "50대", "60대 이상"],
         datasets: [
           {
             label: "남",

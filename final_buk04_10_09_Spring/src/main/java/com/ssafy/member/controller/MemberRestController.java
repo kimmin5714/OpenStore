@@ -80,7 +80,8 @@ public class MemberRestController {
 				
 				//			cookie 설정
 				String idsave = map.get("saveid");
-				if("ok".equals(idsave)) { //아이디 저장을 체크 했다면.
+				
+				if("true".equals(idsave)) { //아이디 저장을 체크 했다면.
 					Cookie cookie = new Cookie("ssafy_id", userId);
 					cookie.setPath(request.getContextPath());
 					//크롬의 경우 400일이 최대
@@ -256,11 +257,11 @@ public class MemberRestController {
 		try { //관리자 계정이면 adminUserList페이지로, 아니면 index페이지로
 			MemberDto memberDto = new MemberDto();
 
-			memberDto.setUserId(map.get("userId"));
-			memberDto.setUserName(map.get("userName"));	
-			memberDto.setUserPwd(map.get("userPwd"));		
-			memberDto.setEmailId(map.get("emailId"));
-			memberDto.setEmailDomain(map.get("emailDomain"));
+			memberDto.setUserId(map.get("userid"));
+			memberDto.setUserName(map.get("username"));	
+			memberDto.setUserPwd(map.get("userpwd"));		
+			memberDto.setEmailId(map.get("emailid"));
+			memberDto.setEmailDomain(map.get("emaildomain"));
 
 			memberService.modify(memberDto);
 

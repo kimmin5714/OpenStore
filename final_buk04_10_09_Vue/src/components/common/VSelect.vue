@@ -17,11 +17,7 @@ const onSelect = () => {
 </script>
 
 <template>
-  <select
-    v-model="key"
-    class="form-select form-select-sm w-50"
-    @change="onSelect"
-  >
+  <select v-model="key" class="select_box" @change="onSelect">
     <option
       v-for="option in selectOption"
       :key="option.value"
@@ -32,4 +28,16 @@ const onSelect = () => {
   </select>
 </template>
 
-<style scoped></style>
+<style scoped>
+.select_box {
+  color: rgba(0, 0, 0, 0.7);
+  width: 120px;
+  padding: 2px 10px 2px 4px;
+  margin-right: 20px;
+  border: 1px solid #d7d7d7;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+</style>

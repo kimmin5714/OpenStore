@@ -167,8 +167,6 @@ onBeforeUnmount(() => {
               {{ estate.jibun }}
             </div>
             <div class="detail-addr2">
-              <div class="detail-addr3">삼성로119길 37-15</div>
-              <div style="display: flex"></div>
             </div>
           </div>
           <div style="padding-bottom: 4px">
@@ -181,9 +179,12 @@ onBeforeUnmount(() => {
                     <div class="detail-des5">
                       <span class="detail-text2"
                         >{{
-                          Math.round((estate.dealAmount / 10000) * 10) / 100
+                          Math.round(estate.dealAmount / 1000) / 10
                         }}억원</span
-                      >
+                      ><span class="sc-kILWxv jFzXbz">{{
+                        Math.round(estate.dealAmount / estate.area)
+                          .toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+                      }}만원/m²</span>
                     </div>
                   </div>
                 </div>
@@ -192,7 +193,7 @@ onBeforeUnmount(() => {
                     <div class="detail-text">층</div>
                     <div class="detail-des4">
                       <div class="detail-des5">
-                        <span class="detail-text2">{{ estate.floor }}</span>
+                        <span class="detail-text2">{{ estate.floor }}층</span>
                       </div>
                     </div>
                   </div>
@@ -214,9 +215,11 @@ onBeforeUnmount(() => {
                     <div class="detail-text">매물 설명</div>
                     <div class="detail-des4">
                       <div class="detail-des5">
-                        <span class="detail-description">{{
+                        <span v-show="estate.description" class="detail-description">{{
                           estate.description
                         }}</span>
+                        <span v-show="!estate.description" class="detail-description" style="color:#bbb">
+                        공란</span>
                       </div>
                     </div>
                   </div>
@@ -250,7 +253,7 @@ onBeforeUnmount(() => {
                   <div class="detail-des5">
                     <span v-show="dealCostAvgByDong.dealAmountAvg" class="detail-text2"
                       >{{
-                        (Math.round(dealCostAvgByDong.dealAmountAvg / 10000 * 10 ) / 100)
+                        Math.round(dealCostAvgByDong.dealAmountAvg / 1000) / 10
                       }}
                       억원</span
                     ><span v-show="!dealCostAvgByDong.dealAmountAvg" class="detail-text3 m-0 fs-6"
@@ -299,7 +302,9 @@ onBeforeUnmount(() => {
               <div class="detail-text">근처 상권</div>
               <div class="detail-des4">
                 <div class="detail-des5">
-                  <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ salesByDong[0].busi_area_code_name }} 상권</span>
+                  <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ salesByDong[0].busi_area_code_name }} 상권<span class="sc-kILWxv jFzXbz">: {{
+                        salesByDong[0].busi_area_div_code_name
+                      }}</span></span>
                   <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
                 </div>
               </div>
@@ -380,7 +385,7 @@ onBeforeUnmount(() => {
         <div>
           <!-- 블록 시작 -->
           <header class="estate-detail-header">
-            <div class="estate-detail-subject">남녀 연령대별 매출</div>
+            <div class="estate-detail-subject">남녀 연령대별 결제 수</div>
           </header>
         </div>
         <div style="padding: 0px 20px">
@@ -520,7 +525,7 @@ onBeforeUnmount(() => {
 }
 .detail-addr {
   font-weight: 700;
-  font-size: 24px;
+  font-size: 23px;
   line-height: 32px;
   color: rgb(20, 23, 26);
 }
@@ -639,5 +644,11 @@ onBeforeUnmount(() => {
   flex-direction: column;
   padding: 0px 20px;
   margin-bottom: 20px !important;
+}.jFzXbz {
+    margin-left: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: rgb(90, 96, 102);
 }
 </style>

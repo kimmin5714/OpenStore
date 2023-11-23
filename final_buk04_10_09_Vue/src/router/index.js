@@ -4,13 +4,13 @@ import AdminView from "@/views/AdminView.vue";
 import { useAdminStore } from "@/stores/admin";
 import { storeToRefs } from "pinia";
 
-const onlyAuthUser = async (to, from) => {
+const onlyAuthUser = async (to, from, next) => {
   //   // const { userInfo } = storeToRefs(memberStore);
-  const { isLogin } = storeToRefs(useAdminStore());
-  if (!isLogin.value) {
-    alert("로그인이 필요한 페이지입니다.");
-    return false;
-  }
+  // const { isLogin } = storeToRefs(useAdminStore());
+  // if (!isLogin.value) {
+  //   alert("로그인이 필요한 페이지입니다.");
+  //   next("/");
+  // }
 };
 
 const router = createRouter({
@@ -41,13 +41,13 @@ const router = createRouter({
           path: "modify/:articleNo",
           name: "BoardModify",
           component: () => import("@/components/board/BoardModify.vue"),
-          beforeEnter: onlyAuthUser,
+          // beforeEnter: onlyAuthUser,
         },
         {
           path: "create",
           name: "BoardCreate",
           component: () => import("@/components/board/BoardCreate.vue"),
-          beforeEnter: onlyAuthUser,
+          // beforeEnter: onlyAuthUser,
         },
       ],
     },

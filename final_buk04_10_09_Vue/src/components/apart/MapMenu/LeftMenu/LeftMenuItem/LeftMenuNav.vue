@@ -255,9 +255,15 @@ p {
 .navbar-list-li {
   display: list-item;
   text-align: center;
-  width: 100%;
+  width: 60px;
   position: relative;
   padding: 16px 8px;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 10px;
+}
+
+.navbar-list-li:hover {
+  background-color: #eee;
 }
 svg {
   vertical-align: middle;

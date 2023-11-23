@@ -183,4 +183,12 @@ a {
 .nav {
   margin: 5px 10px;
 }
+.nav-link {
+  transition: font-weight 0.1s ease-in-out, color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+.nav-link:hover {
+  font-weight: bold;
+  color: #0a58ca;
+}
 </style>

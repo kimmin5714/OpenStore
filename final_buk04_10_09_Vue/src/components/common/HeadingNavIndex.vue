@@ -100,26 +100,23 @@ const createRandomEstate = async () => {
           style="--bs-scroll-height: 100px"
         >
           <template v-if="isLogin">
-            <li class="nav-item nav">
+            <!-- <li class="nav-item nav">
               <a
                 class="nav-link"
                 aria-current="page"
                 style="font-weight: bold; color: white"
               >
-                <strong>{{ userInfo.userName }}</strong> ({{
-                  userInfo.userId
-                }})님 안녕하세요.</a
+                <strong>계정 : {{ userInfo.userName }}</strong
+                >님</a
               >
-            </li>
+            </li> -->
             <li class="nav-item nav">
-              <button
-                style="color: white; font-weight: bolder"
+              <router-link
+                :to="{ name: 'BoardView' }"
                 class="nav-link"
                 aria-current="page"
-                @click="moveBoard"
+                >공지사항</router-link
               >
-                공지사항
-              </button>
             </li>
 
             <li class="nav-item nav">
