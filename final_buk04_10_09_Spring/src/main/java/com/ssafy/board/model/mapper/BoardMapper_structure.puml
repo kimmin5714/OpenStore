@@ -146,8 +146,7 @@ BoardServiceImpl972612767[
 <HR/>
 <TR><TD ALIGN="LEFT" >+ deleteArticle(articleNo: int)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ getArticle(articleNo: int): BoardDto</TD></TR>
-<TR><TD ALIGN="LEFT" >+ listArticle(map: Map&lt;String, String&gt;): List&lt;BoardDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ makePageNavigation(map: Map&lt;String, String&gt;): PageNavigation</TD></TR>
+<TR><TD ALIGN="LEFT" >+ listArticle(map: Map&lt;String, String&gt;): BoardListDto</TD></TR>
 <TR><TD ALIGN="LEFT" >+ modifyArticle(boardDto: BoardDto)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ updateHit(articleNo: int)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ writeArticle(boardDto: BoardDto)</TD></TR>

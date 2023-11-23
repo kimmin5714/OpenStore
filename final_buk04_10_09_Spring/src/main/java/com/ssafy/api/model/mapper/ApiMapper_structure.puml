@@ -70,7 +70,7 @@ config=StructureConfiguration;
     "showPackageLevels": 2,
     "showDetailedClassStructure": true
   },
-  "rootClass": "com.ssafy.happyhouse.model.mapper.HouseMapper",
+  "rootClass": "com.ssafy.api.model.mapper.ApiMapper",
   "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
 }
 diagram meta data end '/
@@ -89,35 +89,19 @@ subgraph cluster_109727380 {
 	fillcolor="#ececec"
 	style=filled
    
-   subgraph cluster_1966184486 { 
-   	label=happyhouse
+   subgraph cluster_82790336 { 
+   	label=api
 	labeljust=l
 	fillcolor="#d8d8d8"
 	style=filled
    
-   HappyHouseController1943013187[
+   ApiMapper80438495[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)HappyHouseController</TD></TR>
+<TR><TD ALIGN="LEFT" >(I)ApiMapper</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >#   houseService: HouseService [0..1]</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ searchApt(map: Map&lt;String, String&gt;): ResponseEntity&lt;?&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchDong(map: Map&lt;String, String&gt;): ResponseEntity&lt;?&gt;</TD></TR>
-</TABLE>>
-	style=filled
-	margin=0
-	shape=plaintext
-	fillcolor="#FFFFFF"
-];
-
-HouseMapper178418035[
-	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(I)HouseMapper</TD></TR>
-<HR/>
-<TR><TD ALIGN="LEFT" >+ getAptCodeSetByDongCode(dongCode: String): List&lt;Long&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getDongCodeByStringAddress(map: Map&lt;String, String&gt;): String</TD></TR>
-<TR><TD ALIGN="LEFT" >+ getHouseDealListByAptCode(aptCodeList: List&lt;Long&gt;): List&lt;HouseInfoDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchAptDealByAptCode(aptCode: Long): List&lt;HouseDealDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getDongCodeBy5(): List&lt;String&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertComProps(cPropList: List&lt;ComPropDto&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertMarketsInfo(list: List&lt;MarketsInfoDto&gt;): int</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -125,14 +109,15 @@ HouseMapper178418035[
 	fillcolor="#F1E5FD"
 ];
 
-HouseServiceImpl89391127[
+XmlParser499912813[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
-<TR><TD ALIGN="LEFT" >(C)HouseServiceImpl</TD></TR>
+<TR><TD ALIGN="LEFT" >(C)XmlParser</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   houseMapper: HouseMapper [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   apiMapper: ApiMapper [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >+ searchAptDealByAptCode(aptCode: Long): List&lt;HouseDealDto&gt;</TD></TR>
-<TR><TD ALIGN="LEFT" >+ searchByStringAddress(map: Map&lt;String, String&gt;): List&lt;HouseInfoDto&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >- commercialProperties()</TD></TR>
+<TR><TD ALIGN="LEFT" >- getTagValue(string: String, eElement: Element): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- marketsInfo()</TD></TR>
 </TABLE>>
 	style=filled
 	margin=0
@@ -143,9 +128,7 @@ HouseServiceImpl89391127[
 } 
 
 'edges    
-HappyHouseController1943013187 -> HouseServiceImpl89391127[label="houseService
-[0..1]", arrowhead=none];
-HouseServiceImpl89391127 -> HouseMapper178418035[label="houseMapper
+XmlParser499912813 -> ApiMapper80438495[label="apiMapper
 [0..1]"];
     
 }
