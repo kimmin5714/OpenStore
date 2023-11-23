@@ -133,235 +133,379 @@ const registerUser = async () => {
       </div>
     </div>
   </div> -->
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <form
-          id="join_form"
-          method="post"
-          action="/user2/join/end"
-          class="form">
-          <input
-            type="hidden"
-            id="token_sjoin"
-            name="token_sjoin"
-            value="26Sdblo4Lq25nf34" />
-          <input type="hidden" id="nid_kb2" name="nid_kb2" value="" />
-          <input
-            type="hidden"
-            id="joinMode"
-            name="joinMode"
-            value="joinIdentity" />
-          <input type="hidden" id="encPswd" name="encPswd" value="" />
-          <input type="hidden" id="encKey" name="encKey" value="" />
-          <input type="hidden" id="telecom" name="telecom" value="" />
-          <input type="hidden" id="birthday" name="birthday" value="" />
+  <div class="inner">
+    <div class="content">
+      <form id="join_form" method="post" action="/user2/join/end" class="form">
+        <input
+          type="hidden"
+          id="token_sjoin"
+          name="token_sjoin"
+          value="26Sdblo4Lq25nf34" />
+        <input type="hidden" id="nid_kb2" name="nid_kb2" value="" />
+        <input
+          type="hidden"
+          id="joinMode"
+          name="joinMode"
+          value="joinIdentity" />
+        <input type="hidden" id="encPswd" name="encPswd" value="" />
+        <input type="hidden" id="encKey" name="encKey" value="" />
+        <input type="hidden" id="telecom" name="telecom" value="" />
+        <input type="hidden" id="birthday" name="birthday" value="" />
 
-          <div class="form_content">
-            <div class="form_section">
-              <div class="join_toggle" id="divToggle">
-                <input type="checkbox" id="join_toggle" checked="" />
-                <label for="join_toggle">실명 인증된 아이디로 가입</label>
+        <div class="form_content">
+          <div class="form_section">
+            <div class="form_list">
+              <div class="form_item user" id="divName">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="이름"
+                  class="input"
+                  v-model="userinfo.username"
+                  maxlength="40" />
               </div>
+              <!-- <div class="form_item calendar" id="divBirthday">
+                <input
+                  type="text"
+                  id="birthdayInput"
+                  placeholder="생년월일 8자리"
+                  class="input"
+                  value=""
+                  maxlength="10" />
+              </div> -->
+            </div>
+            <div class="form_list">
+              <div class="form_item user" id="divId">
+                <input
+                  type="text"
+                  v-model="userinfo.useridRegister"
+                  id="id"
+                  name="id"
+                  placeholder="아이디"
+                  class="input"
+                  maxlength="20"
+                  autocapitalize="off" />
+              </div>
+              <div class="form_item lock password" id="divPasswd">
+                <input
+                  type="password"
+                  id="pswd1"
+                  name="pswd1"
+                  placeholder="비밀번호"
+                  class="input"
+                  v-model="userinfo.userpwdRegister"
+                  maxlength="20"
+                  autocomplete="new-password" />
+              </div>
+              <div class="form_item lock password" id="divPasswd">
+                <input
+                  type="password"
+                  id="pswd2"
+                  name="pswd2"
+                  placeholder="비밀번호 확인"
+                  class="input"
+                  value=""
+                  maxlength="20"
+                  autocomplete="new-password" />
+              </div>
+              <div class="form_item email" id="divEmail">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="이메일 아이디"
+                  class="input"
+                  v-model="userinfo.emailid"
+                  maxlength="100" />
+              </div>
+              <div class="form_item">
+                <span class="input-group-text">@</span>
+                <select
+                  v-model="userinfo.emaildomain"
+                  class="form-select"
+                  id="emaildomain"
+                  name="emaildomain"
+                  aria-label="이메일 도메인 선택">
+                  <option selected>선택</option>
+                  <option value="ssafy.com">싸피</option>
+                  <option value="google.com">구글</option>
+                  <option value="naver.com">네이버</option>
+                  <option value="kakao.com">카카오</option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="error_text item_style"
+              id="idMsg"
+              style="display: none"></div>
+            <div
+              class="error_text item_style"
+              id="pswd1Msg"
+              style="display: none"></div>
+            <div
+              class="error_text item_style"
+              id="emailMsg"
+              style="display: none"></div>
 
-              <div class="form_list">
-                <div class="form_item user" id="divId">
-                  <input
-                    type="text"
-                    id="id"
-                    name="id"
-                    placeholder="아이디"
-                    class="input"
-                    value=""
-                    maxlength="20"
-                    autocapitalize="off" />
-                  <div class="id_naver">@naver.com</div>
-                </div>
-                <div class="form_item lock password" id="divPasswd">
-                  <input
-                    type="password"
-                    id="pswd1"
-                    name="pswd1"
-                    placeholder="비밀번호"
-                    class="input"
-                    value=""
-                    maxlength="20"
-                    autocomplete="new-password" />
-                  <div class="password_info">
-                    <em class="how_secure" id="secureLevel"></em>
-                    <button type="button" class="btn_show hide">
-                      <span class="blind">비밀번호 보기</span>
-                    </button>
+            <div class="form_list" id="divTerm">
+              <div class="form_item check_box" id="itemAgree">
+                <div class="title_area">
+                  <div class="check_circle">
+                    <input type="checkbox" id="agree_all" class="blind" />
+                    <label for="agree_all">
+                      <em class="option point">[필수]</em>
+                      <span class="text">인증 약관 전체동의</span>
+                    </label>
                   </div>
+                  <button
+                    type="button"
+                    class="btn_expand"
+                    aria-expanded="false">
+                    <span class="blind">약관 목록</span>
+                  </button>
                 </div>
-                <div class="form_item email" id="divEmail">
-                  <span class="placeholder_prefix">[선택]</span>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="[선택] 비밀번호 분실 시 확인용 이메일"
-                    class="input"
-                    value=""
-                    maxlength="100" />
-                </div>
-              </div>
-              <div
-                class="error_text item_style"
-                id="idMsg"
-                style="display: none"></div>
-              <div
-                class="error_text item_style"
-                id="pswd1Msg"
-                style="display: none"></div>
-              <div
-                class="error_text item_style"
-                id="emailMsg"
-                style="display: none"></div>
-
-              <div class="form_list">
-                <div class="form_item user" id="divName">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="이름"
-                    class="input"
-                    value=""
-                    maxlength="40" />
-                </div>
-                <div class="form_item calendar" id="divBirthday">
-                  <input
-                    type="text"
-                    id="birthdayInput"
-                    placeholder="생년월일 8자리"
-                    class="input"
-                    value=""
-                    maxlength="10" />
-                </div>
-                <div class="form_item phone" id="divPhoneNo">
-                  <input
-                    type="tel"
-                    id="phoneNo"
-                    name="phoneNo"
-                    placeholder="휴대전화번호"
-                    class="input"
-                    value=""
-                    maxlength="16" />
-                </div>
-              </div>
-              <div class="form_list" id="divTerm">
-                <div class="form_item check_box" id="itemAgree">
-                  <div class="title_area">
-                    <div class="check_circle">
-                      <input type="checkbox" id="agree_all" class="blind" />
-                      <label for="agree_all">
-                        <em class="option point">[필수]</em>
-                        <span class="text">인증 약관 전체동의</span>
+                <ul class="check_list">
+                  <li class="item">
+                    <div class="check_normal">
+                      <input type="checkbox" id="agree_01" class="blind" />
+                      <label for="agree_01">
+                        <span class="text">개인정보 이용</span>
                       </label>
+                      <a
+                        href="https://nid.naver.com/user2/common/terms/terms2?t=viewPersonalInfoTerms&amp;v=1"
+                        target="_blank"
+                        class="link_arrow">
+                        <span class="blind">약관 전문보기</span>
+                      </a>
                     </div>
-                    <button
-                      type="button"
-                      class="btn_expand"
-                      aria-expanded="false">
-                      <span class="blind">약관 목록</span>
-                    </button>
-                  </div>
-                  <ul class="check_list">
-                    <li class="item">
-                      <div class="check_normal">
-                        <input type="checkbox" id="agree_01" class="blind" />
-                        <label for="agree_01">
-                          <span class="text">개인정보 이용</span>
-                        </label>
-                        <a
-                          href="https://nid.naver.com/user2/common/terms/terms2?t=viewPersonalInfoTerms&amp;v=1"
-                          target="_blank"
-                          class="link_arrow">
-                          <span class="blind">약관 전문보기</span>
-                        </a>
-                      </div>
-                      1
-                    </li>
-                    <li class="item">
-                      <div class="check_normal">
-                        <input type="checkbox" id="agree_02" class="blind" />
-                        <label for="agree_02">
-                          <span class="text">고유식별정보 처리</span>
-                        </label>
-                        <a
-                          href="https://nid.naver.com/user2/common/terms/terms2?t=viewUniqInfoTerms&amp;v=1"
-                          target="_blank"
-                          class="link_arrow">
-                          <span class="blind">약관 전문보기</span>
-                        </a>
-                      </div>
-                      2
-                    </li>
-                    <li class="item">
-                      <div class="check_normal">
-                        <input type="checkbox" id="agree_03" class="blind" />
-                        <label for="agree_03">
-                          <span class="text">통신사 이용약관</span>
-                        </label>
-                        <a
-                          href="https://nid.naver.com/user2/common/terms/terms2?t=viewCellPhoneCarriersTerms&amp;v=1"
-                          target="_blank"
-                          class="link_arrow">
-                          <span class="blind">약관 전문보기</span>
-                        </a>
-                      </div>
-                      3
-                    </li>
-                    <li class="item">
-                      <div class="check_normal">
-                        <input type="checkbox" id="agree_04" class="blind" />
-                        <label for="agree_04">
-                          <span class="text">인증사 이용약관</span>
-                        </label>
-                        <a
-                          href="https://nid.naver.com/user2/common/terms/terms2?t=viewServiceTerms&amp;v=1"
-                          target="_blank"
-                          class="link_arrow">
-                          <span class="blind">약관 전문보기</span>
-                        </a>
-                      </div>
-                      4
-                    </li>
-                    <li class="item">
-                      <div class="check_normal">
-                        <input type="checkbox" id="agree_05" class="blind" />
-                        <label for="agree_05">
-                          <span class="text">네이버 개인정보수집</span>
-                        </label>
-                        <a
-                          href="https://nid.naver.com/user2/common/terms/terms2?t=viewNaverTerms&amp;v=2"
-                          target="_blank"
-                          class="link_arrow">
-                          <span class="blind">약관 전문보기</span>
-                        </a>
-                      </div>
-                      5
-                    </li>
-                  </ul>
-                </div>
+                    1
+                  </li>
+                  <li class="item">
+                    <div class="check_normal">
+                      <input type="checkbox" id="agree_02" class="blind" />
+                      <label for="agree_02">
+                        <span class="text">고유식별정보 처리</span>
+                      </label>
+                      <a
+                        href="https://nid.naver.com/user2/common/terms/terms2?t=viewUniqInfoTerms&amp;v=1"
+                        target="_blank"
+                        class="link_arrow">
+                        <span class="blind">약관 전문보기</span>
+                      </a>
+                    </div>
+                    2
+                  </li>
+                  <li class="item">
+                    <div class="check_normal">
+                      <input type="checkbox" id="agree_03" class="blind" />
+                      <label for="agree_03">
+                        <span class="text">통신사 이용약관</span>
+                      </label>
+                      <a
+                        href="https://nid.naver.com/user2/common/terms/terms2?t=viewCellPhoneCarriersTerms&amp;v=1"
+                        target="_blank"
+                        class="link_arrow">
+                        <span class="blind">약관 전문보기</span>
+                      </a>
+                    </div>
+                    3
+                  </li>
+                  <li class="item">
+                    <div class="check_normal">
+                      <input type="checkbox" id="agree_04" class="blind" />
+                      <label for="agree_04">
+                        <span class="text">인증사 이용약관</span>
+                      </label>
+                      <a
+                        href="https://nid.naver.com/user2/common/terms/terms2?t=viewServiceTerms&amp;v=1"
+                        target="_blank"
+                        class="link_arrow">
+                        <span class="blind">약관 전문보기</span>
+                      </a>
+                    </div>
+                    4
+                  </li>
+                  <li class="item">
+                    <div class="check_normal">
+                      <input type="checkbox" id="agree_05" class="blind" />
+                      <label for="agree_05">
+                        <span class="text">네이버 개인정보수집</span>
+                      </label>
+                      <a
+                        href="https://nid.naver.com/user2/common/terms/terms2?t=viewNaverTerms&amp;v=2"
+                        target="_blank"
+                        class="link_arrow">
+                        <span class="blind">약관 전문보기</span>
+                      </a>
+                    </div>
+                    5
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-
-          <div class="btn_submit_wrap" id="divBtnJoin" style="display: none">
-            <button type="button" class="btn_submit" id="btnJoin">
-              가입하기
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="btn_submit_wrap" id="divBtnJoin">
+          <button
+            type="button"
+            class="btn_submit"
+            id="btnJoin"
+            @click="registerUser">
+            가입하기
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   <Footer></Footer>
 </template>
 
 <style scoped>
+.btn_submit {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgb(58, 155, 250);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  color: #fff;
+}
+.btn_submit_wrap {
+  flex: none;
+  padding: 20px;
+}
+.check_normal {
+  display: inline-block;
+  vertical-align: top;
+}
+.check_list .item {
+  display: inline-block;
+  min-width: 50%;
+  vertical-align: top;
+  padding-top: 7px;
+}
+.form_item.check_box .check_list {
+  display: none;
+  padding: 9px 14px 16px;
+  border-top: 1px solid #dfdfdf;
+}
+.form_item.check_box .btn_expand {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+}
+.form_item.check_box .btn_expand::before {
+  background-position: -96px -244px;
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 17px;
+  display: inline-block;
+  vertical-align: top;
+  content: "";
+}
+.check_circle .option + .text {
+  font-weight: 600;
+}
+.check_circle .text {
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.8px;
+  color: #222;
+  vertical-align: middle;
+}
+.check_circle .option.point {
+  color: rgb(58, 155, 250);
+}
+.check_circle .option {
+  display: inline-block;
+  margin-right: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.6px;
+  color: #929294;
+  vertical-align: middle;
+}
+address,
+em {
+  font-style: normal;
+}
+.check_circle label::before {
+  background-position: -342px -200px;
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+}
+.check_circle label {
+  display: inline-block;
+  position: relative;
+  padding-left: 28px;
+  vertical-align: middle;
+}
+label {
+  cursor: pointer;
+}
+.blind {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+.check_circle input:checked + label::before {
+  border-radius: 0;
+  background-position: -342px -224px;
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.form_item.check_box .title_area {
+  position: relative;
+  padding: 14px 45px 14px 14px;
+}
+.form_item::before {
+  position: absolute;
+  top: 10px;
+  left: 9px;
+  content: "";
+}
+.form_item.check_box {
+  display: block;
+  padding: 0;
+}
+
+.form_item:last-of-type {
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.form_item:first-of-type {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.error_text + .form_list {
+  margin-top: 10px;
+}
+.form_list {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.form_item.email::before {
+  background-position: -96px -296px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
 .user-join-header {
   font-weight: 700;
   font-size: 30px;
@@ -382,5 +526,255 @@ h3 {
 .join-form {
   margin: 20px 20px;
   padding: 20px 100px;
+}
+.form {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  height: 100%;
+}
+body,
+button,
+dd,
+dl,
+dt,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+legend,
+li,
+ol,
+p,
+select,
+table,
+td,
+textarea,
+th,
+ul {
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: none;
+}
+.form_item:first-of-type {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.form_item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: 50px;
+  padding: 0 10px 0 45px;
+}
+.input {
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 16px;
+  line-height: 22px;
+  color: #222;
+}
+.form_list::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  border: 1px solid #c6c6c6;
+  pointer-events: none;
+  content: "";
+}
+.how_secure {
+  display: none;
+  padding: 4px 6px 3px 6px;
+  border-radius: 10px;
+  background: rgba(255, 168, 0, 0.12);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 13px;
+  letter-spacing: -0.4px;
+  color: #ffa41c;
+  vertical-align: middle;
+}
+.btn_show {
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+button {
+  cursor: pointer;
+}
+address,
+em {
+  font-style: normal;
+}
+.form_item .id_naver {
+  flex: none;
+  padding: 0 4px 0 6px;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.2px;
+  color: #767678;
+}
+.form_item.email::before {
+  background-position: -96px -296px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.form_item + .form_item {
+  margin-top: -1px;
+}
+.form_item:last-of-type {
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.form_item::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  border: 1px solid #dfdfdf;
+  pointer-events: none;
+  content: "";
+}
+
+button,
+input,
+select,
+textarea {
+  border-radius: 0;
+  border: none;
+  background: 0 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-text-size-adjust: none;
+}
+.form_item.user::before {
+  background-position: -342px -64px;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.form_item + .form_item {
+  margin-top: -1px;
+}
+.form_list {
+  position: relative;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.form_item.lock::before {
+  background-position: -310px 0;
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.form_content {
+  flex: 1 1 auto;
+}
+.form_section {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.inner {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  width: 500px;
+  margin: 0 auto;
+}
+.content {
+  flex: 1 1 auto;
+  padding-top: 30px;
+}
+.admit_tab .tab .text::before,
+.admit_tab .tab[aria-selected="true"] .text::before,
+.bottom_popup .benefit_item.gift::before,
+.bottom_popup .benefit_item.remit::before,
+.bottom_popup .benefit_item.touch::before,
+.bottom_popup .btn_area .text.logo_n::before,
+.bottom_popup .btn_expand .text::before,
+.bottom_popup .title.icon_phone::before,
+.btn_show.hide::before,
+.btn_show::before,
+.btn_telecom::after,
+.check_circle input:checked + label::before,
+.check_circle label::before,
+.check_circle.error label::before,
+.check_normal .link_arrow::before,
+.check_normal input:checked + label::before,
+.check_normal label::before,
+.check_terms .link_arrow::before,
+.check_terms input:checked + label::before,
+.check_terms label::before,
+.form_item.calendar.error::before,
+.form_item.calendar.on::before,
+.form_item.calendar::before,
+.form_item.check_box .btn_expand::before,
+.form_item.check_box.error .check_circle label::before,
+.form_item.email.error::before,
+.form_item.email.on::before,
+.form_item.email::before,
+.form_item.globe.error::before,
+.form_item.globe::before,
+.form_item.group.error::before,
+.form_item.group.on::before,
+.form_item.group::before,
+.form_item.group_type.error::before,
+.form_item.group_type.on::before,
+.form_item.group_type::before,
+.form_item.lock.error::before,
+.form_item.lock.on::before,
+.form_item.lock::before,
+.form_item.phone.error::before,
+.form_item.phone.on::before,
+.form_item.phone::before,
+.form_item.registration_number.error::before,
+.form_item.registration_number.on::before,
+.form_item.registration_number::before,
+.form_item.telecom.error::before,
+.form_item.telecom.on::before,
+.form_item.telecom::before,
+.form_item.user.error::before,
+.form_item.user.on::before,
+.form_item.user::before,
+.help_modal_wrap .btn_close::before,
+.help_modal_wrap .btn_expand::after,
+.join_link_area .link::after,
+.join_toggle input:checked + label::after,
+.join_toggle label::after,
+.lang_select_wrap::after,
+.lang_select_wrap::before,
+.link_certify::after,
+.logo_naver .link::before,
+.select_box::after,
+.welcome_wrap .main_title::before,
+.welcome_wrap .service_link.blog::before,
+.welcome_wrap .service_link.cafe::before,
+.welcome_wrap .service_link.home::before,
+.welcome_wrap .service_link.id::before,
+.welcome_wrap .service_link.mail::before,
+.welcome_wrap .service_link.shopping::before,
+.welcome_wrap .service_link::after {
+  background-image: url(https://ssl.pstatic.net/static/nid/join/m_sp_06_realname_48b1e603.png);
+  background-size: 372px 326px;
+  background-repeat: no-repeat;
 }
 </style>
