@@ -1,63 +1,78 @@
 <script setup>
-import { onMounted, onBeforeUnmount, watch, computed } from "vue";
+import {
+  ref,
+  reactive,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+  computed,
+} from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useMapStore } from "@/stores/map";
 import proj4Src from "proj4";
-
+// 그래프
+import { Line, Bar, Radar, Doughnut } from "vue-chartjs";
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
 // Router
 const router = useRouter();
 const route = useRoute();
 
 // Pinia
 const storeMap = useMapStore();
-const { estate, dealCostAvgByDong, salesByDong } = storeToRefs(storeMap);
+const {
+  estate,
+  dealCostAvgByDong,
+  salesByDong,
+  isChartReady,
+  chartByGenderAge,
+  chartByGender,
+  chartByTime,
+  chartByDay,
+} = storeToRefs(storeMap);
 const { selectEstate, selectDealCostAvgByDong, selectSalesByDong } = storeMap;
-
 
 // Proj4
 const proj4 = proj4Src;
 
 // Data
-const monthSales = computed(()=>{
+const monthSales = computed(() => {
   let sum = 0;
-  for(let i=0; i<salesByDong.value.length; i++){
+  for (let i = 0; i < salesByDong.value.length; i++) {
     const sale = salesByDong.value[i];
     sum += Number(sale.month_sales);
   }
   return sum;
-})
+});
 
 // Methods
 const initEstateDetail = async () => {
   const resp = await selectEstate(route.params.id);
   if (resp === "success") {
-    
     // 매물의 동 평균 매매가
     const dealResp = await selectDealCostAvgByDong(estate.value);
 
-
     // 매물의 상권 매출
     //wgs84(위경도)좌표계
-    const wgs84 = "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees";
-    const epsg5181 = "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs"
+    const wgs84 =
+      "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees";
+    const epsg5181 =
+      "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=500000 +ellps=GRS80 +units=m +no_defs";
     // proj4(proj4(fromProjection, toProjection, coordinates);
     // console.log(estate.value.lat, estate.value.lon);
     // console.log(proj4(wgs84, epsg5181, [ estate.value.lon, estate.value.lat]));
     // console.log(proj4(epsg5181, wgs84, proj4(wgs84, epsg5181, [ estate.value.lon, estate.value.lat])));
-    
-    const pos = proj4(wgs84, epsg5181, [ estate.value.lon, estate.value.lat])
-    const dealSales = await selectSalesByDong({
-      x_pos : pos[0],
-      y_pos : pos[1]
-    });
 
-    
-  }else{
+    const pos = proj4(wgs84, epsg5181, [estate.value.lon, estate.value.lat]);
+    const dealSales = await selectSalesByDong({
+      x_pos: pos[0],
+      y_pos: pos[1],
+    });
+  } else {
     alert("매물을 찾을 수 없습니다.");
   }
-}
-
+};
 
 onMounted(() => {
   initEstateDetail();
@@ -66,7 +81,7 @@ onMounted(() => {
 watch(
   () => route.params.id,
   () => {
-    if(route.params.id){
+    if (route.params.id) {
       initEstateDetail();
     }
   }
@@ -164,13 +179,11 @@ onBeforeUnmount(() => {
                   <div class="detail-text">매매가</div>
                   <div class="detail-des4">
                     <div class="detail-des5">
-                      <span class="detail-text2">{{
-                        (Math.round(estate.dealAmount / 10000 * 10 ) / 100)
-                      }}억원</span
+                      <span class="detail-text2"
+                        >{{
+                          Math.round((estate.dealAmount / 10000) * 10) / 100
+                        }}억원</span
                       >
-                      <!-- <span class="detail-text3"
-                        >( 거래 종류 : {{ estate.dealClass }} )</span
-                      > -->
                     </div>
                   </div>
                 </div>
@@ -213,42 +226,6 @@ onBeforeUnmount(() => {
           </div>
         </section>
       </div>
-
-      <div>
-        <header class="estate-detail-header">
-          <div class="estate-detail-subject">근방 상권 매출</div>
-        </header>
-      </div>
-      <div style="padding: 0px 20px">
-        <hr color="#F0F4F7" class="bar" />
-        <div class="detail-des">
-          <div class="detail-des2">
-            <div class="detail-des3">
-              <div class="detail-text">근처 상권</div>
-              <div class="detail-des4">
-                <div class="detail-des5">
-                  <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ salesByDong[0].busi_area_code_name }} 상권</span>
-                  <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
-                </div>
-              </div>
-            </div>
-            <div class="detail-des2">
-              <div class="detail-des3">
-                <div class="detail-text">상권 매출</div>
-                <div class="detail-des4">
-                  <div class="detail-des5">
-                    <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ Math.round(monthSales / 100000000)
-                          .toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") }}억원
-                      </span>
-                  <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div>
         <header class="estate-detail-header">
           <div class="estate-detail-subject">평균 실거래가</div>
@@ -308,6 +285,119 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </div>
+
+      <div>
+        <header class="estate-detail-header">
+          <div class="estate-detail-subject">근방 상권 매출</div>
+        </header>
+      </div>
+      <div style="padding: 0px 20px">
+        <hr color="#F0F4F7" class="bar" />
+        <div class="detail-des">
+          <div class="detail-des2">
+            <div class="detail-des3">
+              <div class="detail-text">근처 상권</div>
+              <div class="detail-des4">
+                <div class="detail-des5">
+                  <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ salesByDong[0].busi_area_code_name }} 상권</span>
+                  <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-des2">
+              <div class="detail-des3">
+                <div class="detail-text">상권 매출</div>
+                <div class="detail-des4">
+                  <div class="detail-des5">
+                    <span v-if="salesByDong && salesByDong.length > 0" class="detail-text2">{{ Math.round(monthSales / 100000000)
+                          .toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") }}억원
+                      </span>
+                  <span v-else class="detail-text3 m-0 fs-6">데이터 없음</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span v-if="isChartReady">
+        <div>
+          <header class="estate-detail-header">
+            <div class="estate-detail-subject">시간대 매출</div>
+          </header>
+        </div>
+        <div style="padding: 0px 20px">
+          <div class="analysis-chart">
+            <Line
+              :data="chartByTime.data"
+              :options="chartByTime.options"
+              :width="100"
+              :height="70"
+            ></Line>
+          </div>
+        </div>
+        <div>
+          <!-- 블록 시작 -->
+          <header class="estate-detail-header">
+            <div class="estate-detail-subject">성별 매출</div>
+          </header>
+        </div>
+        <div style="padding: 0px 20px">
+          <div class="analysis-chart">
+            <Doughnut
+              :data="chartByGender.data"
+              :options="chartByGender.options"
+              :width="100"
+              :height="70"
+            ></Doughnut>
+            <!-- <div v-if="chartData"></div>
+        <div v-else>
+          <p>데이터가 없어요</p>
+        </div> -->
+          </div>
+        </div>
+        <div>
+          <!-- 블록 시작 -->
+          <header class="estate-detail-header">
+            <div class="estate-detail-subject">요일별 매출</div>
+          </header>
+        </div>
+        <div style="padding: 0px 20px">
+          <div class="analysis-chart">
+            <Bar
+              :data="chartByDay.data"
+              :options="chartByDay.options"
+              :width="100"
+              :height="70"
+            ></Bar>
+            <!-- <div v-if="chartData"></div>
+        <div v-else>
+          <p>데이터가 없어요</p>
+        </div> -->
+          </div>
+        </div>
+        <div>
+          <!-- 블록 시작 -->
+          <header class="estate-detail-header">
+            <div class="estate-detail-subject">남녀 연령대별 매출</div>
+          </header>
+        </div>
+        <div style="padding: 0px 20px">
+          <div class="analysis-chart">
+            <Radar
+              :data="chartByGenderAge.data"
+              :options="chartByGenderAge.options"
+              :width="100"
+              :height="70"
+            ></Radar>
+            <!-- <div v-if="chartData"></div>
+        <div v-else>
+          <p>데이터가 없어요</p>
+        </div> -->
+          </div>
+        </div>
+      </span>
     </div>
   </div>
 </template>

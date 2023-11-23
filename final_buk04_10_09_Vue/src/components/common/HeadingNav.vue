@@ -93,7 +93,7 @@ const createRandomEstate = async () => {
               지도
             </RouterLink>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="btn btn-outline-danger" @click="importData">
               DATA IMPORT
             </a>
@@ -102,7 +102,7 @@ const createRandomEstate = async () => {
             <a class="btn btn-outline-danger" @click="createRandomEstate">
               !!!매물 랜덤 생성!!!
             </a>
-          </li>
+          </li> -->
         </ul>
 
         <ul
