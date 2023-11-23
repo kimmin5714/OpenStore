@@ -27,8 +27,176 @@ export const useMapStore = defineStore("map", () => {
   const mapType = ref("roadmap");
   // 매물 동 검색이 되면 맵 이동을 시키기 위한 상태 변수
   const isSearchedByAddress = ref(false);
+  // 그래프용 데이터
+  const isChartReady = ref(false);
+  const chartByTime = ref({});
+  const chartByGender = ref({});
+  const chartByDay = ref({});
+  const chartByGenderAge = ref({});
 
   // Getters (Computed: State를 가공한 결과를 리턴)
+  const dataByTime = computed(() => {
+    if (salesByDong.value) {
+      let time_00 = 0;
+      let time_06 = 0;
+      let time_11 = 0;
+      let time_14 = 0;
+      let time_17 = 0;
+      let time_21 = 0;
+
+      for (let i = 0; i < salesByDong.value.length; i++) {
+        let sale = salesByDong.value[i];
+        time_00 += sale.time_00_06_sales;
+        time_06 += sale.time_06_11_sales;
+        time_11 += sale.time_11_14_sales;
+        time_14 += sale.time_14_17_sales;
+        time_17 += sale.time_17_21_sales;
+        time_21 += sale.time_21_24_sales;
+      }
+      return [time_06, time_11, time_14, time_17, time_21, time_00];
+    }
+    return 0;
+  });
+
+  const dataByGender = computed(() => {
+    if (salesByDong.value) {
+      let male = 0;
+      let female = 0;
+
+      for (let i = 0; i < salesByDong.value.length; i++) {
+        let sale = salesByDong.value[i];
+        male += sale.male_sales;
+        female += sale.female_sales;
+      }
+      return [male, female];
+    }
+    return 0;
+  });
+  const dataByDay = computed(() => {
+    if (salesByDong.value) {
+      let monday_sales = 0;
+      let tuesday_sales = 0;
+      let wednesday_sales = 0;
+      let thursday_sales = 0;
+      let friday_sales = 0;
+      let saturday_sales = 0;
+      let sunday_sales = 0;
+
+      for (let i = 0; i < salesByDong.value.length; i++) {
+        let sale = salesByDong.value[i];
+        monday_sales += sale.monday_sales;
+        tuesday_sales += sale.tuesday_sales;
+        wednesday_sales += sale.wednesday_sales;
+        thursday_sales += sale.thursday_sales;
+        friday_sales += sale.friday_sales;
+        saturday_sales += sale.saturday_sales;
+        sunday_sales += sale.sunday_sales;
+      }
+      return [
+        monday_sales,
+        tuesday_sales,
+        wednesday_sales,
+        thursday_sales,
+        friday_sales,
+        saturday_sales,
+        sunday_sales,
+      ];
+    }
+    return 0;
+  });
+  const dataByGenderAgeMale = computed(() => {
+    if (salesByDong.value) {
+      let age_10_sales = 0;
+      let age_20_sales = 0;
+      let age_30_sales = 0;
+      let age_40_sales = 0;
+      let age_50_sales = 0;
+      let age_60_above_sales = 0;
+
+      for (let i = 0; i < salesByDong.value.length; i++) {
+        let sale = salesByDong.value[i];
+        if (sale.male_sales_count !== 0) {
+          age_10_sales += Math.round(sale.age_10_sales / sale.male_sales_count);
+          age_20_sales += Math.round(sale.age_20_sales / sale.male_sales_count);
+          age_30_sales += Math.round(sale.age_30_sales / sale.male_sales_count);
+          age_40_sales += Math.round(sale.age_40_sales / sale.male_sales_count);
+          age_50_sales += Math.round(sale.age_50_sales / sale.male_sales_count);
+          age_60_above_sales += Math.round(
+            sale.age_60_above_sales / sale.male_sales_count
+          );
+        }
+      }
+      console.log([
+        age_10_sales,
+        age_20_sales,
+        age_30_sales,
+        age_40_sales,
+        age_50_sales,
+        age_60_above_sales,
+      ]);
+      return [
+        age_10_sales,
+        age_20_sales,
+        age_30_sales,
+        age_40_sales,
+        age_50_sales,
+        age_60_above_sales,
+      ];
+    }
+    return 0;
+  });
+  const dataByGenderAgeFemale = computed(() => {
+    if (salesByDong.value) {
+      let age_10_sales = 0;
+      let age_20_sales = 0;
+      let age_30_sales = 0;
+      let age_40_sales = 0;
+      let age_50_sales = 0;
+      let age_60_above_sales = 0;
+
+      for (let i = 0; i < salesByDong.value.length; i++) {
+        let sale = salesByDong.value[i];
+        if (sale.female_sales_count !== 0) {
+          age_10_sales += Math.round(
+            sale.age_10_sales / sale.female_sales_count
+          );
+          age_20_sales += Math.round(
+            sale.age_20_sales / sale.female_sales_count
+          );
+          age_30_sales += Math.round(
+            sale.age_30_sales / sale.female_sales_count
+          );
+          age_40_sales += Math.round(
+            sale.age_40_sales / sale.female_sales_count
+          );
+          age_50_sales += Math.round(
+            sale.age_50_sales / sale.female_sales_count
+          );
+          age_60_above_sales += Math.round(
+            sale.age_60_above_sales / sale.female_sales_count
+          );
+        }
+      }
+      console.log([
+        age_10_sales,
+        age_20_sales,
+        age_30_sales,
+        age_40_sales,
+        age_50_sales,
+        age_60_above_sales,
+      ]);
+      return [
+        age_10_sales,
+        age_20_sales,
+        age_30_sales,
+        age_40_sales,
+        age_50_sales,
+        age_60_above_sales,
+      ];
+    }
+    return 0;
+  });
+
   const getterEstateList = computed(() => {
     //  boards.value.filter((board) => {
     // 필요한 처리 작성
@@ -43,6 +211,204 @@ export const useMapStore = defineStore("map", () => {
 
   // Getters
   // Actions
+  const initChart = () => {
+    console.log("initChaaart");
+    chartByTime.value = {
+      data: ref({
+        labels: [
+          "06~11시",
+          "11~14시",
+          "14~17시",
+          "17~21시",
+          "21~24시",
+          "00~06시",
+        ],
+        datasets: [
+          {
+            label: "시간대 매출",
+            backgroundColor: "rgb(54, 162, 235)",
+            borderColor: "#C7E7F9",
+            data: dataByTime.value,
+            barThickness: 80,
+          },
+        ],
+      }),
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            // suggestedMin: 0,
+            // suggestedMax: 200,
+            ticks: {
+              display: false,
+            },
+            border: {
+              display: false,
+            },
+            grid: {
+              display: true,
+            },
+          },
+        },
+      },
+    };
+    chartByDay.value = {
+      data: ref({
+        labels: ["월", "화", "수", "목", "금", "토", "일"],
+        datasets: [
+          {
+            label: "요일별 매출",
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(201, 203, 207, 0.2)",
+            ],
+            borderColor: [
+              "rgb(255, 99, 132)",
+              "rgb(255, 159, 64)",
+              "rgb(255, 205, 86)",
+              "rgb(75, 192, 192)",
+              "rgb(54, 162, 235)",
+              "rgb(153, 102, 255)",
+              "rgb(201, 203, 207)",
+            ],
+            borderWidth: 1,
+            data: dataByDay.value,
+            barThickness: 30,
+          },
+        ],
+      }),
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            // suggestedMin: 0,
+            // suggestedMax: 200,
+            ticks: {
+              display: false,
+            },
+            border: {
+              display: true,
+            },
+            grid: {
+              display: true,
+            },
+          },
+        },
+      },
+    };
+    chartByGender.value = {
+      data: ref({
+        labels: ["남성", "여성"],
+        datasets: [
+          {
+            label: "성별 매출",
+            backgroundColor: [
+              "rgba(54, 162, 235, 0.7)",
+              "rgba(255, 99, 132, 0.7)",
+            ],
+            borderColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"],
+            pointColor: "#000000",
+            data: dataByGender.value,
+            barThickness: 80,
+          },
+        ],
+      }),
+      options: {
+        responsive: true,
+        scales: {
+          // x: {
+          //   ticks: {
+          //     display: false,
+          //   },
+          //   border: {
+          //     display: false,
+          //   },
+          //   grid: {
+          //     display: false,
+          //   },
+          // },
+          // y: {
+          //   // suggestedMin: 0,
+          //   // suggestedMax: 200,
+          //   ticks: {
+          //     display: false,
+          //   },
+          //   border: {
+          //     display: false,
+          //   },
+          //   grid: {
+          //     display: false,
+          //   },
+          // },
+        },
+      },
+    };
+    chartByGenderAge.value = {
+      data: ref({
+        labels: ["10대", "20대", "30대", "40대", "50대", "60대 이상"],
+        datasets: [
+          {
+            label: "남",
+            data: dataByGenderAgeMale.value,
+            fill: true,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgb(54, 162, 235)",
+            pointBackgroundColor: "rgb(54, 162, 235)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(54, 162, 235)",
+          },
+          {
+            label: "여",
+            data: dataByGenderAgeFemale.value,
+            fill: true,
+            backgroundColor: "rgba(255, 99, 132, 0.2)",
+            borderColor: "rgb(255, 99, 132)",
+            pointBackgroundColor: "rgb(255, 99, 132)",
+            pointBorderColor: "#fff",
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgb(255, 99, 132)",
+          },
+        ],
+      }),
+      options: {
+        responsive: true,
+        scale: {
+          ticks: {
+            display: false,
+          },
+        },
+        scales: {
+          r: {
+            ticks: {
+              display: false,
+            },
+            border: {
+              display: true,
+            },
+            grid: {
+              display: true,
+            },
+          },
+        },
+      },
+    };
+  };
   const selectStoreList = async (params) => {
     console.log(`selectStoreList : `, params);
 
@@ -95,6 +461,8 @@ export const useMapStore = defineStore("map", () => {
       if (response.status === 200) {
         salesByDong.value = response.data;
         console.log(response);
+        await initChart();
+        isChartReady.value = true;
         return "success";
       } else if (response.status === 204) {
         salesByDong.value = [];
@@ -274,7 +642,6 @@ export const useMapStore = defineStore("map", () => {
     }
     document.querySelector(`#${selid}`).innerHTML = content;
   };
-
   // Return
   return {
     isStoreListClicked,
@@ -288,8 +655,13 @@ export const useMapStore = defineStore("map", () => {
     estate,
     mapType,
     isSearchedByAddress,
+    isChartReady,
     getterEstateList,
     getterEstate,
+    chartByGenderAge,
+    chartByGender,
+    chartByTime,
+    chartByDay,
     selectStoreList,
     selectDealCostAvgByDong,
     selectEstateList,
