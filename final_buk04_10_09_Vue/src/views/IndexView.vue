@@ -1,5 +1,5 @@
 <script setup>
-import HeadingNav from "@/components/common/HeadingNav.vue";
+import HeadingNavIndex from "@/components/common/HeadingNavIndex.vue";
 import Footer from "../components/common/Footer.vue";
 </script>
 
@@ -34,9 +34,10 @@ import Footer from "../components/common/Footer.vue";
       </RouterLink>
     </div>
   </main> -->
-  <HeadingNav />
+
   <main class="sc-bbDxtK iNYtyb">
     <!-- 페이지 상부 -->
+    <HeadingNavIndex />
     <section class="sc-cjpfIh dxleaB">
       <div class="sc-jjeeWu ihRlrO">
         <img src="src\assets\img\v725-te-22.jpg" alt="background" />
@@ -44,49 +45,24 @@ import Footer from "../components/common/Footer.vue";
           <h2 class="sc-eTZVu nQjLg">
             소상공인 상권 정보 솔루션<br />오픈스토어
           </h2>
+          <div class="sc-NjEqx kQLQuf">
+            <a
+              data-gtm-action="mainhome_main_search_box_chips_click"
+              data-gtm-label="mapo"
+              class="sc-jlqnSw cXrUXl"></a>
+          </div>
+
           <div
             class="sc-hsZwpi gGbVFK sc-bsqviP djZIeE sc-cWiZSr kxttkI dropdown">
-            <form class="sc-fkxeQW lbzVUA empty">
-              <input
-                class="sc-gqgnwQ jCTgjP dropdown-toggle"
-                aria-haspopup="true"
-                aria-expanded="false"
-                aria-label="keyword"
-                autocomplete="off"
-                name="keyword"
-                type="text"
-                tabindex="1"
-                placeholder="키워드 검색"
-                value="" /><button
-                title="검색"
-                aria-label="search"
-                tabindex="3"
-                type="submit"
-                class="sc-gcHwEF tbLGf">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="#1A8CFF"
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="swk-icon">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M16.0491 17.4633C14.7873 18.4274 13.2105 19 11.5 19C7.35786 19 4 15.6421 4 11.5C4 7.35786 7.35786 4 11.5 4C15.6421 4 19 7.35786 19 11.5C19 13.2105 18.4274 14.7873 17.4633 16.0491L20.7071 19.2929C21.0976 19.6834 21.0976 20.3166 20.7071 20.7071C20.3166 21.0976 19.6834 21.0976 19.2929 20.7071L16.0491 17.4633ZM17 11.5C17 14.5376 14.5376 17 11.5 17C8.46243 17 6 14.5376 6 11.5C6 8.46243 8.46243 6 11.5 6C14.5376 6 17 8.46243 17 11.5Z"
-                    fill="white"></path>
-                </svg>
-              </button>
+            <form>
+              <router-link
+                class="nav-link"
+                aria-current="page"
+                :to="{ name: 'apart-view' }">
+                <button class="sc-gcHwEF tbLGf">매물 지도 보러가기</button>
+              </router-link>
             </form>
           </div>
-          <!-- <div class="sc-NjEqx kQLQuf">
-        <a
-          data-gtm-action="mainhome_main_search_box_chips_click"
-          data-gtm-label="mapo"
-          class="sc-jlqnSw cXrUXl"  
-          >마포구</a
-        >
-      </div> -->
         </div>
       </div>
     </section>
@@ -175,6 +151,33 @@ import Footer from "../components/common/Footer.vue";
 </template>
 
 <style scoped>
+.fKwRBh {
+  position: absolute;
+  bottom: 0px px;
+  border-top: 1px solid rgb(223, 229, 235);
+  width: 100%;
+  height: 72px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.fKwRBh a {
+  width: 100%;
+  height: 100%;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
 .dxleaB {
   position: relative;
   width: 100%;
@@ -216,13 +219,13 @@ import Footer from "../components/common/Footer.vue";
 }
 .ihRlrO img {
   width: 100%;
-  height: 100%;
+  height: 93%;
   object-fit: cover;
 }
 .jtYTiW {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 83%;
   top: 0px;
   left: 0px;
   display: flex;
@@ -238,8 +241,8 @@ import Footer from "../components/common/Footer.vue";
   line-height: 96px;
   text-align: center;
   color: rgb(255, 255, 255);
-  /* color: black; */
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  letter-spacing: 0.1px;
 }
 .djZIeE {
   margin-left: 24px;
@@ -285,7 +288,7 @@ import Footer from "../components/common/Footer.vue";
   border: none;
 }
 .tbLGf {
-  width: 40px;
+  width: 100%;
   height: 40px;
   border: 0px;
   border-radius: 40px;
@@ -296,10 +299,12 @@ import Footer from "../components/common/Footer.vue";
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
+  margin-top: 6px;
 }
 .kQLQuf {
   display: flex;
-  margin-top: 20px;
+  margin-top: 0px;
+  margin-bottom: 30px;
 }
 .cXrUXl {
   display: flex;
@@ -371,5 +376,14 @@ import Footer from "../components/common/Footer.vue";
   text-align: center;
   color: rgb(20, 23, 26);
   margin: 16px 0px 20px;
+}
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+* {
+  /* font-family: "Nanum Gothic" !important; */
+  font-weight: bold !important;
 }
 </style>

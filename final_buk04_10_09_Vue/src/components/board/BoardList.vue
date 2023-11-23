@@ -81,17 +81,15 @@ const validateSearch = () => {
   params.value.pgno = 1;
   params.value.word = word.value;
   params.value.key = key.value;
-  
+
   getArticleList();
 };
 </script>
 
 <template>
   <div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10 col-sm-12">
-      <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-        <mark class="sky">공지사항</mark>
-      </h2>
+    <div style="padding: 24px 0px 24px; align-items: center">
+      <h3 class="estate-list-header">공지사항</h3>
     </div>
     <div class="col-lg-8 col-md-10 col-sm-12">
       <div class="row align-self-center mb-2">
@@ -101,8 +99,7 @@ const validateSearch = () => {
               type="button"
               id="btn-mv-register"
               class="btn btn-outline-primary btn-sm"
-              @click="$router.push({ name: 'BoardCreate' })"
-            >
+              @click="$router.push({ name: 'BoardCreate' })">
               글쓰기
             </button>
           </span>
@@ -118,14 +115,12 @@ const validateSearch = () => {
                 class="form-control"
                 placeholder="검색어..."
                 v-model="word"
-                @keyup.enter="validateSearch"
-              />
+                @keyup.enter="validateSearch" />
               <button
                 id="btn-searchL"
                 class="btn btn-dark"
                 type="button"
-                @click="validateSearch"
-              >
+                @click="validateSearch">
                 검색
               </button>
             </div>
@@ -147,8 +142,7 @@ const validateSearch = () => {
             v-for="(article, index) in getterArticles"
             :key="article.articleNo"
             :index="index"
-            :article="article"
-          />
+            :article="article" />
           <h2 v-show="isListEmpty">검색 결과가 존재하지 않습니다.</h2>
         </tbody>
       </table>
@@ -156,10 +150,27 @@ const validateSearch = () => {
       <VPageNavigation
         :current-page="currentPage"
         :total-page="totalPage"
-        @pageChange="onPageChange"
-      ></VPageNavigation>
+        @pageChange="onPageChange"></VPageNavigation>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.estate-list-header {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 48px;
+  text-align: center;
+  color: rgb(54, 59, 64);
+}
+h3 {
+  margin: 0px;
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+</style>
