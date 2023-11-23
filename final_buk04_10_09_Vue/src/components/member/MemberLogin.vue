@@ -16,6 +16,7 @@ const { userLogin, getUserInfo } = memberStore;
 const loginUser = ref({
   userid: "",
   userpwd: "",
+  saveid: "",
 });
 
 const login = async () => {
@@ -103,12 +104,14 @@ const login = async () => {
                       title="아이디"
                       class="input_text"
                       maxlength="41"
-                      v-model="loginUser.userid" />
+                      v-model="loginUser.userid"
+                    />
                     <span
                       role="button"
                       class="btn_delete"
                       id="id_clear"
-                      style="display: none">
+                      style="display: none"
+                    >
                       <span class="icon_delete">
                         <span class="blind">삭제</span>
                       </span>
@@ -129,29 +132,32 @@ const login = async () => {
                       class="input_text"
                       maxlength="16"
                       v-model="loginUser.userpwd"
-                      @keyup.enter="login" />
+                      @keyup.enter="login"
+                    />
                     <span
                       role="button"
                       class="btn_delete"
                       id="pw_clear"
-                      style="display: none">
+                      style="display: none"
+                    >
                       <span class="icon_delete">
                         <span class="blind">삭제</span>
                       </span>
                     </span>
                   </div>
                 </div>
-                <div class="login_keep_wrap" id="login_keep_wrap">
+                <!-- <div class="login_keep_wrap" id="login_keep_wrap">
                   <div class="keep_check">
                     <input
                       type="checkbox"
                       id="keep"
                       name="nvlong"
                       class="input_keep"
-                      value="off" />
+                      v-model="loginUser.saveid"
+                    />
                     <label for="keep" class="keep_text">로그인 상태 유지</label>
                   </div>
-                </div>
+                </div> -->
 
                 <!-- <div
                 class="login_error_wrap"
@@ -190,7 +196,8 @@ const login = async () => {
                     type="submit"
                     class="btn_login"
                     id="log.login"
-                    @click="login">
+                    @click="login"
+                  >
                     <span class="btn_text">로그인</span>
                   </button>
                 </div>
@@ -465,8 +472,6 @@ ul {
   margin: 0;
   padding: 0;
   -webkit-text-size-adjust: none;
-  font-family: -apple-system, BlinkMacSystemFont, helvetica,
-    "Apple SD Gothic Neo", sans-serif;
 }
 .find_wrap .en_find_text,
 .find_wrap .find_text,
@@ -491,8 +496,6 @@ li {
   margin: 0;
   padding: 0;
   -webkit-text-size-adjust: none;
-  font-family: -apple-system, BlinkMacSystemFont, helvetica,
-    "Apple SD Gothic Neo", sans-serif;
 }
 .find_wrap li + li::before,
 .relogin_find_wrap li + li::before {

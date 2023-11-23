@@ -116,35 +116,18 @@ if (searchType.value === "D") {
 <template>
   <!--검색창-->
   <div id="searchBox" class="card">
-    <div>
-      <div class="p-2">
-        <div class="d-flex">
-          <i class="fa fa-search"></i>
-          <h6 class="ps-2">검색 방법을 선택하세요</h6>
-        </div>
-        <div class="py-1 px-2 d-flex">
-          <div class="form-check pe-3">
-            <input
-              value="D"
-              v-model="searchType"
-              class="form-check-input"
-              type="radio"
-              name="search"
-              id="searchByDong"
-            />
-            <label class="form-check-label" for="searchByDong">동 검색</label>
-          </div>
-        </div>
-        <div
-          v-if="searchType == 'D'"
-          class="pb-2 d-flex justify-content-evenly"
-        >
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary">서울시</button>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <fieldset>
-              <!-- <select
+    <div class="sc-jZdwFr sc-kQnSwI eMLPZq dPdwHF">
+      <h1 class="sc-jDLPGi eGNfKa">주소 검색</h1>
+    </div>
+    <div v-if="searchType == 'D'" class="d-flex justify-content-between">
+      <div class="btn-group search-add">
+        <button type="button" class="btn btn-primary" style="font-size: 16px">
+          서울시
+        </button>
+      </div>
+      <div class="col-5">
+        <fieldset>
+          <!-- <select
                 v-model="selectGuName"
                 @change="onGuMenuChange"
                 class="array-select form-control form-select"
@@ -157,59 +140,21 @@ if (searchType.value === "D") {
                   {{ item.guName }}
                 </option>
               </select> -->
-              <select
-                id="gugun"
-                class="array-select form-control form-select"
-                v-model="searchAddress.gugun"
-              >
-                <option value="">주소(구군)</option>
-              </select>
-            </fieldset>
-          </div>
-          <div class="col-lg-4 col-md-6 col-sm-6">
-            <fieldset>
-              <select
-                id="dong"
-                class="form-select"
-                v-model="searchAddress.dong"
-              >
-                <option value="">주소(동)</option>
-              </select>
-            </fieldset>
-          </div>
-        </div>
-        <div v-if="searchType == 'K'" class="input-group pb-2 px-3">
-          <input
-            @keyup.enter="onKeywordSearch"
-            type="text"
-            v-model="inputKeyword"
-            class="form-control d-inline-block"
-            placeholder="건물명 또는 동을 입력하세요"
-          />
-          <button
-            @click="onKeywordSearch"
-            class="btn btn-primary d-inline-block"
-            type="button"
+          <select
+            id="gugun"
+            class="array-select form-control form-select"
+            v-model="searchAddress.gugun"
           >
-            <i class="bi bi-search"></i>
-          </button>
-        </div>
+            <option value="">주소(구군)</option>
+          </select>
+        </fieldset>
       </div>
-      <div v-if="searchType == 'K'" class="input-group pb-2 px-3">
-        <input
-          @keyup.enter="onKeywordSearch"
-          type="text"
-          v-model="inputKeyword"
-          class="form-control d-inline-block"
-          placeholder="건물명 또는 동을 입력하세요"
-        />
-        <button
-          @click="onKeywordSearch"
-          class="btn btn-primary d-inline-block"
-          type="button"
-        >
-          <i class="bi bi-search"></i>
-        </button>
+      <div class="col-4">
+        <fieldset>
+          <select id="dong" class="form-select" v-model="searchAddress.dong">
+            <option value="">주소(동)</option>
+          </select>
+        </fieldset>
       </div>
     </div>
   </div>
@@ -228,17 +173,39 @@ if (searchType.value === "D") {
       >
         <div role="button" class="search-list-li-detail">
           <div class="sc-juGoRN cujSyQ">
-            <h4 class="sc-eFfTkT btIhdS">{{ estate.dong }}</h4>
-            <p class="sc-bKGzYo beCmdD">토지ㆍ47m²ㆍ1년이내</p>
+            <h4 class="sc-eFfTkT btIhdS">
+              {{ estate.sido }} {{ estate.gugun }} {{ estate.dong }}
+              {{ estate.jibun }}
+            </h4>
+            <p class="sc-bKGzYo beCmdD">
+              면적ㆍ{{ Math.round(estate.area) }}m²
+            </p>
           </div>
           <div class="sc-hMQQaK cymzWl">
-            <h3 class="sc-jjykVC irPSbt">{{ estate.dealAmount }}</h3>
-            <p class="sc-gbNofL pDonz">489만원/m²</p>
+            <h3 class="sc-jjykVC irPSbt">
+              {{ Math.round(estate.dealAmount / 1000) / 10 }}억원
+            </h3>
+            <p class="sc-gbNofL pDonz">
+              {{ Math.round(estate.dealAmount / estate.area) }}만원/m²
+            </p>
             <p class="sc-haGfLn cwMZDB">{{ estate.join_year }}</p>
           </div>
         </div>
       </router-link>
     </li>
+    <!-- <li data-pnu="4111513800101080008" class="sc-hNfygx jKNRXD">
+      <div role="button" class="sc-bmVCiI kXJbUL">
+        <div class="sc-juGoRN cujSyQ">
+          <h4 class="sc-eFfTkT btIhdS">경기 수원시 팔달구 화서동 108-8</h4>
+          <p class="sc-bKGzYo beCmdD">단독다가구ㆍ97.4평ㆍ25년</p>
+        </div>
+        <div class="sc-hMQQaK cymzWl">
+          <h3 class="sc-jjykVC irPSbt">21.0억원</h3>
+          <p class="sc-gbNofL pDonz">2,156만원/평</p>
+          <p class="sc-haGfLn cwMZDB">2023.04</p>
+        </div>
+      </div>
+    </li> -->
   </ul>
 
   <!--스크롤바-->
@@ -328,6 +295,10 @@ if (searchType.value === "D") {
   text-align: -webkit-match-parent;
   padding: 25px 20px 0px;
   transition: background-color 0.2s ease 0s;
+  border-top: 1px solid #f5f5f5;
+}
+.search-list-li:hover {
+  background-color: #eee;
 }
 .search-list-li-detail {
   display: flex;
@@ -337,13 +308,114 @@ if (searchType.value === "D") {
   align-items: flex-start;
 }
 #searchBox {
-  top: 20px;
-  left: 20px;
-  width: 360px;
-  padding: 10px;
+  /* top: 20px;
+  left: 20px; */
+  /* width: 360px; */
+  width: 100%;
+  /* padding: 10px; */
+  height: 160px;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.7);
+  /* background-color: rgba(255, 255, 255, 0.7); */
+  background: linear-gradient(
+    117.98deg,
+    rgb(0, 75, 188) 21.06%,
+    rgb(108, 181, 255) 100%
+  );
+  border: 0px;
+  /* padding-bottom: 70px; */
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+  /* margin-top: 40px; */
   margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 0;
+}
+.dPdwHF {
+  /* display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: flex-start;
+  order: 1;
+  height: auto; */
+  /* padding: 0px 0px 24px; */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-left: 30px;
+}
+.eGNfKa {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: rgb(214, 236, 255);
+}
+.jKNRXD {
+  padding: 16px 20px 0px;
+  transition: background-color 0.2s ease 0s;
+}
+.kXJbUL {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: flex-start;
+}
+.cujSyQ {
+  width: calc(100% - 120px);
+}
+.btIhdS {
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 20px;
+  color: rgb(20, 23, 26);
+}
+.beCmdD {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(90, 96, 102);
+}
+.cymzWl {
+  text-align: right;
+}
+.irPSbt {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgb(20, 23, 26);
+}
+.pDonz {
+  margin-bottom: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(123, 132, 140);
+}
+.cwMZDB {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgb(90, 96, 102);
+}
+* {
+  font-family: "프리텐다드", "Pretendard-Regular";
+  /* color: rgba(0, 0, 0, 0); */
+}
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
 }
 </style>

@@ -154,6 +154,12 @@ const updateStoreList = async () => {
   deleteMarkers();
   // deleteInfoWindows();
   const levelLimit = 2;
+
+  // 마커 이미지
+  const imageSrc =
+    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+  const imageSize = new kakao.maps.Size(24, 35);
+  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
   if (isStoreListActivated.value) {
     if (map.getLevel() <= levelLimit) {
       const bounds = map.getBounds();
@@ -181,6 +187,7 @@ const updateStoreList = async () => {
             map, // 마커를 표시할 지도
             position: new kakao.maps.LatLng(store.lat, store.lon), // 마커를 표시할 위치
             title: store.bizesNm, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다image : markerImage // 마커 이미지
+            image: markerImage,
           });
 
           // let infowindow = new kakao.maps.InfoWindow({
@@ -307,8 +314,12 @@ const makeEstateMarkers = async () => {
         </header>
         <section style="padding:5px;">
             <div style="text-align: center;">
-                <p style="font-weight: bold; font-size: 12px;margin:0px">${estate.dealAmount}</p>
-                <p style="color: #CCCCCC; font-size: 10px;margin:0px">${estate.joinYear}.${estate.joinMonth}</p>
+                <p style="font-weight: bold; font-size: 12px;margin:0px">${
+                  Math.round(estate.dealAmount / 1000) / 10
+                }억원</p>
+                <p style="color: #CCCCCC; font-size: 10px;margin:0px">${
+                  estate.joinYear
+                }.${estate.joinMonth}</p>
         </section>
         </div>
     </button>

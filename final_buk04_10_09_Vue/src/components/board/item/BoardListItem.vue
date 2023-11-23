@@ -1,29 +1,35 @@
 <script setup>
-defineProps({ article: Object });
+import { useRouter } from "vue-router";
+
+const props = defineProps({ article: Object });
+const router = useRouter();
+
+const movePage = () => {
+  router.push({
+    name: "BoardDetail",
+    params: {
+      articleNo: props.article.articleNo,
+    },
+  });
+};
 </script>
 
 <template>
-  <tr class="text-center">
-    <td>{{ article.articleNo }}</td>
+  <tr @click="movePage" class="text-center" style="cursor: pointer">
     <td class="text-start">
-      <RouterLink
-        v-bind:to="{
-          name: 'BoardDetail',
-          params: {
-            articleNo: article.articleNo,
-          },
-        }"
-        class="article-title link-dark"
-        style="text-decoration: none"
-        >{{ article.subject }}</RouterLink
-      >
+      <a class="article-title link-dark" style="text-decoration: none">{{
+        article.subject
+      }}</a>
     </td>
-    <td>
-      {{ article.userName }}
-    </td>
-    <td>{{ article.hit }}</td>
-    <td>{{ article.registerTime }}</td>
+    <td class="text-end">{{ article.registerTime.substr(0, 10) }}</td>
   </tr>
 </template>
 
-<style scoped></style>
+<style scoped>
+* {
+}
+tr {
+  padding: 0px 10px 0 10px;
+  font-size: 15px;
+}
+</style>

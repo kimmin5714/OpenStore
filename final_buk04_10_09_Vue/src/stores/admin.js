@@ -205,11 +205,11 @@ export const useAdminStore = defineStore("admin", () => {
     }
   };
 
-  const updateUser = async () => {
-    console.log("updateUser", user.value);
+  const updateUser = async (user) => {
+    console.log("updateUser", user);
     try {
-      const { status } = await modify(user.value);
-      if (status === 201) {
+      const { status } = await modify(user);
+      if (status === 200) {
         return "success";
       } else {
         throw new Error(status);

@@ -1,7 +1,7 @@
 <script setup>
 import HeadingNav from "@/components/common/HeadingNav.vue";
 import Footer from "../common/Footer.vue";
-import { reactive } from "vue";
+import { ref, reactive } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useAdminStore } from "@/stores/admin";
@@ -13,6 +13,7 @@ const memberStore = useAdminStore();
 const { insertMember } = memberStore;
 
 // Data
+const isCheckTerm = ref(false);
 const userinfo = reactive({
   username: "",
   useridRegister: "",
@@ -23,6 +24,10 @@ const userinfo = reactive({
 
 // Method
 const registerUser = async () => {
+  if (!isCheckTerm.value) {
+    alert("약관에 동의해주세요");
+    return;
+  }
   const resp = await insertMember(userinfo);
   if (resp === "success") {
     alert("회원가입이 완료되었습니다.");
@@ -140,13 +145,15 @@ const registerUser = async () => {
           type="hidden"
           id="token_sjoin"
           name="token_sjoin"
-          value="26Sdblo4Lq25nf34" />
+          value="26Sdblo4Lq25nf34"
+        />
         <input type="hidden" id="nid_kb2" name="nid_kb2" value="" />
         <input
           type="hidden"
           id="joinMode"
           name="joinMode"
-          value="joinIdentity" />
+          value="joinIdentity"
+        />
         <input type="hidden" id="encPswd" name="encPswd" value="" />
         <input type="hidden" id="encKey" name="encKey" value="" />
         <input type="hidden" id="telecom" name="telecom" value="" />
@@ -163,7 +170,8 @@ const registerUser = async () => {
                   placeholder="이름"
                   class="input"
                   v-model="userinfo.username"
-                  maxlength="40" />
+                  maxlength="40"
+                />
               </div>
               <!-- <div class="form_item calendar" id="divBirthday">
                 <input
@@ -185,7 +193,8 @@ const registerUser = async () => {
                   placeholder="아이디"
                   class="input"
                   maxlength="20"
-                  autocapitalize="off" />
+                  autocapitalize="off"
+                />
               </div>
               <div class="form_item lock password" id="divPasswd">
                 <input
@@ -196,7 +205,8 @@ const registerUser = async () => {
                   class="input"
                   v-model="userinfo.userpwdRegister"
                   maxlength="20"
-                  autocomplete="new-password" />
+                  autocomplete="new-password"
+                />
               </div>
               <div class="form_item lock password" id="divPasswd">
                 <input
@@ -207,7 +217,8 @@ const registerUser = async () => {
                   class="input"
                   value=""
                   maxlength="20"
-                  autocomplete="new-password" />
+                  autocomplete="new-password"
+                />
               </div>
               <div class="form_item email" id="divEmail">
                 <input
@@ -217,42 +228,49 @@ const registerUser = async () => {
                   placeholder="이메일 아이디"
                   class="input"
                   v-model="userinfo.emailid"
-                  maxlength="100" />
-              </div>
-              <div class="form_item">
-                <span class="input-group-text">@</span>
+                  maxlength="100"
+                /><span class="input-group-text">@</span>
                 <select
                   v-model="userinfo.emaildomain"
-                  class="form-select"
+                  class="form-select select"
                   id="emaildomain"
                   name="emaildomain"
-                  aria-label="이메일 도메인 선택">
-                  <option selected>선택</option>
-                  <option value="ssafy.com">싸피</option>
-                  <option value="google.com">구글</option>
-                  <option value="naver.com">네이버</option>
-                  <option value="kakao.com">카카오</option>
+                  aria-label="이메일 도메인 선택"
+                >
+                  <option selected value="">example.com</option>
+                  <option value="ssafy.com">ssafy.com</option>
+                  <option value="google.com">gmail.com</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="kakao.com">kakao.com</option>
                 </select>
               </div>
             </div>
             <div
               class="error_text item_style"
               id="idMsg"
-              style="display: none"></div>
+              style="display: none"
+            ></div>
             <div
               class="error_text item_style"
               id="pswd1Msg"
-              style="display: none"></div>
+              style="display: none"
+            ></div>
             <div
               class="error_text item_style"
               id="emailMsg"
-              style="display: none"></div>
+              style="display: none"
+            ></div>
 
             <div class="form_list" id="divTerm">
               <div class="form_item check_box" id="itemAgree">
                 <div class="title_area">
                   <div class="check_circle">
-                    <input type="checkbox" id="agree_all" class="blind" />
+                    <input
+                      type="checkbox"
+                      id="agree_all"
+                      class="blind"
+                      v-model="isCheckTerm"
+                    />
                     <label for="agree_all">
                       <em class="option point">[필수]</em>
                       <span class="text">인증 약관 전체동의</span>
@@ -261,7 +279,8 @@ const registerUser = async () => {
                   <button
                     type="button"
                     class="btn_expand"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                  >
                     <span class="blind">약관 목록</span>
                   </button>
                 </div>
@@ -275,7 +294,8 @@ const registerUser = async () => {
                       <a
                         href="https://nid.naver.com/user2/common/terms/terms2?t=viewPersonalInfoTerms&amp;v=1"
                         target="_blank"
-                        class="link_arrow">
+                        class="link_arrow"
+                      >
                         <span class="blind">약관 전문보기</span>
                       </a>
                     </div>
@@ -290,7 +310,8 @@ const registerUser = async () => {
                       <a
                         href="https://nid.naver.com/user2/common/terms/terms2?t=viewUniqInfoTerms&amp;v=1"
                         target="_blank"
-                        class="link_arrow">
+                        class="link_arrow"
+                      >
                         <span class="blind">약관 전문보기</span>
                       </a>
                     </div>
@@ -305,7 +326,8 @@ const registerUser = async () => {
                       <a
                         href="https://nid.naver.com/user2/common/terms/terms2?t=viewCellPhoneCarriersTerms&amp;v=1"
                         target="_blank"
-                        class="link_arrow">
+                        class="link_arrow"
+                      >
                         <span class="blind">약관 전문보기</span>
                       </a>
                     </div>
@@ -320,7 +342,8 @@ const registerUser = async () => {
                       <a
                         href="https://nid.naver.com/user2/common/terms/terms2?t=viewServiceTerms&amp;v=1"
                         target="_blank"
-                        class="link_arrow">
+                        class="link_arrow"
+                      >
                         <span class="blind">약관 전문보기</span>
                       </a>
                     </div>
@@ -335,7 +358,8 @@ const registerUser = async () => {
                       <a
                         href="https://nid.naver.com/user2/common/terms/terms2?t=viewNaverTerms&amp;v=2"
                         target="_blank"
-                        class="link_arrow">
+                        class="link_arrow"
+                      >
                         <span class="blind">약관 전문보기</span>
                       </a>
                     </div>
@@ -351,7 +375,8 @@ const registerUser = async () => {
             type="button"
             class="btn_submit"
             id="btnJoin"
-            @click="registerUser">
+            @click="registerUser"
+          >
             가입하기
           </button>
         </div>
@@ -577,10 +602,21 @@ ul {
 .input {
   flex: 1 1 auto;
   box-sizing: border-box;
-  width: 100%;
+  width: 70%;
   font-size: 16px;
   line-height: 22px;
   color: #222;
+}
+.select {
+  padding: 0 20px;
+  width: 310px;
+  text-align: center;
+
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 22px;
+  color: #777;
 }
 .form_list::after {
   position: absolute;
