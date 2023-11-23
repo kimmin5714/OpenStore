@@ -63,7 +63,9 @@ const createRandomEstate = async () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg" style="font-size: large">
+  <nav
+    class="navbar navbar-expand-lg"
+    style="background-color: rgb(157, 191, 200); font-size: large">
     <div class="container">
       <RouterLink
         class="navbar-brand text-warning fw-bold"
@@ -170,7 +172,12 @@ const createRandomEstate = async () => {
 
 <style scoped>
 a {
-  color: rgb(95, 94, 94);
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+* {
+  /* font-family: "Nanum Gothic" !important; */
+  font-weight: bold !important;
 }
 .nav {
   margin: 5px 10px;
