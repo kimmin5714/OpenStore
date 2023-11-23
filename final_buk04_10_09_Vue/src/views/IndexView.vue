@@ -35,7 +35,7 @@ import Footer from "../components/common/Footer.vue";
     </div>
   </main> -->
 
-  <main class="sc-bbDxtK iNYtyb">
+  <main class="sc-bbDxtK iNYtyb" style="position: relative">
     <!-- 페이지 상부 -->
     <HeadingNavIndex />
     <section class="sc-cjpfIh dxleaB">
@@ -43,106 +43,58 @@ import Footer from "../components/common/Footer.vue";
         <img src="src\assets\img\v725-te-22.jpg" alt="background" />
         <div class="sc-KXvuv jtYTiW">
           <h2 class="sc-eTZVu nQjLg">
-            소상공인 상권 정보 솔루션<br />오픈스토어
+            소상공인을 위한 상권 정보<br />오픈스토어
           </h2>
-          <div class="sc-NjEqx kQLQuf">
+          <!-- <div class="sc-NjEqx kQLQuf">
             <a
               data-gtm-action="mainhome_main_search_box_chips_click"
               data-gtm-label="mapo"
-              class="sc-jlqnSw cXrUXl"></a>
-          </div>
+              class="sc-jlqnSw cXrUXl"
+            ></a>
+          </div> -->
 
           <div
-            class="sc-hsZwpi gGbVFK sc-bsqviP djZIeE sc-cWiZSr kxttkI dropdown">
-            <form>
+            class="sc-hsZwpi gGbVFK sc-bsqviP djZIeE sc-cWiZSr kxttkI dropdown"
+          >
+            <!-- <form>
               <router-link
                 class="nav-link"
                 aria-current="page"
-                :to="{ name: 'apart-view' }">
+                :to="{ name: 'apart-view' }"
+              >
                 <button class="sc-gcHwEF tbLGf">매물 지도 보러가기</button>
               </router-link>
-            </form>
+            </form> -->
+            <div class="sc-hgiRw fKwRBh">
+              <router-link
+                class="nav-link"
+                aria-current="page"
+                :to="{ name: 'apart-view' }"
+                >지도 보러가기<span
+                  ><svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="svg1"
+                  >
+                    <!-- <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M10.1538 18.5L11.0215 17.6187L6.35692 12.875H20V11.625H6.35692L11.0215 6.88125L10.1538 6L4 12.25L10.1538 18.5Z"
+                      fill="#14171A"
+                    ></path> -->
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M10.1538 18.5L11.0215 17.6187L6.35692 12.875H20V11.625H6.35692L11.0215 6.88125L10.1538 6L4 12.25L10.1538 18.5Z"
+                      fill="#edeff2"
+                    ></path>
+                  </svg> </span
+              ></router-link>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <!--  페이지 하부 -->
-    <section class="sc-fLHMoE dYa-dTS sc-jRZndg hgliO">
-      <div class="sc-fxhZON glONzd">
-        <h2 class="sc-fZSDuZ jNyKgC">
-          건축의 모든 과정을 랜드북이 함께합니다.
-        </h2>
-        <div class="sc-dMuQbb gtLrFf">
-          <a class="sc-hGNIFk bmEnfh" href="/#analytics"
-            ><p class="sc-hEBzJi losPqi">아직 토지를 고르는 중인가요?</p>
-            <p class="sc-dOGYXd dXhram">
-              AI 건축분석으로 빠르게<br />비교하고 선택하세요
-            </p>
-            <div class="sc-cBBlDJ cMXFRm">
-              <svg
-                width="28"
-                height="39"
-                viewBox="0 0 28 39"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.34171 9.67504C7.79732 9.21943 8.53601 9.21943 8.99162 9.67504L14 14.6834L19.0084 9.67504C19.464 9.21943 20.2027 9.21943 20.6583 9.67504C21.1139 10.1307 21.1139 10.8693 20.6583 11.325L14.825 17.1583C14.3693 17.6139 13.6307 17.6139 13.175 17.1583L7.34171 11.325C6.8861 10.8693 6.8861 10.1307 7.34171 9.67504Z"
-                  fill="#0064D6"></path>
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.34171 20.675C7.79732 20.2194 8.53601 20.2194 8.99162 20.675L14 25.6834L19.0084 20.675C19.464 20.2194 20.2027 20.2194 20.6583 20.675C21.1139 21.1307 21.1139 21.8693 20.6583 22.325L14.825 28.1583C14.3693 28.6139 13.6307 28.6139 13.175 28.1583L7.34171 22.325C6.8861 21.8693 6.8861 21.1307 7.34171 20.675Z"
-                  fill="#0064D6"></path>
-              </svg></div></a
-          ><a class="sc-hGNIFk bmEnfh" href="/#consult"
-            ><p class="sc-hEBzJi losPqi">내 토지의 정확한 진단이 필요한가요?</p>
-            <p class="sc-dOGYXd dXhram">
-              건축 컨설팅을 통해 전문가에게<br />궁금한 것들을 물어보세요
-            </p>
-            <div class="sc-cBBlDJ cMXFRm">
-              <svg
-                width="28"
-                height="39"
-                viewBox="0 0 28 39"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.34171 9.67504C7.79732 9.21943 8.53601 9.21943 8.99162 9.67504L14 14.6834L19.0084 9.67504C19.464 9.21943 20.2027 9.21943 20.6583 9.67504C21.1139 10.1307 21.1139 10.8693 20.6583 11.325L14.825 17.1583C14.3693 17.6139 13.6307 17.6139 13.175 17.1583L7.34171 11.325C6.8861 10.8693 6.8861 10.1307 7.34171 9.67504Z"
-                  fill="#0064D6"></path>
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.34171 20.675C7.79732 20.2194 8.53601 20.2194 8.99162 20.675L14 25.6834L19.0084 20.675C19.464 20.2194 20.2027 20.2194 20.6583 20.675C21.1139 21.1307 21.1139 21.8693 20.6583 22.325L14.825 28.1583C14.3693 28.6139 13.6307 28.6139 13.175 28.1583L7.34171 22.325C6.8861 21.8693 6.8861 21.1307 7.34171 20.675Z"
-                  fill="#0064D6"></path>
-              </svg></div></a
-          ><a class="sc-hGNIFk bmEnfh" href="/#pm"
-            ><p class="sc-hEBzJi losPqi">혼자서는 건축이 어려우신가요?</p>
-            <p class="sc-dOGYXd dXhram">
-              PM 건축으로 랜드북팀과<br />건축의 모든 과정을 함께하세요
-            </p>
-            <div class="sc-cBBlDJ cMXFRm">
-              <svg
-                width="28"
-                height="39"
-                viewBox="0 0 28 39"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.34171 9.67504C7.79732 9.21943 8.53601 9.21943 8.99162 9.67504L14 14.6834L19.0084 9.67504C19.464 9.21943 20.2027 9.21943 20.6583 9.67504C21.1139 10.1307 21.1139 10.8693 20.6583 11.325L14.825 17.1583C14.3693 17.6139 13.6307 17.6139 13.175 17.1583L7.34171 11.325C6.8861 10.8693 6.8861 10.1307 7.34171 9.67504Z"
-                  fill="#0064D6"></path>
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M7.34171 20.675C7.79732 20.2194 8.53601 20.2194 8.99162 20.675L14 25.6834L19.0084 20.675C19.464 20.2194 20.2027 20.2194 20.6583 20.675C21.1139 21.1307 21.1139 21.8693 20.6583 22.325L14.825 28.1583C14.3693 28.6139 13.6307 28.6139 13.175 28.1583L7.34171 22.325C6.8861 21.8693 6.8861 21.1307 7.34171 20.675Z"
-                  fill="#0064D6"></path>
-              </svg></div
-          ></a>
         </div>
       </div>
     </section>
@@ -152,25 +104,26 @@ import Footer from "../components/common/Footer.vue";
 
 <style scoped>
 .fKwRBh {
-  position: absolute;
   bottom: 0px px;
-  border-top: 1px solid rgb(223, 229, 235);
-  width: 100%;
+  width: 250px;
   height: 72px;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 30px;
 }
 .fKwRBh a {
   width: 100%;
   height: 100%;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 24px;
   text-align: center;
-  color: rgb(255, 255, 255);
+  /* color: rgb(255, 255, 255); */
+  color: #000;
   text-decoration: none;
   display: flex;
   -webkit-box-align: center;
@@ -181,7 +134,7 @@ import Footer from "../components/common/Footer.vue";
 .dxleaB {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 93vh;
   min-width: 1200px;
   display: flex;
   flex-direction: column;
@@ -219,7 +172,7 @@ import Footer from "../components/common/Footer.vue";
 }
 .ihRlrO img {
   width: 100%;
-  height: 93%;
+  height: 100%;
   object-fit: cover;
 }
 .jtYTiW {
@@ -369,13 +322,14 @@ import Footer from "../components/common/Footer.vue";
   text-align: center;
   color: rgb(123, 132, 140);
 }
-.dXhram {
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 30px;
-  text-align: center;
-  color: rgb(20, 23, 26);
-  margin: 16px 0px 20px;
+.svg1 {
+  width: 24px;
+  height: 24px;
+  background-color: #777;
+  border-radius: 50%;
+  display: flex;
+  margin-left: 16px;
+  padding: 4px;
 }
 body {
   font-family: "Pretendard Variable", Pretendard, -apple-system,

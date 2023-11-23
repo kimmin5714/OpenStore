@@ -111,7 +111,7 @@ const router = createRouter({
       name: "apart-view",
       // 컴포넌트 아파트
       component: () => import("@/views/ApartView.vue"),
-      // redirect: "/apart"
+      redirect: "/apart/search",
       children: [
         {
           path: "home",

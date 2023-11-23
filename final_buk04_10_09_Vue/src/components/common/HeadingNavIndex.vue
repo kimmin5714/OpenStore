@@ -41,8 +41,10 @@ const checkLogin = async () => {
     await getUserInfo(token);
   }
 };
-const logout = () => {
-  userLogout(userInfo.value.userId);
+const logout = async () => {
+  await userLogout(userInfo.value.userId);
+  alert("로그아웃되었습니다.");
+  router.push({ name: "IndexView" });
 };
 // onMounted(() => {
 checkLogin();
@@ -65,17 +67,20 @@ const createRandomEstate = async () => {
 <template>
   <nav
     class="navbar navbar-expand-lg"
-    style="background-color: rgb(157, 191, 200); font-size: large">
+    style="background-color: rgb(157, 191, 200); font-size: large"
+  >
     <div class="container">
       <RouterLink
         class="navbar-brand text-warning fw-bold"
-        :to="{ name: 'IndexView' }">
+        :to="{ name: 'IndexView' }"
+      >
         <a href="#" style="color: #0d6efd">
           <img
-            src="@/assets/img/header-logo.jpg"
+            src="@/assets/img/header-logo.png"
             alt=""
             width="50"
-            height="40" />
+            height="40"
+          />
         </a>
       </RouterLink>
       <button
@@ -85,19 +90,22 @@ const createRandomEstate = async () => {
         data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
-        aria-label="Toggle navigation">
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul
           class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll"
-          style="--bs-scroll-height: 100px">
+          style="--bs-scroll-height: 100px"
+        >
           <template v-if="isLogin">
             <li class="nav-item nav">
               <a
                 class="nav-link"
                 aria-current="page"
-                style="font-weight: bold; color: white">
+                style="font-weight: bold; color: white"
+              >
                 <strong>{{ userInfo.userName }}</strong> ({{
                   userInfo.userId
                 }})님 안녕하세요.</a
@@ -108,9 +116,19 @@ const createRandomEstate = async () => {
                 style="color: white; font-weight: bolder"
                 class="nav-link"
                 aria-current="page"
-                @click="moveBoard">
+                @click="moveBoard"
+              >
                 공지사항
               </button>
+            </li>
+
+            <li class="nav-item nav">
+              <router-link
+                :to="{ name: 'EstateInsert' }"
+                class="nav-link"
+                aria-current="page"
+                >매물 등록</router-link
+              >
             </li>
             <li class="nav-item nav">
               <router-link
@@ -121,24 +139,16 @@ const createRandomEstate = async () => {
               >
             </li>
             <li class="nav-item nav">
-              <router-link
-                :to="{ name: 'IndexView' }"
+              <a
                 class="nav-link"
                 aria-current="page"
                 @click="logout"
-                >로그아웃</router-link
+                style="cursor: pointer"
+                >로그아웃</a
               >
             </li>
           </template>
           <template v-else>
-            <li class="nav-item nav">
-              <router-link
-                :to="{ name: 'EstateInsert' }"
-                class="nav-link"
-                aria-current="page"
-                >매물 등록</router-link
-              >
-            </li>
             <li class="nav-item nav">
               <router-link
                 :to="{ name: 'BoardView' }"
