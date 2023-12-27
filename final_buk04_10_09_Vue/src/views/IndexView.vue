@@ -61,7 +61,7 @@ import { onMounted, onBeforeUpdate } from "vue";
     <HeadingNavIndex />
     <section class="sc-cjpfIh dxleaB">
       <div class="sc-jjeeWu ihRlrO">
-        <img src="src\assets\img\v725-te-22.jpg" alt="background" />
+        <img src="..\assets\img\v725-te-22.jpg" alt="background" />
         <div class="sc-KXvuv jtYTiW">
           <h2 class="sc-eTZVu nQjLg">
             소상공인을 위한 상권 정보<br />오픈스토어

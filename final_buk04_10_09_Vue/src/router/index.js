@@ -118,7 +118,7 @@ const router = createRouter({
           name: "apart-navbar-home",
           component: () =>
             import(
-              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/ApartNavbarHome.vue"
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarHome.vue"
             ),
         },
         {
@@ -126,7 +126,7 @@ const router = createRouter({
           name: "apart-navbar-search",
           component: () =>
             import(
-              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/ApartNavbarSearch.vue"
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarSearch.vue"
             ),
         },
         {
@@ -134,7 +134,7 @@ const router = createRouter({
           name: "apart-navbar-bookmarks",
           component: () =>
             import(
-              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/ApartNavbarBookmarks.vue"
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarBookmarks.vue"
             ),
           // beforeEnter: onlyAuthUser,
         },
@@ -143,7 +143,7 @@ const router = createRouter({
           name: "apart-navbar-notifications",
           component: () =>
             import(
-              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/ApartNavbarNotifications.vue"
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartNavbarNotifications.vue"
             ),
           // beforeEnter: onlyAuthUser,
         },
@@ -152,7 +152,7 @@ const router = createRouter({
           name: "ApartDetail",
           component: () =>
             import(
-              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/ApartDetail.vue"
+              "@/components/apart/MapMenu/LeftMenu/LeftMenuItem/apartDetail.vue"
             ),
         },
       ],
